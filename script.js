@@ -485,6 +485,36 @@ const preguntasOrtografia = [
         pregunta: "¿Cuál está escrita correctamente?",
         opciones: ["Mariposa", "Maripoza", "Maripoza", "Maripossa"],
         correcta: 0
+    },
+    {
+        pregunta: "¿Cuál está escrita correctamente?",
+        opciones: ["Camión", "Kamión", "Camíon", "Camionn"],
+        correcta: 0
+    },
+    {
+        pregunta: "¿Cuál está escrita correctamente?",
+        opciones: ["Árbol", "Arvol", "Árvol", "Arbol"],
+        correcta: 0
+    },
+    {
+        pregunta: "¿Cuál está escrita correctamente?",
+        opciones: ["Helado", "Elado", "Helhago", "Helaado"],
+        correcta: 0
+    },
+    {
+        pregunta: "¿Cuál está escrita correctamente?",
+        opciones: ["Viento", "Biento", "Vhiento", "Vientto"],
+        correcta: 0
+    },
+    {
+        pregunta: "¿Cuál está escrita correctamente?",
+        opciones: ["Familia", "Familiaa", "Família", "Famillia"],
+        correcta: 0
+    },
+    {
+        pregunta: "¿Cuál está escrita correctamente?",
+        opciones: ["Examen", "Ecsamen", "Exámen", "Esamen"],
+        correcta: 0
     }
 ];
 
@@ -493,9 +523,16 @@ let preguntaOrtografiaActual = 0;
 let puntosOrtografia = 0;
 
 function mezclarOrtografia(array) {
-    return [...array].sort(() => Math.random() - 0.5);
-}
+    const copia = [...array];
 
+    for (let i = copia.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+
+    return copia;
+}
 function mostrarMensaje(tipo) {
 
     if (tipo !== "ortografia") {
