@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-    <url>
-        <loc>https://educonew.github.io/</loc>
-    </url>
+  <url>
+    <loc>https://educonew.github.io/</loc>
+  </url>
 
-    <url>
-        <loc>https://educonew.github.io/tablas-multiplicar.html</loc>
-    </url>
+  <url>
+    <loc>https://educonew.github.io/ciencia.html</loc>
+  </url>
 
-    <url>
-        <loc>https://educonew.github.io/mejorar-matematicas.html</loc>
-    </url>
+  <url>
+    <loc>https://educonew.github.io/fracciones.html</loc>
+  </url>
+
+  <url>
+    <loc>https://educonew.github.io/ingles-basico.html</loc>
+  </url>
+
+  <url>
+    <loc>https://educonew.github.io/mejorar-matematicas.html</loc>
+  </url>
+
+  <url>
+    <loc>https://educonew.github.io/politica-privacidad.html</loc>
+  </url>
+
+  <url>
+    <loc>https://educonew.github.io/reglas-ortografia.html</loc>
+  </url>
+
+  <url>
+    <loc>https://educonew.github.io/tablas-multiplicar.html</loc>
+  </url>
 
 </urlset>
