@@ -1,697 +1,772 @@
-// ============================================
-// APRENDE FÁCIL - MOTOR DE MATEMÁTICAS
-// ============================================
+// ==========================================
+// EDUCONEW — MOTOR DE EJERCICIOS
+// ==========================================
 
-let operacionActual = "";
-let nivelActual = "";
-let preguntas = [];
-let preguntaActual = 0;
-let puntos = 0;
+let juegoActual = null;
 
 
-// ============================================
-// UTILIDADES
-// ============================================
+// ==========================================
+// CONFIGURACIÓN DE NIVELES
+// ==========================================
+
+const niveles = {
+
+    facil: {
+        nombre: "Fácil",
+        color: "🟢"
+    },
+
+    medio: {
+        nombre: "Medio",
+        color: "🟡"
+    },
+
+    dificil: {
+        nombre: "Difícil",
+        color: "🔴"
+    },
+
+    experto: {
+        nombre: "Experto",
+        color: "🟣"
+    }
+
+};
+
+
+// ==========================================
+// INICIAR JUEGO
+// ==========================================
+
+function iniciarJuego(tema, nivel) {
+
+    juegoActual = {
+        tema: tema,
+        nivel: nivel,
+        pregunta: 0,
+        aciertos: 0,
+        total: 10,
+        bloqueado: false
+    };
+
+    mostrarPregunta();
+
+}
+
+
+// ==========================================
+// GENERADOR DE NÚMEROS
+// ==========================================
 
 function numeroAleatorio(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+
+    return Math.floor(
+        Math.random() * (max - min + 1)
+    ) + min;
+
 }
 
 
-function mezclar(array) {
-    return array.sort(() => Math.random() - 0.5);
-}
+// ==========================================
+// GENERAR PREGUNTA
+// ==========================================
 
-
-// ============================================
-// CREAR UNA PREGUNTA
-// ============================================
-
-function crearPregunta(operacion, nivel) {
+function generarPregunta(tema, nivel) {
 
     let a;
     let b;
     let respuesta;
     let simbolo;
 
-    // -------------------------
-    // DIFICULTAD
-    // -------------------------
+    switch (tema) {
 
-    if (nivel === "facil") {
+        // ----------------------------------
+        // SUMAS
+        // ----------------------------------
 
-        a = numeroAleatorio(1, 10);
-        b = numeroAleatorio(1, 10);
+        case "sumas":
 
-    } else if (nivel === "medio") {
+            if (nivel === "facil") {
+                a = numeroAleatorio(1, 20);
+                b = numeroAleatorio(1, 20);
+            }
 
-        a = numeroAleatorio(10, 50);
-        b = numeroAleatorio(5, 30);
+            else if (nivel === "medio") {
+                a = numeroAleatorio(10, 100);
+                b = numeroAleatorio(10, 100);
+            }
 
-    } else {
+            else if (nivel === "dificil") {
+                a = numeroAleatorio(100, 999);
+                b = numeroAleatorio(100, 999);
+            }
 
-        a = numeroAleatorio(100, 999);
-        b = numeroAleatorio(10, 99);
+            else {
+                a = numeroAleatorio(1000, 9999);
+                b = numeroAleatorio(1000, 9999);
+            }
+
+            respuesta = a + b;
+            simbolo = "+";
+
+            break;
+
+
+        // ----------------------------------
+        // RESTAS
+        // ----------------------------------
+
+        case "restas":
+
+            if (nivel === "facil") {
+                a = numeroAleatorio(5, 30);
+                b = numeroAleatorio(1, a);
+            }
+
+            else if (nivel === "medio") {
+                a = numeroAleatorio(30, 150);
+                b = numeroAleatorio(1, a);
+            }
+
+            else if (nivel === "dificil") {
+                a = numeroAleatorio(100, 999);
+                b = numeroAleatorio(1, a);
+            }
+
+            else {
+                a = numeroAleatorio(1000, 9999);
+                b = numeroAleatorio(1, a);
+            }
+
+            respuesta = a - b;
+            simbolo = "−";
+
+            break;
+
+
+        // ----------------------------------
+        // MULTIPLICACIONES
+        // ----------------------------------
+
+        case "multiplicaciones":
+
+            if (nivel === "facil") {
+                a = numeroAleatorio(1, 10);
+                b = numeroAleatorio(1, 10);
+            }
+
+            else if (nivel === "medio") {
+                a = numeroAleatorio(2, 20);
+                b = numeroAleatorio(2, 12);
+            }
+
+            else if (nivel === "dificil") {
+                a = numeroAleatorio(10, 50);
+                b = numeroAleatorio(10, 30);
+            }
+
+            else {
+                a = numeroAleatorio(20, 200);
+                b = numeroAleatorio(20, 100);
+            }
+
+            respuesta = a * b;
+            simbolo = "×";
+
+            break;
+
+
+        // ----------------------------------
+        // DIVISIONES
+        // ----------------------------------
+
+        case "divisiones":
+
+            if (nivel === "facil") {
+                b = numeroAleatorio(2, 10);
+                respuesta = numeroAleatorio(1, 10);
+            }
+
+            else if (nivel === "medio") {
+                b = numeroAleatorio(2, 12);
+                respuesta = numeroAleatorio(2, 20);
+            }
+
+            else if (nivel === "dificil") {
+                b = numeroAleatorio(5, 30);
+                respuesta = numeroAleatorio(5, 50);
+            }
+
+            else {
+                b = numeroAleatorio(10, 100);
+                respuesta = numeroAleatorio(10, 100);
+            }
+
+            a = b * respuesta;
+            simbolo = "÷";
+
+            break;
+
+
+        // ----------------------------------
+        // FRACCIONES
+        // ----------------------------------
+
+        case "fracciones":
+
+            let denominador;
+            let numerador;
+
+            if (nivel === "facil") {
+                denominador = numeroAleatorio(2, 6);
+            }
+
+            else if (nivel === "medio") {
+                denominador = numeroAleatorio(3, 10);
+            }
+
+            else if (nivel === "dificil") {
+                denominador = numeroAleatorio(5, 20);
+            }
+
+            else {
+                denominador = numeroAleatorio(10, 50);
+            }
+
+            numerador = numeroAleatorio(1, denominador - 1);
+
+            return {
+                texto: `¿Qué fracción representa ${numerador} de ${denominador}?`,
+                respuesta: `${numerador}/${denominador}`
+            };
+
+
+        default:
+
+            return null;
     }
-
-
-    // -------------------------
-    // OPERACIÓN
-    // -------------------------
-
-    if (operacion === "suma") {
-
-        respuesta = a + b;
-        simbolo = "+";
-
-    } else if (operacion === "resta") {
-
-        // Evitamos resultados negativos
-        if (b > a) {
-            let temporal = a;
-            a = b;
-            b = temporal;
-        }
-
-        respuesta = a - b;
-        simbolo = "-";
-
-    } else {
-
-        if (nivel === "facil") {
-
-            a = numeroAleatorio(2, 10);
-            b = numeroAleatorio(2, 10);
-
-        } else if (nivel === "medio") {
-
-            a = numeroAleatorio(5, 15);
-            b = numeroAleatorio(2, 12);
-
-        } else {
-
-            a = numeroAleatorio(10, 30);
-            b = numeroAleatorio(5, 20);
-        }
-
-        respuesta = a * b;
-        simbolo = "×";
-    }
-
-
-    // -------------------------
-    // CREAR RESPUESTAS
-    // -------------------------
-
-    let opciones = [respuesta];
-
-    while (opciones.length < 4) {
-
-        let error = numeroAleatorio(1, 10);
-
-        let opcion;
-
-        if (Math.random() < 0.5) {
-            opcion = respuesta + error;
-        } else {
-            opcion = respuesta - error;
-        }
-
-        if (opcion >= 0 && !opciones.includes(opcion)) {
-            opciones.push(opcion);
-        }
-    }
-
-
-    opciones = mezclar(opciones);
 
 
     return {
-        pregunta: `¿Cuánto es ${a} ${simbolo} ${b}?`,
-        opciones: opciones,
-        correcta: opciones.indexOf(respuesta)
+        texto: `${a} ${simbolo} ${b} = ?`,
+        respuesta: respuesta
     };
+
 }
 
 
-// ============================================
-// CREAR PARTIDA
-// ============================================
+// ==========================================
+// GENERAR RESPUESTAS
+// ==========================================
 
-function crearPartida(operacion, nivel) {
+function generarRespuestas(correcta) {
 
-    operacionActual = operacion;
-    nivelActual = nivel;
+    const respuestas = [correcta];
 
-    preguntas = [];
+    while (respuestas.length < 4) {
 
-    preguntaActual = 0;
-    puntos = 0;
-
-
-    // 10 preguntas
-    for (let i = 0; i < 10; i++) {
-
-        preguntas.push(
-            crearPregunta(operacion, nivel)
+        let diferencia = numeroAleatorio(
+            1,
+            Math.max(3, Math.floor(Math.abs(correcta) * 0.15))
         );
+
+        let falsa;
+
+        if (Math.random() < 0.5) {
+            falsa = correcta + diferencia;
+        } else {
+            falsa = correcta - diferencia;
+        }
+
+        if (
+            !respuestas.includes(falsa) &&
+            falsa >= 0
+        ) {
+            respuestas.push(falsa);
+        }
     }
+
+    return respuestas.sort(
+        () => Math.random() - 0.5
+    );
+
 }
 
 
-// ============================================
-// SUMAS
-// ============================================
-
-function empezarSumas(nivel) {
-
-    crearPartida("suma", nivel);
-
-    document.getElementById("sumasQuiz")
-        .classList.remove("oculto");
-
-    mostrarPregunta();
-}
-
-
-// ============================================
-// RESTAS
-// ============================================
-
-function empezarRestas(nivel) {
-
-    crearPartida("resta", nivel);
-
-    document.getElementById("restasQuiz")
-        .classList.remove("oculto");
-
-    mostrarPregunta();
-}
-
-
-// ============================================
-// MULTIPLICACIONES
-// ============================================
-
-function empezarMultiplicaciones(nivel) {
-
-    crearPartida("multiplicacion", nivel);
-
-    document.getElementById("multiplicacionesQuiz")
-        .classList.remove("oculto");
-
-    mostrarPregunta();
-}
-
-
-// ============================================
+// ==========================================
 // MOSTRAR PREGUNTA
-// ============================================
+// ==========================================
 
 function mostrarPregunta() {
 
-    const ejercicio = preguntas[preguntaActual];
+    if (!juegoActual) return;
 
+    const contenedor =
+        document.getElementById("juegoMatematicas");
 
-    let preguntaElemento;
-    let respuestasElemento;
-    let resultadoElemento;
+    if (!contenedor) {
 
+        crearContenedorJuego();
 
-    if (operacionActual === "suma") {
-
-        preguntaElemento =
-            document.getElementById("preguntaSuma");
-
-        respuestasElemento =
-            document.getElementById("respuestasSuma");
-
-        resultadoElemento =
-            document.getElementById("resultadoSuma");
-
-    } else if (operacionActual === "resta") {
-
-        preguntaElemento =
-            document.getElementById("preguntaResta");
-
-        respuestasElemento =
-            document.getElementById("respuestasResta");
-
-        resultadoElemento =
-            document.getElementById("resultadoResta");
-
-    } else {
-
-        preguntaElemento =
-            document.getElementById("preguntaMultiplicacion");
-
-        respuestasElemento =
-            document.getElementById("respuestasMultiplicacion");
-
-        resultadoElemento =
-            document.getElementById("resultadoMultiplicacion");
     }
 
+    if (
+        juegoActual.pregunta >=
+        juegoActual.total
+    ) {
 
-    preguntaElemento.textContent =
-        ejercicio.pregunta;
+        mostrarResultadoFinal();
 
-
-    respuestasElemento.innerHTML = "";
-
-
-    ejercicio.opciones.forEach((opcion, indice) => {
-
-        const boton =
-            document.createElement("button");
-
-        boton.textContent = opcion;
-
-        boton.className = "respuesta";
-
-
-        boton.onclick = function() {
-
-            comprobarRespuesta(indice);
-        };
-
-
-        respuestasElemento.appendChild(boton);
-    });
-
-
-    resultadoElemento.textContent =
-        `Pregunta ${preguntaActual + 1} de ${preguntas.length} · ⭐ ${puntos}`;
-}
-
-
-// ============================================
-// COMPROBAR RESPUESTA
-// ============================================
-
-function comprobarRespuesta(indice) {
-
-    const ejercicio =
-        preguntas[preguntaActual];
-
-
-    let resultadoElemento;
-    let respuestasElemento;
-
-
-    if (operacionActual === "suma") {
-
-        resultadoElemento =
-            document.getElementById("resultadoSuma");
-
-        respuestasElemento =
-            document.getElementById("respuestasSuma");
-
-    } else if (operacionActual === "resta") {
-
-        resultadoElemento =
-            document.getElementById("resultadoResta");
-
-        respuestasElemento =
-            document.getElementById("respuestasResta");
-
-    } else {
-
-        resultadoElemento =
-            document.getElementById("resultadoMultiplicacion");
-
-        respuestasElemento =
-            document.getElementById("respuestasMultiplicacion");
-    }
-
-
-    const botones =
-        respuestasElemento.querySelectorAll(".respuesta");
-
-
-    botones.forEach(boton => {
-        boton.disabled = true;
-    });
-
-
-    if (indice === ejercicio.correcta) {
-
-        puntos++;
-
-        resultadoElemento.textContent =
-            "¡Correcto! 🎉";
-
-    } else {
-
-        resultadoElemento.textContent =
-            "❌ Incorrecto. La respuesta correcta era " +
-            ejercicio.opciones[ejercicio.correcta];
-    }
-
-
-    setTimeout(() => {
-
-        preguntaActual++;
-
-
-        if (preguntaActual < preguntas.length) {
-
-            mostrarPregunta();
-
-        } else {
-
-            terminarPartida();
-        }
-
-    }, 1000);
-}
-
-
-// ============================================
-// TERMINAR PARTIDA
-// ============================================
-
-function terminarPartida() {
-
-    let preguntaElemento;
-    let respuestasElemento;
-    let resultadoElemento;
-
-
-    if (operacionActual === "suma") {
-
-        preguntaElemento =
-            document.getElementById("preguntaSuma");
-
-        respuestasElemento =
-            document.getElementById("respuestasSuma");
-
-        resultadoElemento =
-            document.getElementById("resultadoSuma");
-
-    } else if (operacionActual === "resta") {
-
-        preguntaElemento =
-            document.getElementById("preguntaResta");
-
-        respuestasElemento =
-            document.getElementById("respuestasResta");
-
-        resultadoElemento =
-            document.getElementById("resultadoResta");
-
-    } else {
-
-        preguntaElemento =
-            document.getElementById("preguntaMultiplicacion");
-
-        respuestasElemento =
-            document.getElementById("respuestasMultiplicacion");
-
-        resultadoElemento =
-            document.getElementById("resultadoMultiplicacion");
-    }
-
-
-    const porcentaje =
-        Math.round((puntos / preguntas.length) * 100);
-
-
-    preguntaElemento.textContent =
-        "🏆 ¡Has terminado!";
-
-
-    respuestasElemento.innerHTML = "";
-
-
-    resultadoElemento.textContent =
-        `Has conseguido ${puntos} de ${preguntas.length} · ${porcentaje}%`;
-}
-// ============================================
-// ORTOGRAFÍA
-// ============================================
-
-// ============================================
-// ORTOGRAFÍA
-// ============================================
-
-const preguntasOrtografia = [
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Haver", "Haber", "Aver", "Havir"],
-        correcta: 1
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Baca", "Vaca", "Vakka", "Baka"],
-        correcta: 1
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Jirafa", "Girafa", "Jirrafa", "Giraffa"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Huevo", "Uevo", "Hebo", "Huebo"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Avión", "Abión", "Havión", "Avíon"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Zapato", "Sapato", "Zappato", "Sapatto"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Coche", "Koche", "Coxe", "Cochee"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Guitarra", "Gitarra", "Guitara", "Gitarraa"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Biblioteca", "Bivlioteca", "Bibblioteca", "Biblioteka"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Mariposa", "Maripoza", "Maripoza", "Maripossa"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Camión", "Kamión", "Camíon", "Camionn"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Árbol", "Arvol", "Árvol", "Arbol"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Helado", "Elado", "Helhago", "Helaado"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Viento", "Biento", "Vhiento", "Vientto"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Familia", "Familiaa", "Família", "Famillia"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Cuál está escrita correctamente?",
-        opciones: ["Examen", "Ecsamen", "Exámen", "Esamen"],
-        correcta: 0
-    }
-];
-
-let preguntasOrtografiaPartida = [];
-let preguntaOrtografiaActual = 0;
-let puntosOrtografia = 0;
-
-function mezclarOrtografia(array) {
-    const copia = [...array];
-
-    for (let i = copia.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-
-        [copia[i], copia[j]] = [copia[j], copia[i]];
-    }
-
-    return copia;
-}
-function mostrarMensaje(tipo) {
-
-    if (tipo !== "ortografia") {
         return;
     }
 
-    preguntasOrtografiaPartida =
-        mezclarOrtografia(preguntasOrtografia).slice(0, 5);
 
-    preguntaOrtografiaActual = 0;
-    puntosOrtografia = 0;
+    juegoActual.bloqueado = false;
 
-    mostrarPreguntaOrtografia();
-}
 
-function mostrarPreguntaOrtografia() {
-
-    const seccionLengua =
-        document.getElementById("lengua");
-
-    const ejercicio =
-        preguntasOrtografiaPartida[preguntaOrtografiaActual];
-
-    const opciones =
-        mezclarOrtografia(
-            ejercicio.opciones.map((opcion, indice) => ({
-                texto: opcion,
-                indice: indice
-            }))
+    const pregunta =
+        generarPregunta(
+            juegoActual.tema,
+            juegoActual.nivel
         );
 
-    const botones =
-        opciones.map(opcion => `
-            <button
-                onclick="comprobarOrtografia(${opcion.indice})"
-                class="respuesta"
-            >
-                ${opcion.texto}
-            </button>
-        `).join("");
 
-    seccionLengua.innerHTML = `
-        <div class="ejercicio-ortografia">
+    if (!pregunta) return;
 
-            <h3>✏️ Ejercicio de ortografía</h3>
 
-            <p>${ejercicio.pregunta}</p>
+    const preguntaElemento =
+        document.getElementById(
+            "preguntaJuego"
+        );
 
-            <div class="opciones-ortografia">
-                ${botones}
-            </div>
+    const respuestasElemento =
+        document.getElementById(
+            "respuestasJuego"
+        );
 
-            <p>
-                Pregunta ${preguntaOrtografiaActual + 1}
-                de ${preguntasOrtografiaPartida.length}
-                · ⭐ ${puntosOrtografia}
-            </p>
+    const progresoElemento =
+        document.getElementById(
+            "progresoJuego"
+        );
 
-        </div>
-    `;
+
+    preguntaElemento.textContent =
+        pregunta.texto;
+
+
+    progresoElemento.textContent =
+        `Pregunta ${juegoActual.pregunta + 1} de ${juegoActual.total}`;
+
+
+    respuestasElemento.innerHTML = "";
+
+
+    let respuestas;
+
+
+    if (
+        typeof pregunta.respuesta ===
+        "number"
+    ) {
+
+        respuestas =
+            generarRespuestas(
+                pregunta.respuesta
+            );
+
+    }
+
+    else {
+
+        respuestas = [
+            pregunta.respuesta
+        ];
+
+        while (respuestas.length < 4) {
+
+            const falsa =
+                `${numeroAleatorio(1, 9)}/${numeroAleatorio(2, 10)}`;
+
+            if (!respuestas.includes(falsa)) {
+                respuestas.push(falsa);
+            }
+
+        }
+
+        respuestas.sort(
+            () => Math.random() - 0.5
+        );
+
+    }
+
+
+    respuestas.forEach(
+        respuesta => {
+
+            const boton =
+                document.createElement(
+                    "button"
+                );
+
+            boton.className =
+                "respuesta";
+
+            boton.textContent =
+                respuesta;
+
+            boton.addEventListener(
+                "click",
+                () =>
+                    comprobarRespuesta(
+                        respuesta,
+                        pregunta.respuesta
+                    )
+            );
+
+            respuestasElemento.appendChild(
+                boton
+            );
+
+        }
+    );
+
 }
 
-function comprobarOrtografia(indice) {
 
-    const ejercicio =
-        preguntasOrtografiaPartida[preguntaOrtografiaActual];
+// ==========================================
+// COMPROBAR RESPUESTA
+// ==========================================
+
+function comprobarRespuesta(
+    respuestaUsuario,
+    respuestaCorrecta
+) {
+
+    if (!juegoActual) return;
+
+    if (juegoActual.bloqueado) return;
+
+    juegoActual.bloqueado = true;
+
 
     const botones =
         document.querySelectorAll(
-            ".opciones-ortografia button"
+            "#respuestasJuego .respuesta"
         );
 
-    botones.forEach(boton => {
-        boton.disabled = true;
-    });
 
-    const ejercicioActual =
-        document.querySelector(".ejercicio-ortografia");
+    botones.forEach(
+        boton => {
+
+            boton.disabled = true;
+
+            if (
+                String(boton.textContent) ===
+                String(respuestaCorrecta)
+            ) {
+
+                boton.style.background =
+                    "#10b981";
+
+                boton.style.color =
+                    "white";
+
+            }
+
+        }
+    );
+
 
     const resultado =
-        document.createElement("p");
+        document.getElementById(
+            "resultadoJuego"
+        );
 
-    resultado.className =
-        "resultado-ortografia";
 
-    if (indice === ejercicio.correcta) {
+    if (
+        String(respuestaUsuario) ===
+        String(respuestaCorrecta)
+    ) {
 
-        puntosOrtografia++;
-
-        resultado.textContent =
-            "¡Correcto! 🎉";
-
-        resultado.style.color = "green";
-
-    } else {
+        juegoActual.aciertos++;
 
         resultado.textContent =
-            "❌ Incorrecto. La respuesta correcta era: " +
-            ejercicio.opciones[ejercicio.correcta];
+            "✅ ¡Correcto!";
 
-        resultado.style.color = "red";
+        resultado.style.color =
+            "#10b981";
+
     }
 
-    ejercicioActual.appendChild(resultado);
+    else {
 
-    setTimeout(() => {
+        resultado.textContent =
+            `❌ Incorrecto. La respuesta era ${respuestaCorrecta}`;
 
-        preguntaOrtografiaActual++;
+        resultado.style.color =
+            "#ef4444";
 
-        if (
-            preguntaOrtografiaActual <
-            preguntasOrtografiaPartida.length
-        ) {
+    }
 
-            mostrarPreguntaOrtografia();
 
-        } else {
+    juegoActual.pregunta++;
 
-            terminarOrtografia();
-        }
 
-    }, 1500);
+    setTimeout(
+        () => {
+
+            resultado.textContent = "";
+
+            mostrarPregunta();
+
+        },
+        900
+    );
+
 }
 
-function terminarOrtografia() {
 
-    const seccionLengua =
-        document.getElementById("lengua");
+// ==========================================
+// RESULTADO FINAL
+// ==========================================
+
+function mostrarResultadoFinal() {
 
     const porcentaje =
         Math.round(
-            (puntosOrtografia /
-                preguntasOrtografiaPartida.length) * 100
+            (juegoActual.aciertos /
+                juegoActual.total) * 100
         );
 
-    seccionLengua.innerHTML = `
-        <div class="ejercicio-ortografia">
 
-            <h3>🏆 ¡Has terminado!</h3>
+    let mensaje;
+
+    if (porcentaje === 100) {
+        mensaje = "🏆 ¡Perfecto!";
+    }
+
+    else if (porcentaje >= 80) {
+        mensaje = "🔥 ¡Excelente trabajo!";
+    }
+
+    else if (porcentaje >= 60) {
+        mensaje = "👏 ¡Muy bien!";
+    }
+
+    else if (porcentaje >= 40) {
+        mensaje = "💪 ¡Sigue practicando!";
+    }
+
+    else {
+        mensaje = "📚 ¡Vamos a mejorar!";
+    }
+
+
+    const contenedor =
+        document.getElementById(
+            "juegoMatematicas"
+        );
+
+
+    contenedor.innerHTML = `
+
+        <div class="resultado-final">
+
+            <div style="font-size:4rem;">
+                ${porcentaje >= 80 ? "🏆" : "🎯"}
+            </div>
+
+            <h2>${mensaje}</h2>
 
             <p>
                 Has conseguido
                 <strong>
-                    ${puntosOrtografia}
-                    de
-                    ${preguntasOrtografiaPartida.length}
+                    ${juegoActual.aciertos}
+                </strong>
+                de
+                <strong>
+                    ${juegoActual.total}
                 </strong>
                 respuestas correctas.
             </p>
 
-            <p>
-                ⭐ ${porcentaje}%
-            </p>
+            <div class="resultado-porcentaje">
+                ${porcentaje}%
+            </div>
 
-            <button onclick="mostrarMensaje('ortografia')">
-                🔄 Jugar otra vez
+            <button
+                type="button"
+                class="boton-principal"
+                onclick="iniciarJuego(
+                    '${juegoActual.tema}',
+                    '${juegoActual.nivel}'
+                )">
+
+                🔄 Volver a jugar
+
             </button>
 
         </div>
+
     `;
+
 }
 
+
+// ==========================================
+// CREAR CONTENEDOR DEL JUEGO
+// ==========================================
+
+function crearContenedorJuego() {
+
+    const zona =
+        document.querySelector(
+            ".ejercicios-seccion"
+        );
+
+    if (!zona) return;
+
+
+    const contenedor =
+        document.createElement("div");
+
+
+    contenedor.id =
+        "juegoMatematicas";
+
+
+    contenedor.className =
+        "tarjeta";
+
+
+    contenedor.style.marginTop =
+        "30px";
+
+
+    contenedor.innerHTML = `
+
+        <div style="text-align:center;">
+
+            <p
+                id="progresoJuego"
+                style="
+                    color:#667085;
+                    font-weight:700;
+                ">
+            </p>
+
+            <h2
+                id="preguntaJuego"
+                style="
+                    font-size:2rem;
+                    margin:20px 0;
+                ">
+            </h2>
+
+            <div
+                id="respuestasJuego"
+                style="
+                    display:grid;
+                    grid-template-columns:
+                    repeat(2,1fr);
+                    gap:12px;
+                    max-width:600px;
+                    margin:auto;
+                ">
+            </div>
+
+            <p
+                id="resultadoJuego"
+                style="
+                    font-weight:800;
+                    min-height:28px;
+                    margin-top:18px;
+                ">
+            </p>
+
+        </div>
+
+    `;
+
+
+    zona.appendChild(
+        contenedor
+    );
+
+}
+
+
+// ==========================================
+// BOTONES COMPATIBLES CON LA WEB ANTIGUA
+// ==========================================
+
+function empezarSumas(nivel) {
+
+    iniciarJuego(
+        "sumas",
+        nivel
+    );
+
+}
+
+
+function empezarRestas(nivel) {
+
+    iniciarJuego(
+        "restas",
+        nivel
+    );
+
+}
+
+
+function empezarMultiplicaciones(nivel) {
+
+    iniciarJuego(
+        "multiplicaciones",
+        nivel
+    );
+
+}
+
+
+function empezarDivisiones(nivel) {
+
+    iniciarJuego(
+        "divisiones",
+        nivel
+    );
+
+}
+
+
+function empezarFracciones(nivel) {
+
+    iniciarJuego(
+        "fracciones",
+        nivel
+    );
+
+}
+
+
+// ==========================================
+// MENSAJES TEMPORALES
+// ==========================================
+
+function mostrarMensaje(tipo) {
+
+    if (tipo === "ortografia") {
+
+        alert(
+            "📚 El nuevo ejercicio de ortografía estará disponible muy pronto."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// FINAL
+// ==========================================
