@@ -1,203 +1,740 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Aprende Fácil</title>
-    <link rel="icon" type="image/png" href="perfil.png">
-    <meta name="description" content="Practica matemáticas gratis con ejercicios de sumas, restas y multiplicaciones. Aprende las tablas y mejora tus matemáticas con recursos educativos sencillos.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://educonew.github.io/">
+```
+<title>Educonew | Aprende, practica y mejora</title>
 
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Aprende Fácil | Ejercicios de Matemáticas Gratis">
-    <meta property="og:description" content="Ejercicios gratuitos de matemáticas para practicar sumas, restas y multiplicaciones y mejorar tus conocimientos.">
-    <meta property="og:url" content="https://educonew.github.io/">
-    <meta property="og:site_name" content="Aprende Fácil">
+<link rel="icon" type="image/png" href="perfil.png">
 
-    <meta name="google-site-verification" content="Ed4qsuhqE2dIHOVmobPNIzu9dfwVDeQKHLCoJAOzo2s">
+<meta name="description" content="Educonew: aprende, practica y mejora con ejercicios educativos gratuitos de matemáticas, lengua, ciencia e inglés.">
 
-    <link rel="stylesheet" href="style.css">
+<meta name="robots" content="index, follow">
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Aprende Fácil",
-      "url":"https://educonew.github.io/",
-      "description": "Recursos educativos gratuitos y ejercicios de matemáticas para practicar."
-    }
-    </script>
+<link rel="canonical" href="https://educonew.github.io/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Educonew | Aprende, practica y mejora">
+<meta property="og:description" content="Ejercicios y recursos educativos gratuitos para aprender y practicar.">
+<meta property="og:url" content="https://educonew.github.io/">
+<meta property="og:site_name" content="Educonew">
+
+<meta name="google-site-verification" content="Ed4qsuhqE2dIHOVmobPNIzu9dfwVDeQKHLCoJAOzo2s">
+
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Educonew",
+    "url": "https://educonew.github.io/",
+    "description": "Recursos educativos gratuitos, ejercicios y materiales para aprender y practicar."
+}
+</script>
+```
+
 </head>
 
-<body id="inicio">
+<body>
 
-<header class="hero">
-    <div class="contenedor">
-        <h1>🎓 Aprende Fácil</h1>
-        <p class="subtitulo">Aprende, practica y mejora tus conocimientos.</p>
-        <p>Ejercicios gratuitos de diferentes materias para aprender jugando.</p>
+<header class="hero-principal">
 
-        <a href="#matematicas" class="boton-principal">🚀 Empezar a aprender</a>
+```
+<nav class="barra-navegacion">
+    <div class="logo">
+        <img src="perfil.png" alt="Educonew">
+        <span>Educonew</span>
     </div>
-</header>
 
-<nav aria-label="Navegación principal">
-    <div class="contenedor">
+    <div class="menu">
         <a href="#inicio">Inicio</a>
-        <a href="#matematicas">Matemáticas</a>
-        <a href="#lengua">Lengua</a>
-        <a href="#quiz">Quiz</a>
-        <a href="#articulos">Artículos</a>
+        <a href="#materias">Materias</a>
+        <a href="#destacados">Practicar</a>
+        <a href="#recursos">Recursos</a>
     </div>
 </nav>
 
-<main class="contenedor">
+<div class="hero-contenido" id="inicio">
 
-    <section class="hero" aria-labelledby="bienvenida">
-        <h2 id="bienvenida">Aprender puede ser divertido 🚀</h2>
-        <p>Encuentra ejercicios, explicaciones y herramientas gratuitas para practicar.</p>
-        <p>Empieza con ejercicios de matemáticas y utiliza nuestras guías para reforzar lo aprendido.</p>
-    </section>
+    <div class="hero-texto">
 
-    <section id="matematicas" aria-labelledby="titulo-matematicas">
-        <h2 id="titulo-matematicas">📐 Ejercicios de Matemáticas</h2>
-        <p>Practica sumas, restas y multiplicaciones con diferentes niveles de dificultad.</p>
+        <span class="etiqueta">📚 PLATAFORMA EDUCATIVA</span>
 
-        <div class="tarjetas">
+        <h1>Aprende.<br><span>Practica.</span><br>Mejora.</h1>
 
-            <article class="tarjeta">
-                <h3>➕ Sumas</h3>
-                <p>Practica operaciones de suma con ejercicios fáciles, medios y difíciles.</p>
+        <p>
+            Ejercicios, materias y recursos educativos para aprender
+            de una forma sencilla, práctica y divertida.
+        </p>
 
-                <div class="niveles">
-                    <button type="button" onclick="empezarSumas('facil')">🟢 Fácil</button>
-                    <button type="button" onclick="empezarSumas('medio')">🟡 Medio</button>
-                    <button type="button" onclick="empezarSumas('dificil')">🔴 Difícil</button>
-                </div>
+        <div class="hero-botones">
+            <a href="#materias" class="boton-principal">
+                🚀 Empezar a aprender
+            </a>
 
-                <div id="sumasQuiz" class="oculto">
-                    <h4 id="preguntaSuma"></h4>
-                    <div id="respuestasSuma"></div>
-                    <p id="resultadoSuma"></p>
-                </div>
-            </article>
+            <a href="#destacados" class="boton-secundario">
+                Ver ejercicios →
+            </a>
+        </div>
 
-            <article class="tarjeta">
-                <h3>➖ Restas</h3>
-                <p>Practica operaciones de resta y aumenta poco a poco la dificultad.</p>
+    </div>
 
-                <div class="niveles">
-                    <button type="button" onclick="empezarRestas('facil')">🟢 Fácil</button>
-                    <button type="button" onclick="empezarRestas('medio')">🟡 Medio</button>
-                    <button type="button" onclick="empezarRestas('dificil')">🔴 Difícil</button>
-                </div>
+    <div class="hero-visual">
 
-                <div id="restasQuiz" class="oculto">
-                    <h4 id="preguntaResta"></h4>
-                    <div id="respuestasResta"></div>
-                    <p id="resultadoResta"></p>
-                </div>
-            </article>
+        <div class="tarjeta-flotante tarjeta-libro">
+            📖
+            <strong>Aprende</strong>
+            <span>A tu ritmo</span>
+        </div>
 
-            <article class="tarjeta">
-                <h3>✖️ Multiplicaciones</h3>
-                <p>Practica las tablas de multiplicar con ejercicios de diferentes niveles.</p>
+        <div class="circulo-educativo">
+            <img src="perfil.png" alt="Educonew">
+        </div>
 
-                <div class="niveles">
-                    <button type="button" onclick="empezarMultiplicaciones('facil')">🟢 Fácil</button>
-                    <button type="button" onclick="empezarMultiplicaciones('medio')">🟡 Medio</button>
-                    <button type="button" onclick="empezarMultiplicaciones('dificil')">🔴 Difícil</button>
-                </div>
+        <div class="tarjeta-flotante tarjeta-estadistica">
+            ⭐
+            <strong>Practica</strong>
+            <span>Mejora cada día</span>
+        </div>
 
-                <div id="multiplicacionesQuiz" class="oculto">
-                    <h4 id="preguntaMultiplicacion"></h4>
-                    <div id="respuestasMultiplicacion"></div>
-                    <p id="resultadoMultiplicacion"></p>
-                </div>
-            </article>
+    </div>
+
+</div>
+```
+
+</header>
+
+<main>
+
+<section class="presentacion">
+
+```
+<span class="etiqueta">TODO EN UN SOLO LUGAR</span>
+
+<h2>Tu espacio para aprender</h2>
+
+<p>
+    Explora nuestras materias, practica con ejercicios
+    interactivos y descubre nuevos recursos para mejorar.
+</p>
+```
+
+</section>
+
+<section id="materias" class="seccion">
+
+```
+<div class="titulo-seccion">
+
+    <div>
+        <span class="etiqueta">📚 MATERIAS</span>
+        <h2>¿Qué quieres aprender?</h2>
+    </div>
+
+    <p>
+        Elige una materia y empieza a practicar.
+    </p>
+
+</div>
+
+
+<div class="materias-grid">
+
+
+    <a href="#matematicas" class="materia-card matematicas">
+
+        <div class="materia-icono">📐</div>
+
+        <div>
+            <h3>Matemáticas</h3>
+            <p>
+                Operaciones, fracciones, problemas,
+                geometría y mucho más.
+            </p>
+        </div>
+
+        <span class="flecha">→</span>
+
+    </a>
+
+
+    <a href="#lengua" class="materia-card lengua">
+
+        <div class="materia-icono">📚</div>
+
+        <div>
+            <h3>Lengua</h3>
+            <p>
+                Ortografía, vocabulario, gramática
+                y comprensión.
+            </p>
+        </div>
+
+        <span class="flecha">→</span>
+
+    </a>
+
+
+    <a href="ciencia.html" class="materia-card ciencia">
+
+        <div class="materia-icono">🔬</div>
+
+        <div>
+            <h3>Ciencia</h3>
+            <p>
+                Descubre el mundo y aprende
+                cómo funciona.
+            </p>
+        </div>
+
+        <span class="flecha">→</span>
+
+    </a>
+
+
+    <a href="ingles-basico.html" class="materia-card ingles">
+
+        <div class="materia-icono">🇬🇧</div>
+
+        <div>
+            <h3>Inglés</h3>
+            <p>
+                Vocabulario y expresiones
+                para empezar a comunicarte.
+            </p>
+        </div>
+
+        <span class="flecha">→</span>
+
+    </a>
+
+
+    <a href="#" class="materia-card geografia">
+
+        <div class="materia-icono">🌍</div>
+
+        <div>
+            <h3>Geografía</h3>
+            <p>
+                Países, continentes, mapas
+                y lugares del mundo.
+            </p>
+        </div>
+
+        <span class="proximamente">PRÓXIMAMENTE</span>
+
+    </a>
+
+
+    <a href="#" class="materia-card historia">
+
+        <div class="materia-icono">🏛️</div>
+
+        <div>
+            <h3>Historia</h3>
+            <p>
+                Grandes acontecimientos,
+                épocas y personajes.
+            </p>
+        </div>
+
+        <span class="proximamente">PRÓXIMAMENTE</span>
+
+    </a>
+
+
+</div>
+```
+
+</section>
+
+<section id="destacados" class="seccion seccion-destacados">
+
+```
+<div class="titulo-seccion">
+
+    <div>
+        <span class="etiqueta">🎯 PRACTICA</span>
+        <h2>Empieza ahora</h2>
+    </div>
+
+    <p>
+        Ejercicios para poner a prueba tus conocimientos.
+    </p>
+
+</div>
+
+
+<div class="destacados-grid">
+
+
+    <article class="destacado-card">
+
+        <span class="destacado-icono">➕</span>
+
+        <div>
+            <span class="nivel">NIVELES</span>
+            <h3>Sumas</h3>
+            <p>
+                Practica sumas con diferentes
+                dificultades.
+            </p>
+
+            <a href="#matematicas">
+                Practicar →
+            </a>
+        </div>
+
+    </article>
+
+
+    <article class="destacado-card">
+
+        <span class="destacado-icono">✖️</span>
+
+        <div>
+            <span class="nivel">NIVELES</span>
+            <h3>Multiplicaciones</h3>
+            <p>
+                Mejora tu cálculo y domina
+                las multiplicaciones.
+            </p>
+
+            <a href="#matematicas">
+                Practicar →
+            </a>
+        </div>
+
+    </article>
+
+
+    <article class="destacado-card">
+
+        <span class="destacado-icono">✏️</span>
+
+        <div>
+            <span class="nivel">LENGUA</span>
+            <h3>Ortografía</h3>
+            <p>
+                Pon a prueba tus conocimientos
+                de ortografía.
+            </p>
+
+            <a href="#lengua">
+                Practicar →
+            </a>
+        </div>
+
+    </article>
+
+
+</div>
+```
+
+</section>
+
+<section id="matematicas" class="seccion ejercicios-seccion">
+
+```
+<div class="cabecera-ejercicios">
+
+    <div>
+        <span class="etiqueta">📐 MATEMÁTICAS</span>
+        <h2>Practica matemáticas</h2>
+        <p>
+            Elige una operación y comienza un reto.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="tarjetas">
+
+
+    <article class="tarjeta ejercicio-card">
+
+        <div class="ejercicio-icono">➕</div>
+
+        <h3>Sumas</h3>
+
+        <p>
+            Practica operaciones de suma
+            desde fáciles hasta difíciles.
+        </p>
+
+        <div class="niveles">
+
+            <button type="button" onclick="empezarSumas('facil')">
+                🟢 Fácil
+            </button>
+
+            <button type="button" onclick="empezarSumas('medio')">
+                🟡 Medio
+            </button>
+
+            <button type="button" onclick="empezarSumas('dificil')">
+                🔴 Difícil
+            </button>
 
         </div>
-    </section>
 
-    <section id="lengua" aria-labelledby="titulo-lengua">
-        <h2 id="titulo-lengua">📚 Lengua</h2>
-        <div class="tarjetas">
-            <article class="tarjeta">
-                <h3>✏️ Ortografía</h3>
-                <p>Practica palabras y reglas ortográficas.</p>
-                <button type="button" onclick="mostrarMensaje('ortografia')">Practicar</button>
-            </article>
-        </div>
-    </section>
+        <div id="sumasQuiz" class="oculto">
 
-    <section id="quiz" class="quiz" aria-labelledby="titulo-quiz">
-        <h2 id="titulo-quiz">🧠 Quiz de matemáticas</h2>
-        <p id="pregunta">Pulsa el botón para comenzar.</p>
-        <div id="respuestas"></div>
-        <button type="button" onclick="empezarQuiz()">Empezar quiz</button>
-        <p id="resultado"></p>
-    </section>
+            <h4 id="preguntaSuma"></h4>
 
-    <section id="articulos" aria-labelledby="titulo-articulos">
-        <h2 id="titulo-articulos">📖 Artículos educativos</h2>
-        <p>Aprende conceptos de forma sencilla con nuestras guías educativas.</p>
+            <div id="respuestasSuma"></div>
 
-        <div class="tarjetas">
-
-            <article class="tarjeta">
-                <h3>🧮 Cómo aprender las tablas de multiplicar</h3>
-                <p>Descubre trucos sencillos, patrones y consejos para aprender y practicar las tablas de multiplicar.</p>
-                <a href="tablas-multiplicar.html" class="enlace-articulo">Leer cómo aprender las tablas →</a>
-            </article>
-
-            <article class="tarjeta">
-                <h3>📐 Cómo mejorar en matemáticas</h3>
-                <p>Descubre consejos prácticos para estudiar, practicar y mejorar tus habilidades matemáticas.</p>
-                <a href="mejorar-matematicas.html" class="enlace-articulo">Leer cómo mejorar en matemáticas →</a>
-            </article>
-            <article class="tarjeta">
-    <h3>✏️ Reglas de ortografía</h3>
-    <p>Aprende las reglas de ortografía más comunes con ejemplos sencillos y trucos fáciles de recordar.</p>
-    <a href="reglas-ortografia.html" class="enlace-articulo">Leer las reglas de ortografía →</a>
-</article>
-            <article class="tarjeta">
-    <h3>🧮 Fracciones</h3>
-    <p>Aprende qué son las fracciones y cómo sumar, restar, multiplicar y dividir con ejemplos sencillos.</p>
-    <a href="fracciones.html" class="enlace-articulo">Aprender fracciones →</a>
-</article>
-            <article class="tarjeta">
-    <h3>🔬 Ciencia para principiantes</h3>
-    <p>Descubre qué es la ciencia, sus principales ramas y cómo funciona el método científico.</p>
-    <a href="ciencia.html" class="enlace-articulo">Aprender ciencia →</a>
-</article>
-            <article class="tarjeta">
-    <h3>🇬🇧 Inglés básico</h3>
-    <p>Aprende palabras y frases sencillas en inglés para empezar a comunicarte en situaciones cotidianas.</p>
-    <a href="ingles-basico.html" class="enlace-articulo">Aprender inglés →</a>
-</article>
-
-            <article class="tarjeta">
-                <h3>🧠 Cómo estudiar mejor</h3>
-                <p>Próximamente encontrarás una guía con técnicas sencillas para organizar tus sesiones de estudio.</p>
-                <span class="enlace-articulo">Próximamente</span>
-            </article>
+            <p id="resultadoSuma"></p>
 
         </div>
-    </section>
+
+    </article>
+
+
+    <article class="tarjeta ejercicio-card">
+
+        <div class="ejercicio-icono">➖</div>
+
+        <h3>Restas</h3>
+
+        <p>
+            Mejora tu cálculo practicando
+            diferentes niveles.
+        </p>
+
+        <div class="niveles">
+
+            <button type="button" onclick="empezarRestas('facil')">
+                🟢 Fácil
+            </button>
+
+            <button type="button" onclick="empezarRestas('medio')">
+                🟡 Medio
+            </button>
+
+            <button type="button" onclick="empezarRestas('dificil')">
+                🔴 Difícil
+            </button>
+
+        </div>
+
+        <div id="restasQuiz" class="oculto">
+
+            <h4 id="preguntaResta"></h4>
+
+            <div id="respuestasResta"></div>
+
+            <p id="resultadoResta"></p>
+
+        </div>
+
+    </article>
+
+
+    <article class="tarjeta ejercicio-card">
+
+        <div class="ejercicio-icono">✖️</div>
+
+        <h3>Multiplicaciones</h3>
+
+        <p>
+            Practica las tablas y mejora
+            tu velocidad de cálculo.
+        </p>
+
+        <div class="niveles">
+
+            <button type="button" onclick="empezarMultiplicaciones('facil')">
+                🟢 Fácil
+            </button>
+
+            <button type="button" onclick="empezarMultiplicaciones('medio')">
+                🟡 Medio
+            </button>
+
+            <button type="button" onclick="empezarMultiplicaciones('dificil')">
+                🔴 Difícil
+            </button>
+
+        </div>
+
+        <div id="multiplicacionesQuiz" class="oculto">
+
+            <h4 id="preguntaMultiplicacion"></h4>
+
+            <div id="respuestasMultiplicacion"></div>
+
+            <p id="resultadoMultiplicacion"></p>
+
+        </div>
+
+    </article>
+
+
+</div>
+```
+
+</section>
+
+<section id="lengua" class="seccion lengua-seccion">
+
+```
+<div class="cabecera-ejercicios">
+
+    <div>
+        <span class="etiqueta">📚 LENGUA</span>
+        <h2>Mejora tu español</h2>
+        <p>
+            Practica ortografía y amplía tus conocimientos.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="tarjetas">
+
+    <article class="tarjeta ejercicio-card">
+
+        <div class="ejercicio-icono">✏️</div>
+
+        <h3>Ortografía</h3>
+
+        <p>
+            Pon a prueba tus conocimientos
+            con preguntas aleatorias.
+        </p>
+
+        <button
+            type="button"
+            onclick="mostrarMensaje('ortografia')">
+            Practicar →
+        </button>
+
+    </article>
+
+</div>
+```
+
+</section>
+
+<section id="recursos" class="seccion recursos-seccion">
+
+```
+<div class="titulo-seccion">
+
+    <div>
+        <span class="etiqueta">📖 RECURSOS</span>
+        <h2>Aprende también con nuestras guías</h2>
+    </div>
+
+</div>
+
+
+<div class="recursos-grid">
+
+
+    <a href="tablas-multiplicar.html" class="recurso-card">
+
+        <span>🧮</span>
+
+        <div>
+            <h3>Tablas de multiplicar</h3>
+            <p>
+                Trucos y consejos para aprender
+                las tablas de multiplicar.
+            </p>
+        </div>
+
+        <strong>→</strong>
+
+    </a>
+
+
+    <a href="mejorar-matematicas.html" class="recurso-card">
+
+        <span>📐</span>
+
+        <div>
+            <h3>Mejorar en matemáticas</h3>
+            <p>
+                Consejos para estudiar y practicar
+                matemáticas.
+            </p>
+        </div>
+
+        <strong>→</strong>
+
+    </a>
+
+
+    <a href="reglas-ortografia.html" class="recurso-card">
+
+        <span>✏️</span>
+
+        <div>
+            <h3>Reglas de ortografía</h3>
+            <p>
+                Aprende las reglas más comunes
+                con ejemplos sencillos.
+            </p>
+        </div>
+
+        <strong>→</strong>
+
+    </a>
+
+
+    <a href="fracciones.html" class="recurso-card">
+
+        <span>🍕</span>
+
+        <div>
+            <h3>Fracciones</h3>
+            <p>
+                Aprende fracciones paso a paso
+                con ejemplos claros.
+            </p>
+        </div>
+
+        <strong>→</strong>
+
+    </a>
+
+
+    <a href="ciencia.html" class="recurso-card">
+
+        <span>🔬</span>
+
+        <div>
+            <h3>Ciencia para principiantes</h3>
+            <p>
+                Descubre conceptos científicos
+                de forma sencilla.
+            </p>
+        </div>
+
+        <strong>→</strong>
+
+    </a>
+
+
+    <a href="ingles-basico.html" class="recurso-card">
+
+        <span>🇬🇧</span>
+
+        <div>
+            <h3>Inglés básico</h3>
+            <p>
+                Palabras y expresiones para
+                empezar a aprender inglés.
+            </p>
+        </div>
+
+        <strong>→</strong>
+
+    </a>
+
+
+</div>
+```
+
+</section>
+
+<section class="llamada-final">
+
+```
+<div>
+
+    <span>🚀</span>
+
+    <h2>¿Preparado para aprender?</h2>
+
+    <p>
+        Elige una materia y empieza a practicar.
+    </p>
+
+    <a href="#materias" class="boton-principal">
+        Empezar ahora
+    </a>
+
+</div>
+```
+
+</section>
 
 </main>
 
 <footer>
-    <p>Aprende Fácil · Recursos educativos gratuitos</p>
+
+```
+<div class="footer-contenido">
+
+    <div>
+
+        <h3>🎓 Educonew</h3>
+
+        <p>
+            Aprende, practica y mejora.
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <h4>Enlaces</h4>
+
+        <a href="#inicio">Inicio</a>
+        <a href="#materias">Materias</a>
+        <a href="#destacados">Practicar</a>
+        <a href="#recursos">Recursos</a>
+
+    </div>
+
+
+    <div>
+
+        <h4>Recursos</h4>
+
+        <a href="tablas-multiplicar.html">
+            Tablas de multiplicar
+        </a>
+
+        <a href="mejorar-matematicas.html">
+            Matemáticas
+        </a>
+
+        <a href="reglas-ortografia.html">
+            Ortografía
+        </a>
+
+        <a href="/politica-privacidad.html">
+            Política de privacidad
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="footer-final">
+
     <p>
-        <a href="tablas-multiplicar.html">Tablas de multiplicar</a> ·
-        <a href="mejorar-matematicas.html">Mejorar en matemáticas</a>
-        · <a href="/politica-privacidad.html">Política de Privacidad</a>
+        © Educonew · Recursos educativos gratuitos
     </p>
+
+</div>
+```
+
 </footer>
 
 <script src="script.js"></script>
+
 </body>
 </html>
