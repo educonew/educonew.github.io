@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -8,7 +10,7 @@
 
     <meta
         name="description"
-        content="Practica matemáticas gratis en Educonew con ejercicios de sumas, restas, multiplicaciones, divisiones, fracciones, porcentajes, geometría y problemas."
+        content="Practica matemáticas gratis en Educonew con ejercicios de diferentes temas y dificultades."
     >
 
     <meta name="robots" content="index, follow">
@@ -19,323 +21,485 @@
     >
 
     <link rel="icon" type="image/png" href="perfil.png">
+
     <link rel="stylesheet" href="style.css">
 
     <style>
-        .math-page {
-            background:
-                radial-gradient(circle at 10% 10%, rgba(99,102,241,.08), transparent 30%),
-                radial-gradient(circle at 90% 20%, rgba(16,185,129,.08), transparent 28%),
-                #f7f9fc;
-            min-height: 100vh;
-        }
+
+        /* ==================================================
+           MATEMÁTICAS — HERO
+           ================================================== */
 
         .math-hero {
-            padding: 72px 20px 58px;
-            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .math-hero-inner {
-            max-width: 900px;
-            margin: 0 auto;
+        .math-hero .hero-contenido {
+            min-height: 620px;
         }
 
-        .math-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 9px 15px;
-            border-radius: 999px;
-            background: rgba(99,102,241,.10);
-            color: #4f46e5;
-            font-weight: 800;
-            font-size: .82rem;
-            letter-spacing: .05em;
+        .math-hero .hero-texto h1 {
+            margin-bottom: 20px;
         }
 
-        .math-hero h1 {
-            margin: 18px 0 12px;
-            font-size: clamp(2.4rem, 6vw, 4.5rem);
-            line-height: 1;
-            letter-spacing: -.05em;
+        .math-hero .hero-texto p {
+            max-width: 580px;
         }
 
-        .math-hero h1 span {
-            color: #4f46e5;
+        .math-hero .hero-visual {
+            position: relative;
         }
 
-        .math-hero p {
-            max-width: 650px;
-            margin: 0 auto;
-            color: #667085;
-            font-size: 1.08rem;
-            line-height: 1.7;
-        }
+
+        /* ==================================================
+           CONTENIDO MATEMÁTICAS
+           ================================================== */
 
         .math-main {
-            max-width: 1120px;
+            max-width: 1180px;
             margin: 0 auto;
-            padding: 0 20px 80px;
+            padding: 70px 20px 90px;
         }
 
+
         .math-panel {
-            background: rgba(255,255,255,.92);
-            border: 1px solid #e7eaf0;
+            background: #ffffff;
             border-radius: 28px;
-            padding: clamp(22px, 4vw, 40px);
-            box-shadow: 0 18px 50px rgba(15,23,42,.07);
+            padding: 40px;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 23, 42, 0.06);
         }
+
 
         .math-panel-title {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 35px;
         }
+
 
         .math-panel-title h2 {
-            margin: 8px 0;
-            font-size: clamp(1.65rem, 3vw, 2.2rem);
+            margin: 12px 0 8px;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
         }
 
+
         .math-panel-title p {
-            margin: 0;
             color: #667085;
+            margin: 0;
+            font-size: 1rem;
         }
+
+
+        /* ==================================================
+           TEMAS
+           ================================================== */
 
         .math-topics {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
         }
+
 
         .math-topic {
             position: relative;
-            border: 1px solid #e8ebf2;
-            background: #fff;
-            border-radius: 20px;
-            padding: 23px 18px;
+            border: 1px solid #e7eaf0;
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 25px 20px;
             text-align: left;
             cursor: pointer;
-            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
             font: inherit;
             color: #101828;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
         }
+
 
         .math-topic:hover {
-            transform: translateY(-4px);
+            transform: translateY(-5px);
             border-color: #c7d2fe;
-            box-shadow: 0 14px 30px rgba(15,23,42,.09);
+            box-shadow: 0 15px 32px rgba(15, 23, 42, 0.10);
         }
+
 
         .math-topic-icon {
-            width: 48px;
-            height: 48px;
-            display: grid;
-            place-items: center;
-            border-radius: 15px;
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 16px;
             background: #f1f5ff;
-            font-size: 1.7rem;
-            margin-bottom: 15px;
+
+            font-size: 1.8rem;
+
+            margin-bottom: 17px;
         }
 
+
         .math-topic h3 {
-            margin: 0 0 6px;
-            font-size: 1.08rem;
+            margin: 0 0 7px;
+            font-size: 1.1rem;
         }
+
 
         .math-topic p {
             margin: 0;
             color: #667085;
-            font-size: .9rem;
-            line-height: 1.45;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
+
 
         .topic-arrow {
             position: absolute;
-            right: 16px;
-            bottom: 16px;
+            right: 18px;
+            bottom: 17px;
+
             color: #667085;
-            font-size: 1.15rem;
+            font-size: 1.2rem;
         }
+
+
+        /* ==================================================
+           CAMBIO ENTRE PANTALLAS
+           ================================================== */
 
         .math-selection {
             display: none;
-            animation: mathFade .28s ease;
+            animation: mathAppear 0.3s ease;
         }
+
 
         .math-selection.active {
             display: block;
         }
 
-        @keyframes mathFade {
+
+        @keyframes mathAppear {
+
             from {
                 opacity: 0;
-                transform: translateY(8px);
+                transform: translateY(10px);
             }
 
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
+
         }
 
+
+        /* ==================================================
+           BOTÓN VOLVER
+           ================================================== */
+
         .back-topics {
-            border: 0;
+            border: none;
             background: transparent;
+
             color: #4f46e5;
-            font-weight: 800;
-            cursor: pointer;
-            padding: 4px 0;
+
             font: inherit;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            padding: 5px 0;
+
+            transition: opacity 0.2s ease;
         }
+
+
+        .back-topics:hover {
+            opacity: 0.7;
+        }
+
+
+        /* ==================================================
+           TEMA SELECCIONADO
+           ================================================== */
 
         .selected-topic {
             text-align: center;
-            margin: 12px 0 26px;
+            margin: 10px 0 32px;
         }
+
 
         .selected-topic .big-icon {
-            font-size: 3.2rem;
             display: block;
-            margin-bottom: 5px;
+
+            font-size: 3.4rem;
+
+            margin-bottom: 8px;
         }
 
+
         .selected-topic h2 {
-            margin: 0 0 7px;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin: 0 0 8px;
+
+            font-size: clamp(1.9rem, 4vw, 2.6rem);
         }
+
 
         .selected-topic p {
             margin: 0;
+
             color: #667085;
         }
+
+
+        /* ==================================================
+           NIVELES
+           ================================================== */
 
         .level-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 14px;
-            max-width: 850px;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 16px;
+
+            max-width: 900px;
+
             margin: 0 auto;
         }
 
+
         .level-button {
             border: 1px solid #e4e7ec;
-            border-radius: 18px;
-            background: #fff;
-            padding: 19px 14px;
+
+            border-radius: 20px;
+
+            background: #ffffff;
+
+            padding: 22px 15px;
+
             cursor: pointer;
+
             text-align: center;
-            transition: transform .2s ease, box-shadow .2s ease;
+
             font: inherit;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
         }
 
+
         .level-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 26px rgba(15,23,42,.08);
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 13px 28px rgba(15, 23, 42, 0.09);
+
+            border-color: #c7d2fe;
         }
+
 
         .level-emoji {
             display: block;
-            font-size: 1.7rem;
-            margin-bottom: 7px;
+
+            font-size: 1.8rem;
+
+            margin-bottom: 8px;
         }
+
 
         .level-name {
             display: block;
+
             font-weight: 900;
+
+            font-size: 1rem;
         }
+
 
         .level-description {
             display: block;
+
             color: #667085;
-            font-size: .8rem;
-            margin-top: 4px;
+
+            font-size: 0.82rem;
+
+            margin-top: 5px;
         }
+
+
+        /* ==================================================
+           ZONA DEL EJERCICIO
+           ================================================== */
 
         .game-area {
             display: none;
-            margin-top: 26px;
-            scroll-margin-top: 25px;
+
+            margin-top: 30px;
+
+            scroll-margin-top: 30px;
         }
+
 
         .game-area.active {
             display: block;
-            animation: mathFade .3s ease;
+
+            animation: mathAppear 0.3s ease;
         }
+
 
         #juegoMatematicas {
             width: 100%;
         }
 
+
         #juegoMatematicas > .tarjeta {
-            border-radius: 24px;
+
+            border-radius: 25px;
+
             border: 1px solid #e7eaf0;
-            background: #fff;
-            padding: clamp(22px, 5vw, 42px);
-            box-shadow: 0 15px 38px rgba(15,23,42,.07);
+
+            background: #ffffff;
+
+            padding:
+                clamp(22px, 5vw, 42px);
+
+            box-shadow:
+                0 15px 38px rgba(15, 23, 42, 0.07);
         }
+
 
         #respuestasJuego .respuesta {
+
             min-height: 58px;
+
             border: 1px solid #e4e7ec;
+
             border-radius: 15px;
-            background: #fff;
+
+            background: #ffffff;
+
             font: inherit;
+
             font-weight: 800;
+
             font-size: 1.05rem;
+
             cursor: pointer;
-            transition: transform .18s ease, box-shadow .18s ease;
+
+            transition:
+                transform 0.18s ease,
+                box-shadow 0.18s ease;
         }
 
+
         #respuestasJuego .respuesta:hover:not(:disabled) {
+
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(15,23,42,.08);
+
+            box-shadow:
+                0 8px 20px rgba(15, 23, 42, 0.08);
         }
+
 
         #respuestasJuego .respuesta:disabled {
             cursor: default;
-            opacity: .92;
         }
+
+
+        /* ==================================================
+           RECURSOS
+           ================================================== */
 
         .math-resources {
-            margin-top: 32px;
+            margin-top: 50px;
         }
+
 
         .math-resources-grid {
+
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
         }
+
 
         .resource-card {
-            background: #fff;
+
+            background: #ffffff;
+
             border: 1px solid #e7eaf0;
-            border-radius: 20px;
-            padding: 22px;
+
+            border-radius: 22px;
+
+            padding: 24px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
         }
+
+
+        .resource-card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 13px 28px rgba(15, 23, 42, 0.08);
+        }
+
 
         .resource-card span {
-            font-size: 1.7rem;
+            font-size: 1.8rem;
         }
+
 
         .resource-card h3 {
-            margin: 10px 0 6px;
+            margin: 12px 0 7px;
         }
+
 
         .resource-card p {
+
             color: #667085;
+
             line-height: 1.55;
+
             margin: 0;
-            font-size: .9rem;
+
+            font-size: 0.9rem;
         }
+
 
         .math-footer-note {
+
             text-align: center;
+
             color: #667085;
-            margin-top: 28px;
-            font-size: .88rem;
+
+            margin-top: 30px;
+
+            font-size: 0.88rem;
         }
 
-        @media (max-width: 900px) {
+
+        /* ==================================================
+           RESPONSIVE
+           ================================================== */
+
+        @media (max-width: 1000px) {
+
             .math-topics {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -347,11 +511,23 @@
             .math-resources-grid {
                 grid-template-columns: 1fr;
             }
+
         }
 
-        @media (max-width: 560px) {
-            .math-hero {
-                padding-top: 48px;
+
+        @media (max-width: 700px) {
+
+            .math-hero .hero-contenido {
+                min-height: auto;
+            }
+
+            .math-main {
+                padding-top: 45px;
+            }
+
+            .math-panel {
+                padding: 25px 18px;
+                border-radius: 22px;
             }
 
             .math-topics {
@@ -362,28 +538,48 @@
                 grid-template-columns: 1fr;
             }
 
-            .math-panel {
-                border-radius: 22px;
-                padding: 20px 16px;
-            }
+        }
+
+
+        @media (max-width: 500px) {
 
             #respuestasJuego {
                 grid-template-columns: 1fr !important;
             }
+
         }
+
     </style>
+
 </head>
 
-<body class="math-page">
+
+<body>
+
+
+<!-- ==================================================
+     HERO — MISMO ESTILO QUE LA PÁGINA PRINCIPAL
+     ================================================== -->
 
 <header class="hero-principal">
 
+
     <nav class="barra-navegacion">
 
+
         <a href="index.html" class="logo">
-            <img src="perfil.png" alt="Educonew">
-            <span>Educonew</span>
+
+            <img
+                src="perfil.png"
+                alt="Educonew"
+            >
+
+            <span>
+                Educonew
+            </span>
+
         </a>
+
 
         <div class="menu">
 
@@ -401,77 +597,215 @@
 
         </div>
 
+
     </nav>
+
+
+
+    <div class="hero-contenido">
+
+
+        <div class="hero-texto">
+
+
+            <span class="etiqueta">
+                📐 MATEMÁTICAS
+            </span>
+
+
+            <h1>
+
+                Aprende.<br>
+
+                <span>
+                    Practica.
+                </span><br>
+
+                Mejora.
+
+            </h1>
+
+
+            <p>
+
+                Pon a prueba tus conocimientos con ejercicios
+                de matemáticas adaptados a diferentes niveles
+                de dificultad.
+
+            </p>
+
+
+            <div class="hero-botones">
+
+
+                <a
+                    href="#temas"
+                    class="boton-principal"
+                >
+                    🚀 Empezar a practicar
+                </a>
+
+
+                <a
+                    href="#recursos"
+                    class="boton-secundario"
+                >
+                    Ver recursos →
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="hero-visual">
+
+
+            <div
+                class="tarjeta-flotante tarjeta-libro"
+            >
+
+                🧮
+
+                <strong>
+                    Practica
+                </strong>
+
+                <span>
+                    A tu ritmo
+                </span>
+
+            </div>
+
+
+
+            <div class="circulo-educativo">
+
+                <img
+                    src="perfil.png"
+                    alt="Educonew"
+                >
+
+            </div>
+
+
+
+            <div
+                class="tarjeta-flotante tarjeta-estadistica"
+            >
+
+                ⭐
+
+                <strong>
+                    Matemáticas
+                </strong>
+
+                <span>
+                    Mejora cada día
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
 
 </header>
 
 
+
 <main>
 
-    <!-- HERO -->
 
-    <section class="math-hero">
+    <!-- ==================================================
+         PRESENTACIÓN
+         ================================================== -->
 
-        <div class="math-hero-inner">
+    <section class="presentacion">
 
-            <span class="math-badge">
-                📐 MATEMÁTICAS
-            </span>
 
-            <h1>
-                Aprende.<br>
-                <span>Practica.</span><br>
-                Domina.
-            </h1>
+        <span class="etiqueta">
+            🧠 APRENDE PRACTICANDO
+        </span>
 
-            <p>
-                Elige un tema, selecciona tu nivel y empieza a practicar
-                con ejercicios aleatorios. Tú marcas el ritmo.
-            </p>
 
-        </div>
+        <h2>
+            Tu espacio para mejorar en matemáticas
+        </h2>
+
+
+        <p>
+
+            Elige un tema, selecciona tu nivel
+            y empieza a practicar.
+
+        </p>
+
 
     </section>
 
 
+
+    <!-- ==================================================
+         TEMAS Y NIVELES
+         ================================================== -->
+
     <div class="math-main">
 
-        <!-- TEMAS -->
 
         <section
             id="temas"
             class="math-panel"
         >
 
+
+            <!-- ==============================
+                 SELECCIÓN DE TEMAS
+                 ============================== -->
+
             <div
                 id="selectorTemas"
                 class="math-selection active"
             >
 
+
                 <div class="math-panel-title">
 
-                    <span class="math-badge">
-                        🧠 PRACTICA
+
+                    <span class="etiqueta">
+                        📚 TEMAS
                     </span>
+
 
                     <h2>
                         ¿Qué quieres practicar?
                     </h2>
 
+
                     <p>
-                        Elige un tema para comenzar.
+                        Elige una materia para comenzar.
                     </p>
+
 
                 </div>
 
 
+
                 <div class="math-topics">
+
 
                     <button
                         type="button"
                         class="math-topic"
                         onclick="seleccionarTema('sumas')"
                     >
+
                         <div class="math-topic-icon">
                             ➕
                         </div>
@@ -487,7 +821,9 @@
                         <span class="topic-arrow">
                             →
                         </span>
+
                     </button>
+
 
 
                     <button
@@ -495,6 +831,7 @@
                         class="math-topic"
                         onclick="seleccionarTema('restas')"
                     >
+
                         <div class="math-topic-icon">
                             ➖
                         </div>
@@ -510,7 +847,9 @@
                         <span class="topic-arrow">
                             →
                         </span>
+
                     </button>
+
 
 
                     <button
@@ -518,6 +857,7 @@
                         class="math-topic"
                         onclick="seleccionarTema('multiplicaciones')"
                     >
+
                         <div class="math-topic-icon">
                             ✖️
                         </div>
@@ -533,7 +873,9 @@
                         <span class="topic-arrow">
                             →
                         </span>
+
                     </button>
+
 
 
                     <button
@@ -541,6 +883,7 @@
                         class="math-topic"
                         onclick="seleccionarTema('divisiones')"
                     >
+
                         <div class="math-topic-icon">
                             ➗
                         </div>
@@ -550,13 +893,15 @@
                         </h3>
 
                         <p>
-                            Practica divisiones exactas y cálculo mental.
+                            Practica divisiones y cálculo mental.
                         </p>
 
                         <span class="topic-arrow">
                             →
                         </span>
+
                     </button>
+
 
 
                     <button
@@ -564,6 +909,7 @@
                         class="math-topic"
                         onclick="seleccionarTema('fracciones')"
                     >
+
                         <div class="math-topic-icon">
                             🍕
                         </div>
@@ -573,13 +919,15 @@
                         </h3>
 
                         <p>
-                            Aprende a trabajar con fracciones.
+                            Aprende y practica fracciones.
                         </p>
 
                         <span class="topic-arrow">
                             →
                         </span>
+
                     </button>
+
 
 
                     <button
@@ -587,6 +935,7 @@
                         class="math-topic"
                         onclick="seleccionarTema('porcentajes')"
                     >
+
                         <div class="math-topic-icon">
                             💯
                         </div>
@@ -602,7 +951,9 @@
                         <span class="topic-arrow">
                             →
                         </span>
+
                     </button>
+
 
 
                     <button
@@ -610,6 +961,7 @@
                         class="math-topic"
                         onclick="seleccionarTema('geometria')"
                     >
+
                         <div class="math-topic-icon">
                             📐
                         </div>
@@ -625,7 +977,9 @@
                         <span class="topic-arrow">
                             →
                         </span>
+
                     </button>
+
 
 
                     <button
@@ -633,6 +987,7 @@
                         class="math-topic"
                         onclick="seleccionarTema('problemas')"
                     >
+
                         <div class="math-topic-icon">
                             🧩
                         </div>
@@ -648,19 +1003,26 @@
                         <span class="topic-arrow">
                             →
                         </span>
+
                     </button>
 
+
                 </div>
+
 
             </div>
 
 
-            <!-- NIVELES -->
+
+            <!-- ==============================
+                 SELECCIÓN DE NIVEL
+                 ============================== -->
 
             <div
                 id="selectorNivel"
                 class="math-selection"
             >
+
 
                 <button
                     type="button"
@@ -671,7 +1033,9 @@
                 </button>
 
 
+
                 <div class="selected-topic">
+
 
                     <span
                         id="temaIcono"
@@ -680,18 +1044,23 @@
                         ➕
                     </span>
 
+
                     <h2 id="temaTitulo">
                         Sumas
                     </h2>
+
 
                     <p id="temaDescripcion">
                         Elige el nivel con el que quieres practicar.
                     </p>
 
+
                 </div>
 
 
+
                 <div class="level-grid">
+
 
                     <button
                         type="button"
@@ -712,6 +1081,7 @@
                         </span>
 
                     </button>
+
 
 
                     <button
@@ -735,6 +1105,7 @@
                     </button>
 
 
+
                     <button
                         type="button"
                         class="level-button"
@@ -754,6 +1125,7 @@
                         </span>
 
                     </button>
+
 
 
                     <button
@@ -776,10 +1148,14 @@
 
                     </button>
 
+
                 </div>
 
 
-                <!-- EJERCICIOS -->
+
+                <!-- ==============================
+                     EJERCICIO
+                     ============================== -->
 
                 <div
                     id="zonaJuego"
@@ -790,36 +1166,48 @@
 
                 </div>
 
+
             </div>
+
 
         </section>
 
 
-        <!-- RECURSOS -->
+
+        <!-- ==================================================
+             RECURSOS
+             ================================================== -->
 
         <section
             id="recursos"
             class="math-resources"
         >
 
+
             <div class="math-panel-title">
 
-                <span class="math-badge">
-                    📚 RECURSOS
+
+                <span class="etiqueta">
+                    📖 RECURSOS
                 </span>
+
 
                 <h2>
                     Sigue aprendiendo
                 </h2>
 
+
                 <p>
-                    Convierte la práctica en progreso.
+                    Más recursos para mejorar tus matemáticas.
                 </p>
+
 
             </div>
 
 
+
             <div class="math-resources-grid">
+
 
                 <article class="resource-card">
 
@@ -832,11 +1220,12 @@
                     </h3>
 
                     <p>
-                        Empieza con un nivel cómodo y avanza cuando
-                        estés preparado para el siguiente.
+                        Empieza con un nivel cómodo y avanza
+                        cuando estés preparado.
                     </p>
 
                 </article>
+
 
 
                 <article class="resource-card">
@@ -850,11 +1239,12 @@
                     </h3>
 
                     <p>
-                        Cada respuesta te ayuda a detectar qué
-                        operaciones necesitas seguir practicando.
+                        Utiliza cada ejercicio para descubrir
+                        qué necesitas seguir practicando.
                     </p>
 
                 </article>
+
 
 
                 <article class="resource-card">
@@ -868,11 +1258,12 @@
                     </h3>
 
                     <p>
-                        Cuando controles un nivel, prueba el siguiente
-                        y sigue mejorando.
+                        Cuando controles un nivel, prueba
+                        el siguiente y sigue avanzando.
                     </p>
 
                 </article>
+
 
             </div>
 
@@ -881,164 +1272,276 @@
                 Educonew · Aprende, practica y mejora.
             </p>
 
+
         </section>
 
+
     </div>
+
 
 </main>
 
 
+
+<!-- ==================================================
+     SCRIPT EXISTENTE
+     ================================================== -->
+
 <script src="script.js"></script>
+
 
 
 <script>
 
+
+    /* ==================================================
+       DATOS DE LOS TEMAS
+       ================================================== */
+
+
     const temasMatematicas = {
 
+
         sumas: {
+
             icono: "➕",
+
             titulo: "Sumas",
-            descripcion: "Practica sumas y mejora tu cálculo."
+
+            descripcion:
+                "Practica sumas y mejora tu cálculo."
+
         },
+
 
         restas: {
+
             icono: "➖",
+
             titulo: "Restas",
-            descripcion: "Mejora tu cálculo y precisión."
+
+            descripcion:
+                "Mejora tu cálculo y precisión."
+
         },
+
 
         multiplicaciones: {
+
             icono: "✖️",
+
             titulo: "Multiplicaciones",
-            descripcion: "Domina las multiplicaciones paso a paso."
+
+            descripcion:
+                "Domina las multiplicaciones paso a paso."
+
         },
+
 
         divisiones: {
+
             icono: "➗",
+
             titulo: "Divisiones",
-            descripcion: "Practica divisiones y cálculo mental."
+
+            descripcion:
+                "Practica divisiones y cálculo mental."
+
         },
+
 
         fracciones: {
+
             icono: "🍕",
+
             titulo: "Fracciones",
-            descripcion: "Aprende y practica fracciones."
+
+            descripcion:
+                "Aprende y practica fracciones."
+
         },
+
 
         porcentajes: {
+
             icono: "💯",
+
             titulo: "Porcentajes",
-            descripcion: "Practica porcentajes y situaciones cotidianas."
+
+            descripcion:
+                "Practica porcentajes y situaciones cotidianas."
+
         },
+
 
         geometria: {
+
             icono: "📐",
+
             titulo: "Geometría",
-            descripcion: "Practica áreas y razonamiento geométrico."
+
+            descripcion:
+                "Practica áreas y razonamiento geométrico."
+
         },
 
+
         problemas: {
+
             icono: "🧩",
+
             titulo: "Problemas",
-            descripcion: "Desarrolla tu razonamiento matemático."
+
+            descripcion:
+                "Desarrolla tu razonamiento matemático."
+
         }
 
     };
 
 
+
     let temaSeleccionado = null;
 
 
+
+    /* ==================================================
+       SELECCIONAR TEMA
+       ================================================== */
+
+
     function seleccionarTema(tema) {
+
 
         if (!temasMatematicas[tema]) {
             return;
         }
 
+
         temaSeleccionado = tema;
+
 
         const datos =
             temasMatematicas[tema];
 
 
-        document.getElementById("temaIcono")
+        document
+            .getElementById("temaIcono")
             .textContent = datos.icono;
 
 
-        document.getElementById("temaTitulo")
+        document
+            .getElementById("temaTitulo")
             .textContent = datos.titulo;
 
 
-        document.getElementById("temaDescripcion")
+        document
+            .getElementById("temaDescripcion")
             .textContent = datos.descripcion;
 
 
-        document.getElementById("selectorTemas")
+        document
+            .getElementById("selectorTemas")
             .classList.remove("active");
 
 
-        document.getElementById("selectorNivel")
+        document
+            .getElementById("selectorNivel")
             .classList.add("active");
 
 
-        document.getElementById("zonaJuego")
+        document
+            .getElementById("zonaJuego")
             .classList.remove("active");
 
 
-        document.getElementById("juegoMatematicas")
+        document
+            .getElementById("juegoMatematicas")
             .innerHTML = "";
 
 
         document
             .getElementById("selectorNivel")
             .scrollIntoView({
+
                 behavior: "smooth",
+
                 block: "start"
+
             });
 
     }
+
+
+
+    /* ==================================================
+       VOLVER A TEMAS
+       ================================================== */
 
 
     function volverATemas() {
 
+
         temaSeleccionado = null;
 
 
-        document.getElementById("zonaJuego")
+        document
+            .getElementById("zonaJuego")
             .classList.remove("active");
 
 
-        document.getElementById("juegoMatematicas")
+        document
+            .getElementById("juegoMatematicas")
             .innerHTML = "";
 
 
-        document.getElementById("selectorNivel")
+        document
+            .getElementById("selectorNivel")
             .classList.remove("active");
 
 
-        document.getElementById("selectorTemas")
+        document
+            .getElementById("selectorTemas")
             .classList.add("active");
 
 
-        document.getElementById("temas")
+        document
+            .getElementById("temas")
             .scrollIntoView({
+
                 behavior: "smooth",
+
                 block: "start"
+
             });
 
     }
 
 
+
+    /* ==================================================
+       EMPEZAR EJERCICIO
+       ================================================== */
+
+
     function empezarTemaSeleccionado(nivel) {
+
 
         if (!temaSeleccionado) {
             return;
         }
 
 
-        document.getElementById("zonaJuego")
+        document
+            .getElementById("zonaJuego")
             .classList.add("active");
 
+
+        /*
+         * IMPORTANTE:
+         * Utilizamos el motor que ya tenemos
+         * en script.js.
+         */
 
         iniciarJuego(
             temaSeleccionado,
@@ -1048,17 +1551,26 @@
 
         setTimeout(() => {
 
-            document.getElementById("zonaJuego")
+
+            document
+                .getElementById("zonaJuego")
                 .scrollIntoView({
+
                     behavior: "smooth",
+
                     block: "start"
+
                 });
+
 
         }, 50);
 
     }
 
+
 </script>
 
+
 </body>
+
 </html>
