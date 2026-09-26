@@ -57,6 +57,10 @@ function iniciarJuego(tema, nivel) {
         nivel: nivel,
         pregunta: 0,
         aciertos: 0,
+        errores: 0,
+        racha: 0,
+        mejorRacha: 0,
+        puntos: 0,
         total: 10,
         bloqueado: false
     };
@@ -73,7 +77,8 @@ function iniciarJuego(tema, nivel) {
 
 function prepararZonaJuego() {
 
-    const contenedor = document.getElementById("juegoMatematicas");
+    const contenedor =
+        document.getElementById("juegoMatematicas");
 
     if (!contenedor) {
         console.error("No existe #juegoMatematicas");
@@ -81,7 +86,26 @@ function prepararZonaJuego() {
     }
 
     contenedor.innerHTML = `
-        <div class="tarjeta" style="text-align:center;">
+
+        <div
+            class="tarjeta"
+            style="
+                text-align:center;
+                position:relative;
+            "
+        >
+
+            <div
+                id="marcadorJuego"
+                style="
+                    display:flex;
+                    justify-content:center;
+                    flex-wrap:wrap;
+                    gap:10px;
+                    margin-bottom:20px;
+                "
+            ></div>
+
 
             <p
                 id="progresoJuego"
@@ -92,6 +116,7 @@ function prepararZonaJuego() {
                 "
             ></p>
 
+
             <div
                 id="nivelJuego"
                 style="
@@ -100,6 +125,7 @@ function prepararZonaJuego() {
                 "
             ></div>
 
+
             <h2
                 id="preguntaJuego"
                 style="
@@ -107,6 +133,7 @@ function prepararZonaJuego() {
                     margin:20px 0;
                 "
             ></h2>
+
 
             <div
                 id="respuestasJuego"
@@ -119,6 +146,7 @@ function prepararZonaJuego() {
                 "
             ></div>
 
+
             <p
                 id="resultadoJuego"
                 style="
@@ -129,6 +157,65 @@ function prepararZonaJuego() {
             ></p>
 
         </div>
+
+    `;
+}
+
+
+// ==========================================
+// ACTUALIZAR MARCADOR
+// ==========================================
+
+function actualizarMarcador() {
+
+    if (!juegoActual) return;
+
+    const marcador =
+        document.getElementById("marcadorJuego");
+
+    if (!marcador) return;
+
+
+    marcador.innerHTML = `
+
+        <div
+            style="
+                background:#f1f5ff;
+                color:#4f46e5;
+                padding:8px 14px;
+                border-radius:999px;
+                font-weight:800;
+            "
+        >
+            ⭐ ${juegoActual.puntos} puntos
+        </div>
+
+
+        <div
+            style="
+                background:#ecfdf3;
+                color:#059669;
+                padding:8px 14px;
+                border-radius:999px;
+                font-weight:800;
+            "
+        >
+            🔥 Racha: ${juegoActual.racha}
+        </div>
+
+
+        <div
+            style="
+                background:#f8fafc;
+                color:#475467;
+                padding:8px 14px;
+                border-radius:999px;
+                font-weight:800;
+            "
+        >
+            🎯 ${juegoActual.aciertos}/${juegoActual.total}
+        </div>
+
     `;
 }
 
@@ -297,11 +384,14 @@ function generarPregunta(tema, nivel) {
                 denominador = numeroAleatorio(10, 50);
             }
 
-            numerador = numeroAleatorio(1, denominador - 1);
+            numerador =
+                numeroAleatorio(1, denominador - 1);
 
             return {
-                texto: `¿Qué fracción representa ${numerador} de ${denominador}?`,
-                respuesta: `${numerador}/${denominador}`
+                texto:
+                    `¿Qué fracción representa ${numerador} de ${denominador}?`,
+                respuesta:
+                    `${numerador}/${denominador}`
             };
         }
 
@@ -316,30 +406,45 @@ function generarPregunta(tema, nivel) {
             let cantidad;
 
             if (nivel === "facil") {
-                porcentaje = numeroAleatorio(1, 5) * 10;
-                cantidad = numeroAleatorio(1, 10) * 10;
+                porcentaje =
+                    numeroAleatorio(1, 5) * 10;
+
+                cantidad =
+                    numeroAleatorio(1, 10) * 10;
             }
 
             else if (nivel === "medio") {
-                porcentaje = numeroAleatorio(1, 9) * 10;
-                cantidad = numeroAleatorio(1, 20) * 10;
+                porcentaje =
+                    numeroAleatorio(1, 9) * 10;
+
+                cantidad =
+                    numeroAleatorio(1, 20) * 10;
             }
 
             else if (nivel === "dificil") {
-                porcentaje = numeroAleatorio(5, 95);
-                cantidad = numeroAleatorio(2, 20) * 10;
+                porcentaje =
+                    numeroAleatorio(5, 95);
+
+                cantidad =
+                    numeroAleatorio(2, 20) * 10;
             }
 
             else {
-                porcentaje = numeroAleatorio(5, 95);
-                cantidad = numeroAleatorio(10, 100) * 10;
+                porcentaje =
+                    numeroAleatorio(5, 95);
+
+                cantidad =
+                    numeroAleatorio(10, 100) * 10;
             }
 
-            respuesta = (cantidad * porcentaje) / 100;
+            respuesta =
+                (cantidad * porcentaje) / 100;
 
             return {
-                texto: `¿Cuánto es el ${porcentaje}% de ${cantidad}?`,
-                respuesta: respuesta
+                texto:
+                    `¿Cuánto es el ${porcentaje}% de ${cantidad}?`,
+                respuesta:
+                    respuesta
             };
         }
 
@@ -373,11 +478,14 @@ function generarPregunta(tema, nivel) {
                 altura = numeroAleatorio(20, 100);
             }
 
-            respuesta = (base * altura) / 2;
+            respuesta =
+                (base * altura) / 2;
 
             return {
-                texto: `¿Cuál es el área de un triángulo de base ${base} y altura ${altura}?`,
-                respuesta: respuesta
+                texto:
+                    `¿Cuál es el área de un triángulo de base ${base} y altura ${altura}?`,
+                respuesta:
+                    respuesta
             };
         }
 
@@ -388,29 +496,49 @@ function generarPregunta(tema, nivel) {
 
         case "problemas": {
 
-            let precio = numeroAleatorio(2, 20);
-            let cantidad = numeroAleatorio(2, 10);
+            let precio =
+                numeroAleatorio(2, 20);
+
+            let cantidad =
+                numeroAleatorio(2, 10);
+
 
             if (nivel === "medio") {
-                precio = numeroAleatorio(10, 50);
-                cantidad = numeroAleatorio(2, 15);
+                precio =
+                    numeroAleatorio(10, 50);
+
+                cantidad =
+                    numeroAleatorio(2, 15);
             }
+
 
             if (nivel === "dificil") {
-                precio = numeroAleatorio(20, 100);
-                cantidad = numeroAleatorio(5, 20);
+                precio =
+                    numeroAleatorio(20, 100);
+
+                cantidad =
+                    numeroAleatorio(5, 20);
             }
+
 
             if (nivel === "experto") {
-                precio = numeroAleatorio(50, 200);
-                cantidad = numeroAleatorio(10, 30);
+                precio =
+                    numeroAleatorio(50, 200);
+
+                cantidad =
+                    numeroAleatorio(10, 30);
             }
 
-            respuesta = precio * cantidad;
+
+            respuesta =
+                precio * cantidad;
+
 
             return {
-                texto: `Cada producto cuesta ${precio} €. Si compras ${cantidad}, ¿cuánto pagarás?`,
-                respuesta: respuesta
+                texto:
+                    `Cada producto cuesta ${precio} €. Si compras ${cantidad}, ¿cuánto pagarás?`,
+                respuesta:
+                    respuesta
             };
         }
 
@@ -421,8 +549,11 @@ function generarPregunta(tema, nivel) {
 
 
     return {
-        texto: `${a} ${simbolo} ${b} = ?`,
-        respuesta: respuesta
+        texto:
+            `${a} ${simbolo} ${b} = ?`,
+
+        respuesta:
+            respuesta
     };
 }
 
@@ -437,24 +568,40 @@ function generarRespuestas(correcta) {
 
     let intentos = 0;
 
-    while (respuestas.length < 4 && intentos < 100) {
+
+    while (
+        respuestas.length < 4 &&
+        intentos < 100
+    ) {
 
         intentos++;
 
-        let diferencia = numeroAleatorio(
-            1,
-            Math.max(3, Math.floor(Math.abs(correcta) * 0.15))
-        );
+
+        let diferencia =
+            numeroAleatorio(
+                1,
+                Math.max(
+                    3,
+                    Math.floor(
+                        Math.abs(correcta) * 0.15
+                    )
+                )
+            );
+
 
         let falsa;
 
+
         if (Math.random() < 0.5) {
-            falsa = correcta + diferencia;
+            falsa =
+                correcta + diferencia;
         }
 
         else {
-            falsa = correcta - diferencia;
+            falsa =
+                correcta - diferencia;
         }
+
 
         if (
             !respuestas.includes(falsa) &&
@@ -465,11 +612,11 @@ function generarRespuestas(correcta) {
     }
 
 
-    // Por seguridad, rellenamos si hiciera falta.
-
     while (respuestas.length < 4) {
 
-        let falsa = correcta + respuestas.length;
+        let falsa =
+            correcta + respuestas.length;
+
 
         if (!respuestas.includes(falsa)) {
             respuestas.push(falsa);
@@ -496,37 +643,58 @@ function mostrarPregunta() {
         juegoActual.pregunta >=
         juegoActual.total
     ) {
+
         mostrarResultadoFinal();
+
         return;
     }
 
 
-    const pregunta = generarPregunta(
-        juegoActual.tema,
-        juegoActual.nivel
-    );
+    const pregunta =
+        generarPregunta(
+            juegoActual.tema,
+            juegoActual.nivel
+        );
 
 
     if (!pregunta) {
-        console.error("No se pudo generar la pregunta.");
+
+        console.error(
+            "No se pudo generar la pregunta."
+        );
+
         return;
     }
 
 
     const preguntaElemento =
-        document.getElementById("preguntaJuego");
+        document.getElementById(
+            "preguntaJuego"
+        );
+
 
     const respuestasElemento =
-        document.getElementById("respuestasJuego");
+        document.getElementById(
+            "respuestasJuego"
+        );
+
 
     const progresoElemento =
-        document.getElementById("progresoJuego");
+        document.getElementById(
+            "progresoJuego"
+        );
+
 
     const resultadoElemento =
-        document.getElementById("resultadoJuego");
+        document.getElementById(
+            "resultadoJuego"
+        );
+
 
     const nivelElemento =
-        document.getElementById("nivelJuego");
+        document.getElementById(
+            "nivelJuego"
+        );
 
 
     if (
@@ -535,6 +703,7 @@ function mostrarPregunta() {
         !progresoElemento ||
         !resultadoElemento
     ) {
+
         console.error(
             "No se encontraron los elementos del juego."
         );
@@ -566,10 +735,16 @@ function mostrarPregunta() {
     respuestasElemento.innerHTML = "";
 
 
+    actualizarMarcador();
+
+
     let respuestas;
 
 
-    if (typeof pregunta.respuesta === "number") {
+    if (
+        typeof pregunta.respuesta ===
+        "number"
+    ) {
 
         respuestas =
             generarRespuestas(
@@ -577,17 +752,25 @@ function mostrarPregunta() {
             );
     }
 
+
     else {
 
-        respuestas = [pregunta.respuesta];
+        respuestas =
+            [pregunta.respuesta];
 
 
-        while (respuestas.length < 4) {
+        while (
+            respuestas.length < 4
+        ) {
 
             let falsa =
                 `${numeroAleatorio(1, 9)}/${numeroAleatorio(2, 10)}`;
 
-            if (!respuestas.includes(falsa)) {
+
+            if (
+                !respuestas.includes(falsa)
+            ) {
+
                 respuestas.push(falsa);
             }
         }
@@ -603,17 +786,25 @@ function mostrarPregunta() {
         respuesta => {
 
             const boton =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
 
 
-            boton.type = "button";
-
-            boton.className = "respuesta";
-
-            boton.textContent = respuesta;
+            boton.type =
+                "button";
 
 
-            boton.style.cursor = "pointer";
+            boton.className =
+                "respuesta";
+
+
+            boton.textContent =
+                respuesta;
+
+
+            boton.style.cursor =
+                "pointer";
 
 
             boton.addEventListener(
@@ -632,6 +823,7 @@ function mostrarPregunta() {
             respuestasElemento.appendChild(
                 boton
             );
+
         }
     );
 }
@@ -666,9 +858,14 @@ function comprobarRespuesta(
 
             boton.disabled = true;
 
+
             if (
-                String(boton.textContent) ===
-                String(respuestaCorrecta)
+                String(
+                    boton.textContent
+                ) ===
+                String(
+                    respuestaCorrecta
+                )
             ) {
 
                 boton.style.background =
@@ -691,6 +888,10 @@ function comprobarRespuesta(
     if (!resultado) return;
 
 
+    // ==================================
+    // RESPUESTA CORRECTA
+    // ==================================
+
     if (
         String(respuestaUsuario) ===
         String(respuestaCorrecta)
@@ -698,16 +899,56 @@ function comprobarRespuesta(
 
         juegoActual.aciertos++;
 
+        juegoActual.racha++;
+
+
+        if (
+            juegoActual.racha >
+            juegoActual.mejorRacha
+        ) {
+
+            juegoActual.mejorRacha =
+                juegoActual.racha;
+        }
+
+
+        /*
+         * La puntuación aumenta
+         * con la racha.
+         */
+
+        const puntosGanados =
+            100 +
+            (
+                (juegoActual.racha - 1)
+                * 25
+            );
+
+
+        juegoActual.puntos +=
+            puntosGanados;
+
 
         resultado.textContent =
-            "✅ ¡Correcto!";
+            `✅ ¡Correcto! +${puntosGanados} puntos`;
 
 
         resultado.style.color =
             "#10b981";
+
     }
 
+
+    // ==================================
+    // RESPUESTA INCORRECTA
+    // ==================================
+
     else {
+
+        juegoActual.errores++;
+
+        juegoActual.racha = 0;
+
 
         resultado.textContent =
             `❌ Incorrecto. La respuesta era ${respuestaCorrecta}`;
@@ -716,6 +957,9 @@ function comprobarRespuesta(
         resultado.style.color =
             "#ef4444";
     }
+
+
+    actualizarMarcador();
 
 
     juegoActual.pregunta++;
@@ -740,32 +984,61 @@ function mostrarResultadoFinal() {
 
     const porcentaje =
         Math.round(
-            (juegoActual.aciertos /
-                juegoActual.total) * 100
+            (
+                juegoActual.aciertos /
+                juegoActual.total
+            ) * 100
         );
 
 
     let mensaje;
 
+    let emoji;
+
 
     if (porcentaje === 100) {
-        mensaje = "🏆 ¡Perfecto!";
+
+        mensaje =
+            "¡Perfecto!";
+
+        emoji =
+            "🏆";
     }
 
     else if (porcentaje >= 80) {
-        mensaje = "🔥 ¡Excelente trabajo!";
+
+        mensaje =
+            "¡Excelente trabajo!";
+
+        emoji =
+            "🔥";
     }
 
     else if (porcentaje >= 60) {
-        mensaje = "👏 ¡Muy bien!";
+
+        mensaje =
+            "¡Muy bien!";
+
+        emoji =
+            "👏";
     }
 
     else if (porcentaje >= 40) {
-        mensaje = "💪 ¡Sigue practicando!";
+
+        mensaje =
+            "¡Sigue practicando!";
+
+        emoji =
+            "💪";
     }
 
     else {
-        mensaje = "📚 ¡Vamos a mejorar!";
+
+        mensaje =
+            "¡Vamos a mejorar!";
+
+        emoji =
+            "📚";
     }
 
 
@@ -780,44 +1053,249 @@ function mostrarResultadoFinal() {
 
     contenedor.innerHTML = `
 
-        <div class="resultado-final">
+        <div
+            class="resultado-final"
+            style="
+                text-align:center;
+                padding:20px 10px;
+            "
+        >
 
-            <div style="font-size:4rem;">
-                ${porcentaje >= 80 ? "🏆" : "🎯"}
+            <div
+                style="
+                    font-size:4.5rem;
+                    margin-bottom:10px;
+                "
+            >
+                ${emoji}
             </div>
 
-            <h2>
+
+            <h2
+                style="
+                    font-size:2rem;
+                    margin:0 0 10px;
+                "
+            >
                 ${mensaje}
             </h2>
 
-            <p>
-                Has conseguido
-                <strong>
-                    ${juegoActual.aciertos}
-                </strong>
-                de
-                <strong>
-                    ${juegoActual.total}
-                </strong>
-                respuestas correctas.
-            </p>
 
-            <div class="resultado-porcentaje">
-                ${porcentaje}%
-            </div>
-
-            <button
-                type="button"
-                class="boton-principal"
-                onclick="
-                    iniciarJuego(
-                        '${juegoActual.tema}',
-                        '${juegoActual.nivel}'
-                    )
+            <p
+                style="
+                    color:#667085;
+                    font-size:1rem;
                 "
             >
-                🔄 Volver a jugar
-            </button>
+                Has terminado el nivel
+                <strong>
+                    ${niveles[juegoActual.nivel].nombre}
+                </strong>.
+            </p>
+
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        repeat(2, minmax(0, 1fr));
+                    gap:12px;
+                    max-width:500px;
+                    margin:25px auto;
+                "
+            >
+
+                <div
+                    style="
+                        background:#f1f5ff;
+                        border-radius:18px;
+                        padding:18px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:1.5rem;
+                        "
+                    >
+                        🎯
+                    </div>
+
+                    <strong
+                        style="
+                            display:block;
+                            font-size:1.4rem;
+                            margin-top:5px;
+                        "
+                    >
+                        ${juegoActual.aciertos}/${juegoActual.total}
+                    </strong>
+
+                    <span
+                        style="
+                            color:#667085;
+                            font-size:.85rem;
+                        "
+                    >
+                        Aciertos
+                    </span>
+
+                </div>
+
+
+                <div
+                    style="
+                        background:#ecfdf3;
+                        border-radius:18px;
+                        padding:18px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:1.5rem;
+                        "
+                    >
+                        ⭐
+                    </div>
+
+                    <strong
+                        style="
+                            display:block;
+                            font-size:1.4rem;
+                            margin-top:5px;
+                        "
+                    >
+                        ${juegoActual.puntos}
+                    </strong>
+
+                    <span
+                        style="
+                            color:#667085;
+                            font-size:.85rem;
+                        "
+                    >
+                        Puntos
+                    </span>
+
+                </div>
+
+
+                <div
+                    style="
+                        background:#fff7ed;
+                        border-radius:18px;
+                        padding:18px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:1.5rem;
+                        "
+                    >
+                        🔥
+                    </div>
+
+                    <strong
+                        style="
+                            display:block;
+                            font-size:1.4rem;
+                            margin-top:5px;
+                        "
+                    >
+                        ${juegoActual.mejorRacha}
+                    </strong>
+
+                    <span
+                        style="
+                            color:#667085;
+                            font-size:.85rem;
+                        "
+                    >
+                        Mejor racha
+                    </span>
+
+                </div>
+
+
+                <div
+                    style="
+                        background:#f8fafc;
+                        border-radius:18px;
+                        padding:18px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:1.5rem;
+                        "
+                    >
+                        📊
+                    </div>
+
+                    <strong
+                        style="
+                            display:block;
+                            font-size:1.4rem;
+                            margin-top:5px;
+                        "
+                    >
+                        ${porcentaje}%
+                    </strong>
+
+                    <span
+                        style="
+                            color:#667085;
+                            font-size:.85rem;
+                        "
+                    >
+                        Precisión
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:center;
+                    gap:12px;
+                    flex-wrap:wrap;
+                    margin-top:20px;
+                "
+            >
+
+                <button
+                    type="button"
+                    class="boton-principal"
+                    onclick="
+                        iniciarJuego(
+                            '${juegoActual.tema}',
+                            '${juegoActual.nivel}'
+                        )
+                    "
+                >
+                    🔄 Volver a jugar
+                </button>
+
+
+                <button
+                    type="button"
+                    class="boton-secundario"
+                    onclick="
+                        if (typeof volverATemas === 'function') {
+                            volverATemas();
+                        }
+                    "
+                >
+                    📚 Cambiar tema
+                </button>
+
+            </div>
 
         </div>
 
