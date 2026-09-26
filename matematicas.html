@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Matemáticas | Educonew</title>
 
     <meta
         name="description"
-        content="Practica matemáticas gratis en Educonew. Sumas, restas, multiplicaciones, divisiones, fracciones, porcentajes, geometría y problemas con diferentes niveles."
+        content="Practica matemáticas gratis en Educonew con ejercicios de sumas, restas, multiplicaciones, divisiones, fracciones, porcentajes, geometría y problemas."
     >
 
     <meta name="robots" content="index, follow">
@@ -22,27 +19,371 @@
     >
 
     <link rel="icon" type="image/png" href="perfil.png">
-
     <link rel="stylesheet" href="style.css">
 
+    <style>
+        .math-page {
+            background:
+                radial-gradient(circle at 10% 10%, rgba(99,102,241,.08), transparent 30%),
+                radial-gradient(circle at 90% 20%, rgba(16,185,129,.08), transparent 28%),
+                #f7f9fc;
+            min-height: 100vh;
+        }
+
+        .math-hero {
+            padding: 72px 20px 58px;
+            text-align: center;
+        }
+
+        .math-hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .math-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 15px;
+            border-radius: 999px;
+            background: rgba(99,102,241,.10);
+            color: #4f46e5;
+            font-weight: 800;
+            font-size: .82rem;
+            letter-spacing: .05em;
+        }
+
+        .math-hero h1 {
+            margin: 18px 0 12px;
+            font-size: clamp(2.4rem, 6vw, 4.5rem);
+            line-height: 1;
+            letter-spacing: -.05em;
+        }
+
+        .math-hero h1 span {
+            color: #4f46e5;
+        }
+
+        .math-hero p {
+            max-width: 650px;
+            margin: 0 auto;
+            color: #667085;
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+
+        .math-main {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        .math-panel {
+            background: rgba(255,255,255,.92);
+            border: 1px solid #e7eaf0;
+            border-radius: 28px;
+            padding: clamp(22px, 4vw, 40px);
+            box-shadow: 0 18px 50px rgba(15,23,42,.07);
+        }
+
+        .math-panel-title {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .math-panel-title h2 {
+            margin: 8px 0;
+            font-size: clamp(1.65rem, 3vw, 2.2rem);
+        }
+
+        .math-panel-title p {
+            margin: 0;
+            color: #667085;
+        }
+
+        .math-topics {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .math-topic {
+            position: relative;
+            border: 1px solid #e8ebf2;
+            background: #fff;
+            border-radius: 20px;
+            padding: 23px 18px;
+            text-align: left;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+            font: inherit;
+            color: #101828;
+        }
+
+        .math-topic:hover {
+            transform: translateY(-4px);
+            border-color: #c7d2fe;
+            box-shadow: 0 14px 30px rgba(15,23,42,.09);
+        }
+
+        .math-topic-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: #f1f5ff;
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+        }
+
+        .math-topic h3 {
+            margin: 0 0 6px;
+            font-size: 1.08rem;
+        }
+
+        .math-topic p {
+            margin: 0;
+            color: #667085;
+            font-size: .9rem;
+            line-height: 1.45;
+        }
+
+        .topic-arrow {
+            position: absolute;
+            right: 16px;
+            bottom: 16px;
+            color: #667085;
+            font-size: 1.15rem;
+        }
+
+        .math-selection {
+            display: none;
+            animation: mathFade .28s ease;
+        }
+
+        .math-selection.active {
+            display: block;
+        }
+
+        @keyframes mathFade {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-topics {
+            border: 0;
+            background: transparent;
+            color: #4f46e5;
+            font-weight: 800;
+            cursor: pointer;
+            padding: 4px 0;
+            font: inherit;
+        }
+
+        .selected-topic {
+            text-align: center;
+            margin: 12px 0 26px;
+        }
+
+        .selected-topic .big-icon {
+            font-size: 3.2rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .selected-topic h2 {
+            margin: 0 0 7px;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+        }
+
+        .selected-topic p {
+            margin: 0;
+            color: #667085;
+        }
+
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .level-button {
+            border: 1px solid #e4e7ec;
+            border-radius: 18px;
+            background: #fff;
+            padding: 19px 14px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform .2s ease, box-shadow .2s ease;
+            font: inherit;
+        }
+
+        .level-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 26px rgba(15,23,42,.08);
+        }
+
+        .level-emoji {
+            display: block;
+            font-size: 1.7rem;
+            margin-bottom: 7px;
+        }
+
+        .level-name {
+            display: block;
+            font-weight: 900;
+        }
+
+        .level-description {
+            display: block;
+            color: #667085;
+            font-size: .8rem;
+            margin-top: 4px;
+        }
+
+        .game-area {
+            display: none;
+            margin-top: 26px;
+            scroll-margin-top: 25px;
+        }
+
+        .game-area.active {
+            display: block;
+            animation: mathFade .3s ease;
+        }
+
+        #juegoMatematicas {
+            width: 100%;
+        }
+
+        #juegoMatematicas > .tarjeta {
+            border-radius: 24px;
+            border: 1px solid #e7eaf0;
+            background: #fff;
+            padding: clamp(22px, 5vw, 42px);
+            box-shadow: 0 15px 38px rgba(15,23,42,.07);
+        }
+
+        #respuestasJuego .respuesta {
+            min-height: 58px;
+            border: 1px solid #e4e7ec;
+            border-radius: 15px;
+            background: #fff;
+            font: inherit;
+            font-weight: 800;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+
+        #respuestasJuego .respuesta:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15,23,42,.08);
+        }
+
+        #respuestasJuego .respuesta:disabled {
+            cursor: default;
+            opacity: .92;
+        }
+
+        .math-resources {
+            margin-top: 32px;
+        }
+
+        .math-resources-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .resource-card {
+            background: #fff;
+            border: 1px solid #e7eaf0;
+            border-radius: 20px;
+            padding: 22px;
+        }
+
+        .resource-card span {
+            font-size: 1.7rem;
+        }
+
+        .resource-card h3 {
+            margin: 10px 0 6px;
+        }
+
+        .resource-card p {
+            color: #667085;
+            line-height: 1.55;
+            margin: 0;
+            font-size: .9rem;
+        }
+
+        .math-footer-note {
+            text-align: center;
+            color: #667085;
+            margin-top: 28px;
+            font-size: .88rem;
+        }
+
+        @media (max-width: 900px) {
+            .math-topics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .level-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .math-resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .math-hero {
+                padding-top: 48px;
+            }
+
+            .math-topics {
+                grid-template-columns: 1fr;
+            }
+
+            .level-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .math-panel {
+                border-radius: 22px;
+                padding: 20px 16px;
+            }
+
+            #respuestasJuego {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
 </head>
 
-
-<body>
-
+<body class="math-page">
 
 <header class="hero-principal">
 
     <nav class="barra-navegacion">
 
         <a href="index.html" class="logo">
-
             <img src="perfil.png" alt="Educonew">
-
             <span>Educonew</span>
-
         </a>
-
 
         <div class="menu">
 
@@ -54,10 +395,6 @@
                 Matemáticas
             </a>
 
-            <a href="#niveles">
-                Niveles
-            </a>
-
             <a href="#recursos">
                 Recursos
             </a>
@@ -66,16 +403,20 @@
 
     </nav>
 
+</header>
 
-    <div class="hero-contenido">
 
+<main>
 
-        <div class="hero-texto">
+    <!-- HERO -->
 
-            <span class="etiqueta">
+    <section class="math-hero">
+
+        <div class="math-hero-inner">
+
+            <span class="math-badge">
                 📐 MATEMÁTICAS
             </span>
-
 
             <h1>
                 Aprende.<br>
@@ -83,1131 +424,468 @@
                 Domina.
             </h1>
 
-
             <p>
-                Mejora tus habilidades matemáticas con ejercicios
-                de diferentes temas y dificultades.
-            </p>
-
-
-            <div class="hero-botones">
-
-                <a
-                    href="#temas"
-                    class="boton-principal"
-                >
-                    🚀 Empezar a practicar
-                </a>
-
-
-                <a
-                    href="index.html"
-                    class="boton-secundario"
-                >
-                    ← Volver a Educonew
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <div class="hero-visual">
-
-            <div class="circulo-educativo">
-
-                <div style="font-size: 8rem;">
-                    📐
-                </div>
-
-            </div>
-
-
-            <div class="tarjeta-flotante tarjeta-libro">
-
-                🧮
-
-                <strong>
-                    8 temas
-                </strong>
-
-                <span>
-                    Para aprender
-                </span>
-
-            </div>
-
-
-            <div class="tarjeta-flotante tarjeta-estadistica">
-
-                🎯
-
-                <strong>
-                    4 niveles
-                </strong>
-
-                <span>
-                    De dificultad
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</header>
-
-
-
-<main>
-
-
-<section class="presentacion">
-
-    <span class="etiqueta">
-        ELIGE TU RETO
-    </span>
-
-
-    <h2>
-        ¿Qué quieres practicar?
-    </h2>
-
-
-    <p>
-        Empieza por un tema que conozcas y avanza
-        poco a poco hasta los niveles más difíciles.
-    </p>
-
-</section>
-
-
-
-<!-- =========================================
-     TEMAS
-========================================= -->
-
-<section
-    id="temas"
-    class="seccion"
->
-
-
-    <div class="titulo-seccion">
-
-        <div>
-
-            <span class="etiqueta">
-                📚 TEMAS
-            </span>
-
-
-            <h2>
-                Matemáticas paso a paso
-            </h2>
-
-        </div>
-
-
-        <p>
-            Elige un tema y selecciona tu dificultad.
-        </p>
-
-    </div>
-
-
-
-    <div class="materias-grid">
-
-
-        <!-- SUMAS -->
-
-        <article class="materia-card matematicas">
-
-            <div class="materia-icono">
-                ➕
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Sumas
-                </h3>
-
-
-                <p>
-                    Practica sumas con diferentes niveles.
-                </p>
-
-
-                <div class="niveles">
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('sumas','facil')"
-                    >
-                        🟢 Fácil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('sumas','medio')"
-                    >
-                        🟡 Medio
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('sumas','dificil')"
-                    >
-                        🔴 Difícil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('sumas','experto')"
-                    >
-                        🟣 Experto
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- RESTAS -->
-
-        <article class="materia-card matematicas">
-
-            <div class="materia-icono">
-                ➖
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Restas
-                </h3>
-
-
-                <p>
-                    Mejora tu cálculo con diferentes dificultades.
-                </p>
-
-
-                <div class="niveles">
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('restas','facil')"
-                    >
-                        🟢 Fácil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('restas','medio')"
-                    >
-                        🟡 Medio
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('restas','dificil')"
-                    >
-                        🔴 Difícil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('restas','experto')"
-                    >
-                        🟣 Experto
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- MULTIPLICACIONES -->
-
-        <article class="materia-card matematicas">
-
-            <div class="materia-icono">
-                ✖️
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Multiplicaciones
-                </h3>
-
-
-                <p>
-                    Practica multiplicaciones cada vez más difíciles.
-                </p>
-
-
-                <div class="niveles">
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('multiplicaciones','facil')"
-                    >
-                        🟢 Fácil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('multiplicaciones','medio')"
-                    >
-                        🟡 Medio
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('multiplicaciones','dificil')"
-                    >
-                        🔴 Difícil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="iniciarJuego('multiplicaciones','experto')"
-                    >
-                        🟣 Experto
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- DIVISIONES -->
-
-        <article class="materia-card matematicas">
-
-            <div class="materia-icono">
-                ➗
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Divisiones
-                </h3>
-
-
-                <p>
-                    Próximamente podrás practicar divisiones.
-                </p>
-
-
-                <div class="niveles">
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Divisiones')"
-                    >
-                        🟢 Fácil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Divisiones')"
-                    >
-                        🟡 Medio
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Divisiones')"
-                    >
-                        🔴 Difícil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Divisiones')"
-                    >
-                        🟣 Experto
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- FRACCIONES -->
-
-        <article class="materia-card matematicas">
-
-            <div class="materia-icono">
-                🍕
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Fracciones
-                </h3>
-
-
-                <p>
-                    Próximamente podrás practicar fracciones.
-                </p>
-
-
-                <div class="niveles">
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Fracciones')"
-                    >
-                        🟢 Fácil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Fracciones')"
-                    >
-                        🟡 Medio
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Fracciones')"
-                    >
-                        🔴 Difícil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Fracciones')"
-                    >
-                        🟣 Experto
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- PORCENTAJES -->
-
-        <article class="materia-card matematicas">
-
-            <div class="materia-icono">
-                💯
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Porcentajes
-                </h3>
-
-
-                <p>
-                    Próximamente podrás practicar porcentajes.
-                </p>
-
-
-                <div class="niveles">
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Porcentajes')"
-                    >
-                        🟢 Fácil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Porcentajes')"
-                    >
-                        🟡 Medio
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Porcentajes')"
-                    >
-                        🔴 Difícil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Porcentajes')"
-                    >
-                        🟣 Experto
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- GEOMETRÍA -->
-
-        <article class="materia-card matematicas">
-
-            <div class="materia-icono">
-                📐
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Geometría
-                </h3>
-
-
-                <p>
-                    Próximamente podrás practicar geometría.
-                </p>
-
-
-                <div class="niveles">
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Geometría')"
-                    >
-                        🟢 Fácil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Geometría')"
-                    >
-                        🟡 Medio
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Geometría')"
-                    >
-                        🔴 Difícil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Geometría')"
-                    >
-                        🟣 Experto
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- PROBLEMAS -->
-
-        <article class="materia-card matematicas">
-
-            <div class="materia-icono">
-                🧩
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Problemas
-                </h3>
-
-
-                <p>
-                    Próximamente podrás practicar problemas.
-                </p>
-
-
-                <div class="niveles">
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Problemas')"
-                    >
-                        🟢 Fácil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Problemas')"
-                    >
-                        🟡 Medio
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Problemas')"
-                    >
-                        🔴 Difícil
-                    </button>
-
-
-                    <button
-                        type="button"
-                        onclick="mostrarMensaje('Problemas')"
-                    >
-                        🟣 Experto
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================
-     ZONA DEL JUEGO
-========================================= -->
-
-<section class="seccion ejercicios-seccion">
-
-
-    <div class="cabecera-ejercicios">
-
-        <span class="etiqueta">
-            🎯 PRÁCTICA
-        </span>
-
-
-        <h2>
-            Tu ejercicio aparecerá aquí
-        </h2>
-
-
-        <p>
-            Elige Sumas, Restas o Multiplicaciones
-            y selecciona un nivel para comenzar.
-        </p>
-
-    </div>
-
-
-    <div id="juegoMatematicas">
-
-        <div
-            class="tarjeta"
-            style="text-align:center;"
-        >
-
-            <div style="font-size:4rem;">
-                🧠
-            </div>
-
-
-            <h3>
-                Elige un reto
-            </h3>
-
-
-            <p>
-                Cuando selecciones una dificultad,
-                aquí aparecerán tus preguntas.
+                Elige un tema, selecciona tu nivel y empieza a practicar
+                con ejercicios aleatorios. Tú marcas el ritmo.
             </p>
 
         </div>
 
-    </div>
+    </section>
 
 
-</section>
+    <div class="math-main">
 
+        <!-- TEMAS -->
 
-
-<!-- =========================================
-     NIVELES
-========================================= -->
-
-<section
-    id="niveles"
-    class="seccion seccion-destacados"
->
-
-
-    <div class="titulo-seccion">
-
-        <div>
-
-            <span class="etiqueta">
-                🎯 DIFICULTAD
-            </span>
-
-
-            <h2>
-                Elige tu nivel
-            </h2>
-
-        </div>
-
-
-        <p>
-            Avanza desde los conceptos básicos
-            hasta los retos más exigentes.
-        </p>
-
-    </div>
-
-
-
-    <div class="destacados-grid">
-
-
-        <article class="destacado-card">
-
-            <span class="destacado-icono">
-                🟢
-            </span>
-
-
-            <div>
-
-                <span class="nivel">
-                    NIVEL 1
-                </span>
-
-
-                <h3>
-                    Fácil
-                </h3>
-
-
-                <p>
-                    Ideal para comenzar y practicar
-                    los conceptos básicos.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <article class="destacado-card">
-
-            <span class="destacado-icono">
-                🟡
-            </span>
-
-
-            <div>
-
-                <span class="nivel">
-                    NIVEL 2
-                </span>
-
-
-                <h3>
-                    Medio
-                </h3>
-
-
-                <p>
-                    Un reto mayor para seguir
-                    mejorando tus habilidades.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <article class="destacado-card">
-
-            <span class="destacado-icono">
-                🔴
-            </span>
-
-
-            <div>
-
-                <span class="nivel">
-                    NIVEL 3
-                </span>
-
-
-                <h3>
-                    Difícil
-                </h3>
-
-
-                <p>
-                    Pon a prueba todo lo que
-                    has aprendido.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <article class="destacado-card">
-
-            <span class="destacado-icono">
-                🟣
-            </span>
-
-
-            <div>
-
-                <span class="nivel">
-                    NIVEL 4
-                </span>
-
-
-                <h3>
-                    Experto
-                </h3>
-
-
-                <p>
-                    El reto más exigente para
-                    poner a prueba tus conocimientos.
-                </p>
-
-            </div>
-
-        </article>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================
-     RECURSOS
-========================================= -->
-
-<section
-    id="recursos"
-    class="seccion"
->
-
-
-    <div class="titulo-seccion">
-
-        <div>
-
-            <span class="etiqueta">
-                📖 RECURSOS
-            </span>
-
-
-            <h2>
-                Aprende también con nuestras guías
-            </h2>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="recursos-grid">
-
-
-        <a
-            href="tablas-multiplicar.html"
-            class="recurso-card"
+        <section
+            id="temas"
+            class="math-panel"
         >
 
-            <span>
-                🧮
-            </span>
+            <div
+                id="selectorTemas"
+                class="math-selection active"
+            >
+
+                <div class="math-panel-title">
+
+                    <span class="math-badge">
+                        🧠 PRACTICA
+                    </span>
+
+                    <h2>
+                        ¿Qué quieres practicar?
+                    </h2>
+
+                    <p>
+                        Elige un tema para comenzar.
+                    </p>
+
+                </div>
 
 
-            <div>
+                <div class="math-topics">
 
-                <h3>
-                    Tablas de multiplicar
-                </h3>
+                    <button
+                        type="button"
+                        class="math-topic"
+                        onclick="seleccionarTema('sumas')"
+                    >
+                        <div class="math-topic-icon">
+                            ➕
+                        </div>
+
+                        <h3>
+                            Sumas
+                        </h3>
+
+                        <p>
+                            Practica sumas de diferentes dificultades.
+                        </p>
+
+                        <span class="topic-arrow">
+                            →
+                        </span>
+                    </button>
 
 
-                <p>
-                    Consejos y trucos para aprender
-                    las tablas de multiplicar.
-                </p>
+                    <button
+                        type="button"
+                        class="math-topic"
+                        onclick="seleccionarTema('restas')"
+                    >
+                        <div class="math-topic-icon">
+                            ➖
+                        </div>
+
+                        <h3>
+                            Restas
+                        </h3>
+
+                        <p>
+                            Mejora tu cálculo y rapidez.
+                        </p>
+
+                        <span class="topic-arrow">
+                            →
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="math-topic"
+                        onclick="seleccionarTema('multiplicaciones')"
+                    >
+                        <div class="math-topic-icon">
+                            ✖️
+                        </div>
+
+                        <h3>
+                            Multiplicaciones
+                        </h3>
+
+                        <p>
+                            Domina las multiplicaciones paso a paso.
+                        </p>
+
+                        <span class="topic-arrow">
+                            →
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="math-topic"
+                        onclick="seleccionarTema('divisiones')"
+                    >
+                        <div class="math-topic-icon">
+                            ➗
+                        </div>
+
+                        <h3>
+                            Divisiones
+                        </h3>
+
+                        <p>
+                            Practica divisiones exactas y cálculo mental.
+                        </p>
+
+                        <span class="topic-arrow">
+                            →
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="math-topic"
+                        onclick="seleccionarTema('fracciones')"
+                    >
+                        <div class="math-topic-icon">
+                            🍕
+                        </div>
+
+                        <h3>
+                            Fracciones
+                        </h3>
+
+                        <p>
+                            Aprende a trabajar con fracciones.
+                        </p>
+
+                        <span class="topic-arrow">
+                            →
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="math-topic"
+                        onclick="seleccionarTema('porcentajes')"
+                    >
+                        <div class="math-topic-icon">
+                            💯
+                        </div>
+
+                        <h3>
+                            Porcentajes
+                        </h3>
+
+                        <p>
+                            Practica porcentajes y situaciones cotidianas.
+                        </p>
+
+                        <span class="topic-arrow">
+                            →
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="math-topic"
+                        onclick="seleccionarTema('geometria')"
+                    >
+                        <div class="math-topic-icon">
+                            📐
+                        </div>
+
+                        <h3>
+                            Geometría
+                        </h3>
+
+                        <p>
+                            Áreas, medidas y razonamiento geométrico.
+                        </p>
+
+                        <span class="topic-arrow">
+                            →
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="math-topic"
+                        onclick="seleccionarTema('problemas')"
+                    >
+                        <div class="math-topic-icon">
+                            🧩
+                        </div>
+
+                        <h3>
+                            Problemas
+                        </h3>
+
+                        <p>
+                            Desarrolla tu razonamiento matemático.
+                        </p>
+
+                        <span class="topic-arrow">
+                            →
+                        </span>
+                    </button>
+
+                </div>
 
             </div>
 
 
-            <strong>
-                →
-            </strong>
+            <!-- NIVELES -->
 
-        </a>
+            <div
+                id="selectorNivel"
+                class="math-selection"
+            >
+
+                <button
+                    type="button"
+                    class="back-topics"
+                    onclick="volverATemas()"
+                >
+                    ← Volver a temas
+                </button>
 
 
+                <div class="selected-topic">
 
-        <a
-            href="mejorar-matematicas.html"
-            class="recurso-card"
+                    <span
+                        id="temaIcono"
+                        class="big-icon"
+                    >
+                        ➕
+                    </span>
+
+                    <h2 id="temaTitulo">
+                        Sumas
+                    </h2>
+
+                    <p id="temaDescripcion">
+                        Elige el nivel con el que quieres practicar.
+                    </p>
+
+                </div>
+
+
+                <div class="level-grid">
+
+                    <button
+                        type="button"
+                        class="level-button"
+                        onclick="empezarTemaSeleccionado('facil')"
+                    >
+
+                        <span class="level-emoji">
+                            🟢
+                        </span>
+
+                        <span class="level-name">
+                            Fácil
+                        </span>
+
+                        <span class="level-description">
+                            Para empezar
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="level-button"
+                        onclick="empezarTemaSeleccionado('medio')"
+                    >
+
+                        <span class="level-emoji">
+                            🟡
+                        </span>
+
+                        <span class="level-name">
+                            Medio
+                        </span>
+
+                        <span class="level-description">
+                            Para mejorar
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="level-button"
+                        onclick="empezarTemaSeleccionado('dificil')"
+                    >
+
+                        <span class="level-emoji">
+                            🔴
+                        </span>
+
+                        <span class="level-name">
+                            Difícil
+                        </span>
+
+                        <span class="level-description">
+                            Para ponerte a prueba
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="level-button"
+                        onclick="empezarTemaSeleccionado('experto')"
+                    >
+
+                        <span class="level-emoji">
+                            🟣
+                        </span>
+
+                        <span class="level-name">
+                            Experto
+                        </span>
+
+                        <span class="level-description">
+                            Para dominarlo
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- EJERCICIOS -->
+
+                <div
+                    id="zonaJuego"
+                    class="game-area"
+                >
+
+                    <div id="juegoMatematicas"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECURSOS -->
+
+        <section
+            id="recursos"
+            class="math-resources"
         >
 
-            <span>
-                📐
-            </span>
+            <div class="math-panel-title">
 
+                <span class="math-badge">
+                    📚 RECURSOS
+                </span>
 
-            <div>
-
-                <h3>
-                    Mejorar en matemáticas
-                </h3>
-
+                <h2>
+                    Sigue aprendiendo
+                </h2>
 
                 <p>
-                    Consejos para estudiar
-                    y mejorar en matemáticas.
+                    Convierte la práctica en progreso.
                 </p>
 
             </div>
 
 
-            <strong>
-                →
-            </strong>
+            <div class="math-resources-grid">
 
-        </a>
+                <article class="resource-card">
 
+                    <span>
+                        🎯
+                    </span>
 
+                    <h3>
+                        Practica a tu ritmo
+                    </h3>
 
-        <a
-            href="fracciones.html"
-            class="recurso-card"
-        >
+                    <p>
+                        Empieza con un nivel cómodo y avanza cuando
+                        estés preparado para el siguiente.
+                    </p>
 
-            <span>
-                🍕
-            </span>
-
-
-            <div>
-
-                <h3>
-                    Fracciones
-                </h3>
+                </article>
 
 
-                <p>
-                    Aprende fracciones paso a paso
-                    con ejemplos.
-                </p>
+                <article class="resource-card">
+
+                    <span>
+                        🧠
+                    </span>
+
+                    <h3>
+                        Aprende de tus errores
+                    </h3>
+
+                    <p>
+                        Cada respuesta te ayuda a detectar qué
+                        operaciones necesitas seguir practicando.
+                    </p>
+
+                </article>
+
+
+                <article class="resource-card">
+
+                    <span>
+                        🚀
+                    </span>
+
+                    <h3>
+                        Supera tus límites
+                    </h3>
+
+                    <p>
+                        Cuando controles un nivel, prueba el siguiente
+                        y sigue mejorando.
+                    </p>
+
+                </article>
 
             </div>
 
 
-            <strong>
-                →
-            </strong>
+            <p class="math-footer-note">
+                Educonew · Aprende, practica y mejora.
+            </p>
 
-        </a>
-
+        </section>
 
     </div>
-
-</section>
-
-
-
-<!-- =========================================
-     FINAL
-========================================= -->
-
-<section class="llamada-final">
-
-    <div>
-
-        <span>
-            🧠
-        </span>
-
-
-        <h2>
-            El conocimiento se consigue practicando
-        </h2>
-
-
-        <p>
-            Sigue aprendiendo y supera nuevos retos.
-        </p>
-
-
-        <a
-            href="#temas"
-            class="boton-principal"
-        >
-            Volver a los temas
-        </a>
-
-    </div>
-
-</section>
-
 
 </main>
-
-
-
-<footer>
-
-
-    <div class="footer-contenido">
-
-
-        <div>
-
-            <h3>
-                🎓 Educonew
-            </h3>
-
-
-            <p>
-                Aprende, practica y mejora.
-            </p>
-
-        </div>
-
-
-
-        <div>
-
-            <h4>
-                Navegación
-            </h4>
-
-
-            <a href="index.html">
-                Inicio
-            </a>
-
-
-            <a href="#temas">
-                Matemáticas
-            </a>
-
-
-            <a href="#niveles">
-                Niveles
-            </a>
-
-        </div>
-
-
-
-        <div>
-
-            <h4>
-                Recursos
-            </h4>
-
-
-            <a href="tablas-multiplicar.html">
-                Tablas de multiplicar
-            </a>
-
-
-            <a href="mejorar-matematicas.html">
-                Mejorar matemáticas
-            </a>
-
-
-            <a href="fracciones.html">
-                Fracciones
-            </a>
-
-
-            <a href="index.html#recursos">
-                Más recursos
-            </a>
-
-        </div>
-
-
-    </div>
-
-
-
-    <div class="footer-final">
-
-        <p>
-            © Educonew · Recursos educativos gratuitos
-        </p>
-
-    </div>
-
-
-</footer>
-
 
 
 <script src="script.js"></script>
@@ -1215,18 +893,172 @@
 
 <script>
 
-function mostrarMensaje(tema) {
+    const temasMatematicas = {
 
-    alert(
-        "🚀 " + tema +
-        " estará disponible próximamente en Educonew."
-    );
+        sumas: {
+            icono: "➕",
+            titulo: "Sumas",
+            descripcion: "Practica sumas y mejora tu cálculo."
+        },
 
-}
+        restas: {
+            icono: "➖",
+            titulo: "Restas",
+            descripcion: "Mejora tu cálculo y precisión."
+        },
+
+        multiplicaciones: {
+            icono: "✖️",
+            titulo: "Multiplicaciones",
+            descripcion: "Domina las multiplicaciones paso a paso."
+        },
+
+        divisiones: {
+            icono: "➗",
+            titulo: "Divisiones",
+            descripcion: "Practica divisiones y cálculo mental."
+        },
+
+        fracciones: {
+            icono: "🍕",
+            titulo: "Fracciones",
+            descripcion: "Aprende y practica fracciones."
+        },
+
+        porcentajes: {
+            icono: "💯",
+            titulo: "Porcentajes",
+            descripcion: "Practica porcentajes y situaciones cotidianas."
+        },
+
+        geometria: {
+            icono: "📐",
+            titulo: "Geometría",
+            descripcion: "Practica áreas y razonamiento geométrico."
+        },
+
+        problemas: {
+            icono: "🧩",
+            titulo: "Problemas",
+            descripcion: "Desarrolla tu razonamiento matemático."
+        }
+
+    };
+
+
+    let temaSeleccionado = null;
+
+
+    function seleccionarTema(tema) {
+
+        if (!temasMatematicas[tema]) {
+            return;
+        }
+
+        temaSeleccionado = tema;
+
+        const datos =
+            temasMatematicas[tema];
+
+
+        document.getElementById("temaIcono")
+            .textContent = datos.icono;
+
+
+        document.getElementById("temaTitulo")
+            .textContent = datos.titulo;
+
+
+        document.getElementById("temaDescripcion")
+            .textContent = datos.descripcion;
+
+
+        document.getElementById("selectorTemas")
+            .classList.remove("active");
+
+
+        document.getElementById("selectorNivel")
+            .classList.add("active");
+
+
+        document.getElementById("zonaJuego")
+            .classList.remove("active");
+
+
+        document.getElementById("juegoMatematicas")
+            .innerHTML = "";
+
+
+        document
+            .getElementById("selectorNivel")
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+    }
+
+
+    function volverATemas() {
+
+        temaSeleccionado = null;
+
+
+        document.getElementById("zonaJuego")
+            .classList.remove("active");
+
+
+        document.getElementById("juegoMatematicas")
+            .innerHTML = "";
+
+
+        document.getElementById("selectorNivel")
+            .classList.remove("active");
+
+
+        document.getElementById("selectorTemas")
+            .classList.add("active");
+
+
+        document.getElementById("temas")
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+    }
+
+
+    function empezarTemaSeleccionado(nivel) {
+
+        if (!temaSeleccionado) {
+            return;
+        }
+
+
+        document.getElementById("zonaJuego")
+            .classList.add("active");
+
+
+        iniciarJuego(
+            temaSeleccionado,
+            nivel
+        );
+
+
+        setTimeout(() => {
+
+            document.getElementById("zonaJuego")
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+        }, 50);
+
+    }
 
 </script>
 
-
 </body>
-
 </html>
