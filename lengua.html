@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lengua | Educonew</title>
+
+<meta
+    name="description"
+    content="Practica Lengua con ejercicios interactivos de ortografía en Educonew."
+>
+
+<meta
+    name="robots"
+    content="index, follow"
+>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="perfil.png"
+>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+```
+
+</head>
+
+<body>
+
+<header class="hero-principal">
+
+```
+<nav class="barra-navegacion">
+
+    <div class="logo">
+
+        <img
+            src="perfil.png"
+            alt="Educonew"
+        >
+
+        <span>Educonew</span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <a href="index.html">
+            Inicio
+        </a>
+
+        <a href="index.html#materias">
+            Materias
+        </a>
+
+        <a href="#ortografia">
+            Practicar
+        </a>
+
+        <a href="index.html#recursos">
+            Recursos
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div
+    class="hero-contenido"
+    id="inicio"
+>
+
+    <div class="hero-texto">
+
+        <span class="etiqueta">
+            📚 LENGUA
+        </span>
+
+
+        <h1>
+            Aprende.<br>
+            <span>Practica.</span><br>
+            Mejora.
+        </h1>
+
+
+        <p>
+            Mejora tu ortografía y aprende Lengua
+            practicando con ejercicios interactivos.
+        </p>
+
+
+        <div class="hero-botones">
+
+            <a
+                href="#ortografia"
+                class="boton-principal"
+            >
+                ✏️ Empezar a practicar
+            </a>
+
+
+            <a
+                href="index.html"
+                class="boton-secundario"
+            >
+                ← Volver al inicio
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-visual">
+
+        <div
+            class="tarjeta-flotante tarjeta-libro"
+        >
+
+            ✏️
+
+            <strong>
+                Ortografía
+            </strong>
+
+            <span>
+                Aprende practicando
+            </span>
+
+        </div>
+
+
+        <div class="circulo-educativo">
+
+            <img
+                src="perfil.png"
+                alt="Educonew"
+            >
+
+        </div>
+
+
+        <div
+            class="tarjeta-flotante tarjeta-estadistica"
+        >
+
+            ⭐
+
+            <strong>
+                Mejora
+            </strong>
+
+            <span>
+                A tu ritmo
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</header>
+
+<main>
+
+<section class="presentacion">
+
+```
+<span class="etiqueta">
+    📖 LENGUA
+</span>
+
+
+<h2>
+    Aprende Lengua de forma interactiva
+</h2>
+
+
+<p>
+    Elige una actividad, selecciona tu nivel
+    y empieza a practicar.
+</p>
+```
+
+</section>
+
+<section
+    id="ortografia"
+    class="seccion"
+>
+
+```
+<div class="titulo-seccion">
+
+    <div>
+
+        <span class="etiqueta">
+            ✏️ ORTOGRAFÍA
+        </span>
+
+
+        <h2>
+            Pon a prueba tu ortografía
+        </h2>
+
+    </div>
+
+
+    <p>
+        Elige tu nivel y comienza el reto.
+    </p>
+
+</div>
+
+
+
+<div
+    class="materias-grid"
+    style="
+        margin-bottom:35px;
+    "
+>
+
+
+    <div
+        class="materia-card"
+        style="
+            cursor:pointer;
+        "
+        onclick="empezarOrtografia('facil')"
+    >
+
+        <div class="materia-icono">
+            🟢
+        </div>
+
+
+        <div>
+
+            <h3>
+                Fácil
+            </h3>
+
+            <p>
+                Palabras y reglas básicas
+                de ortografía.
+            </p>
+
+        </div>
+
+
+        <span class="flecha">
+            →
+        </span>
+
+    </div>
+
+
+
+    <div
+        class="materia-card"
+        style="
+            cursor:pointer;
+        "
+        onclick="empezarOrtografia('medio')"
+    >
+
+        <div class="materia-icono">
+            🟡
+        </div>
+
+
+        <div>
+
+            <h3>
+                Medio
+            </h3>
+
+            <p>
+                Reglas y palabras
+                de dificultad media.
+            </p>
+
+        </div>
+
+
+        <span class="flecha">
+            →
+        </span>
+
+    </div>
+
+
+
+    <div
+        class="materia-card"
+        style="
+            cursor:pointer;
+        "
+        onclick="empezarOrtografia('dificil')"
+    >
+
+        <div class="materia-icono">
+            🔴
+        </div>
+
+
+        <div>
+
+            <h3>
+                Difícil
+            </h3>
+
+            <p>
+                Pon a prueba tus conocimientos
+                ortográficos.
+            </p>
+
+        </div>
+
+
+        <span class="flecha">
+            →
+        </span>
+
+    </div>
+
+
+
+    <div
+        class="materia-card"
+        style="
+            cursor:pointer;
+        "
+        onclick="empezarOrtografia('experto')"
+    >
+
+        <div class="materia-icono">
+            🟣
+        </div>
+
+
+        <div>
+
+            <h3>
+                Experto
+            </h3>
+
+            <p>
+                El reto para quienes dominan
+                la ortografía.
+            </p>
+
+        </div>
+
+
+        <span class="flecha">
+            →
+        </span>
+
+    </div>
+
+
+</div>
+
+
+
+<div
+    id="juegoLengua"
+    style="
+        max-width:900px;
+        margin:0 auto;
+    "
+>
+
+    <div
+        class="tarjeta"
+        style="
+            text-align:center;
+            padding:45px 25px;
+        "
+    >
+
+        <div
+            style="
+                font-size:4rem;
+                margin-bottom:15px;
+            "
+        >
+            ✏️
+        </div>
+
+
+        <h2>
+            Elige un nivel para comenzar
+        </h2>
+
+
+        <p>
+            Selecciona Fácil, Medio, Difícil
+            o Experto para empezar a practicar.
+        </p>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<section class="seccion">
+
+```
+<div class="titulo-seccion">
+
+    <div>
+
+        <span class="etiqueta">
+            🚀 PRÓXIMAMENTE
+        </span>
+
+
+        <h2>
+            Más formas de practicar
+        </h2>
+
+    </div>
+
+</div>
+
+
+
+<div class="materias-grid">
+
+
+    <div class="materia-card">
+
+        <div class="materia-icono">
+            🧩
+        </div>
+
+
+        <div>
+
+            <h3>
+                Gramática
+            </h3>
+
+            <p>
+                Sustantivos, verbos, adjetivos,
+                sujeto y predicado.
+            </p>
+
+        </div>
+
+
+        <span class="proximamente">
+            PRÓXIMAMENTE
+        </span>
+
+    </div>
+
+
+
+    <div class="materia-card">
+
+        <div class="materia-icono">
+            🧠
+        </div>
+
+
+        <div>
+
+            <h3>
+                Vocabulario
+            </h3>
+
+            <p>
+                Sinónimos, antónimos
+                y significado de palabras.
+            </p>
+
+        </div>
+
+
+        <span class="proximamente">
+            PRÓXIMAMENTE
+        </span>
+
+    </div>
+
+
+
+    <div class="materia-card">
+
+        <div class="materia-icono">
+            📖
+        </div>
+
+
+        <div>
+
+            <h3>
+                Comprensión lectora
+            </h3>
+
+            <p>
+                Lee textos y demuestra
+                cuánto has comprendido.
+            </p>
+
+        </div>
+
+
+        <span class="proximamente">
+            PRÓXIMAMENTE
+        </span>
+
+    </div>
+
+
+</div>
+```
+
+</section>
+
+<section class="llamada-final">
+
+```
+<div>
+
+    <span>
+        🚀
+    </span>
+
+
+    <h2>
+        ¿Preparado para mejorar?
+    </h2>
+
+
+    <p>
+        Practica un poco cada día
+        y sigue avanzando.
+    </p>
+
+
+    <a
+        href="#ortografia"
+        class="boton-principal"
+    >
+        Empezar ahora
+    </a>
+
+</div>
+```
+
+</section>
+
+</main>
+
+<footer>
+
+```
+<div class="footer-contenido">
+
+
+    <div>
+
+        <h3>
+            🎓 Educonew
+        </h3>
+
+
+        <p>
+            Aprende, practica y mejora.
+        </p>
+
+    </div>
+
+
+
+    <div>
+
+        <h4>
+            Enlaces
+        </h4>
+
+
+        <a href="index.html">
+            Inicio
+        </a>
+
+
+        <a href="index.html#materias">
+            Materias
+        </a>
+
+
+        <a href="#ortografia">
+            Practicar
+        </a>
+
+
+        <a href="index.html#recursos">
+            Recursos
+        </a>
+
+    </div>
+
+
+
+    <div>
+
+        <h4>
+            Recursos
+        </h4>
+
+
+        <a href="tablas-multiplicar.html">
+            Tablas de multiplicar
+        </a>
+
+
+        <a href="mejorar-matematicas.html">
+            Matemáticas
+        </a>
+
+
+        <a href="reglas-ortografia.html">
+            Ortografía
+        </a>
+
+
+        <a href="politica-privacidad.html">
+            Política de privacidad
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="footer-final">
+
+    <p>
+        © Educonew · Recursos educativos gratuitos
+    </p>
+
+</div>
+```
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
