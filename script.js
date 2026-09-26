@@ -2105,3 +2105,856 @@ function mostrarMensaje(tema) {
         " estará disponible próximamente en Educonew."
     );
 }
+// ==========================================
+// EDUCONEW — LENGUA: ORTOGRAFÍA
+// ==========================================
+
+const preguntasOrtografia = {
+
+    facil: [
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["avión", "abión", "havión", "avíon"],
+            respuesta: "avión"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["casa", "cassa", "caza", "kasa"],
+            respuesta: "casa"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["queso", "keso", "qeso", "quesoo"],
+            respuesta: "queso"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["jirafa", "girafa", "girrafa", "jirrafa"],
+            respuesta: "jirafa"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["huevo", "uevo", "huvo", "huebo"],
+            respuesta: "huevo"
+        }
+    ],
+
+    medio: [
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["haber", "aver", "haver", "a ver"],
+            respuesta: "haber"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["viaje", "biage", "viaje", "biaje"],
+            respuesta: "viaje"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["vergüenza", "verguenza", "vergüensa", "berguenza"],
+            respuesta: "vergüenza"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["examen", "ecsamen", "exámen", "esamen"],
+            respuesta: "examen"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["también", "tanbién", "tambien", "tanbien"],
+            respuesta: "también"
+        }
+    ],
+
+    dificil: [
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["desarrollar", "desarollar", "desarroyar", "desarrolllar"],
+            respuesta: "desarrollar"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["privilegio", "previlegio", "privilejio", "pribilegio"],
+            respuesta: "privilegio"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["excepción", "escepción", "exepción", "exceción"],
+            respuesta: "excepción"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["construcción", "construción", "construccion", "construcsión"],
+            respuesta: "construcción"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["extraordinario", "estraordinario", "extrahordinario", "extraordinarío"],
+            respuesta: "extraordinario"
+        }
+    ],
+
+    experto: [
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: [
+                "idiosincrasia",
+                "idiosincracia",
+                "idiosincracia",
+                "idiosincrasiaa"
+            ],
+            respuesta: "idiosincrasia"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: [
+                "subsanar",
+                "subsanár",
+                "supsanar",
+                "subsanhar"
+            ],
+            respuesta: "subsanar"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: [
+                "ambigüedad",
+                "ambiguedad",
+                "anbigüedad",
+                "ambigüedád"
+            ],
+            respuesta: "ambigüedad"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: [
+                "heterogéneo",
+                "eterogéneo",
+                "heterogeneo",
+                "heterojéneo"
+            ],
+            respuesta: "heterogéneo"
+        },
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: [
+                "inconmensurable",
+                "inconmensuráble",
+                "incomensurable",
+                "inconmenssurable"
+            ],
+            respuesta: "inconmensurable"
+        }
+    ]
+};
+
+
+// ==========================================
+// INICIAR ORTOGRAFÍA
+// ==========================================
+
+function empezarOrtografia(nivel) {
+
+    if (!preguntasOrtografia[nivel]) {
+
+        console.error(
+            "Nivel de ortografía no válido:",
+            nivel
+        );
+
+        return;
+    }
+
+
+    juegoLenguaActual = {
+
+        tema: "ortografia",
+
+        nivel: nivel,
+
+        pregunta: 0,
+
+        aciertos: 0,
+
+        errores: 0,
+
+        racha: 0,
+
+        mejorRacha: 0,
+
+        puntos: 0,
+
+        total: 10,
+
+        bloqueado: false,
+
+        preguntas:
+            crearPartidaOrtografia(nivel)
+    };
+
+
+    prepararZonaLengua();
+
+    mostrarPreguntaOrtografia();
+}
+
+
+// ==========================================
+// CREAR PARTIDA ALEATORIA
+// ==========================================
+
+function crearPartidaOrtografia(nivel) {
+
+    const disponibles =
+        [...preguntasOrtografia[nivel]];
+
+
+    const partida = [];
+
+
+    while (
+        partida.length < 10
+    ) {
+
+        const indice =
+            Math.floor(
+                Math.random() *
+                disponibles.length
+            );
+
+
+        const pregunta =
+            disponibles[indice];
+
+
+        partida.push({
+            pregunta: pregunta.pregunta,
+            opciones: [...pregunta.opciones],
+            respuesta: pregunta.respuesta
+        });
+
+
+        disponibles.splice(
+            indice,
+            1
+        );
+
+
+        if (
+            disponibles.length === 0
+        ) {
+
+            disponibles.push(
+                ...preguntasOrtografia[nivel]
+            );
+        }
+    }
+
+
+    return partida;
+}
+
+
+// ==========================================
+// VARIABLES DEL JUEGO DE LENGUA
+// ==========================================
+
+let juegoLenguaActual = null;
+
+
+// ==========================================
+// PREPARAR ZONA DE LENGUA
+// ==========================================
+
+function prepararZonaLengua() {
+
+    let contenedor =
+        document.getElementById(
+            "juegoLengua"
+        );
+
+
+    if (!contenedor) {
+
+        console.error(
+            "No existe #juegoLengua"
+        );
+
+        return;
+    }
+
+
+    contenedor.innerHTML = `
+
+        <div
+            class="tarjeta"
+            style="
+                text-align:center;
+                position:relative;
+            "
+        >
+
+            <div
+                id="marcadorLengua"
+                style="
+                    display:flex;
+                    justify-content:center;
+                    flex-wrap:wrap;
+                    gap:10px;
+                    margin-bottom:20px;
+                "
+            ></div>
+
+
+            <p
+                id="progresoLengua"
+                style="
+                    color:#667085;
+                    font-weight:700;
+                    margin-bottom:10px;
+                "
+            ></p>
+
+
+            <div
+                id="nivelLengua"
+                style="
+                    font-weight:800;
+                    margin-bottom:10px;
+                "
+            ></div>
+
+
+            <h2
+                id="preguntaLengua"
+                style="
+                    font-size:1.6rem;
+                    margin:25px 0;
+                "
+            ></h2>
+
+
+            <div
+                id="respuestasLengua"
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        repeat(2,1fr);
+                    gap:12px;
+                    max-width:600px;
+                    margin:auto;
+                "
+            ></div>
+
+
+            <p
+                id="resultadoLengua"
+                style="
+                    font-weight:800;
+                    min-height:28px;
+                    margin-top:18px;
+                "
+            ></p>
+
+        </div>
+
+    `;
+}
+
+
+// ==========================================
+// MOSTRAR PREGUNTA DE ORTOGRAFÍA
+// ==========================================
+
+function mostrarPreguntaOrtografia() {
+
+    if (!juegoLenguaActual) return;
+
+
+    if (
+        juegoLenguaActual.pregunta >=
+        juegoLenguaActual.total
+    ) {
+
+        mostrarResultadoLengua();
+
+        return;
+    }
+
+
+    const pregunta =
+        juegoLenguaActual.preguntas[
+            juegoLenguaActual.pregunta
+        ];
+
+
+    const preguntaElemento =
+        document.getElementById(
+            "preguntaLengua"
+        );
+
+
+    const respuestasElemento =
+        document.getElementById(
+            "respuestasLengua"
+        );
+
+
+    const progresoElemento =
+        document.getElementById(
+            "progresoLengua"
+        );
+
+
+    const resultadoElemento =
+        document.getElementById(
+            "resultadoLengua"
+        );
+
+
+    const nivelElemento =
+        document.getElementById(
+            "nivelLengua"
+        );
+
+
+    if (
+        !preguntaElemento ||
+        !respuestasElemento ||
+        !progresoElemento ||
+        !resultadoElemento
+    ) {
+
+        console.error(
+            "No se encontraron los elementos de Lengua."
+        );
+
+        return;
+    }
+
+
+    juegoLenguaActual.bloqueado =
+        false;
+
+
+    preguntaElemento.textContent =
+        pregunta.pregunta;
+
+
+    progresoElemento.textContent =
+        `Pregunta ${juegoLenguaActual.pregunta + 1} de ${juegoLenguaActual.total}`;
+
+
+    if (nivelElemento) {
+
+        nivelElemento.textContent =
+            `${niveles[juegoLenguaActual.nivel].color} ${niveles[juegoLenguaActual.nivel].nombre}`;
+    }
+
+
+    resultadoElemento.textContent =
+        "";
+
+
+    respuestasElemento.innerHTML =
+        "";
+
+
+    actualizarMarcadorLengua();
+
+
+    const opciones =
+        [...pregunta.opciones];
+
+
+    opciones.sort(
+        () =>
+            Math.random() - 0.5
+    );
+
+
+    opciones.forEach(
+        opcion => {
+
+            const boton =
+                document.createElement(
+                    "button"
+                );
+
+
+            boton.type =
+                "button";
+
+
+            boton.className =
+                "respuesta";
+
+
+            boton.textContent =
+                opcion;
+
+
+            boton.style.cursor =
+                "pointer";
+
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    comprobarRespuestaLengua(
+                        opcion,
+                        pregunta.respuesta
+                    );
+
+                }
+            );
+
+
+            respuestasElemento.appendChild(
+                boton
+            );
+        }
+    );
+}
+
+
+// ==========================================
+// MARCADOR DE LENGUA
+// ==========================================
+
+function actualizarMarcadorLengua() {
+
+    if (!juegoLenguaActual) return;
+
+
+    const marcador =
+        document.getElementById(
+            "marcadorLengua"
+        );
+
+
+    if (!marcador) return;
+
+
+    marcador.innerHTML = `
+
+        <div
+            style="
+                background:#f1f5ff;
+                color:#4f46e5;
+                padding:8px 14px;
+                border-radius:999px;
+                font-weight:800;
+            "
+        >
+            ⭐ ${juegoLenguaActual.puntos} puntos
+        </div>
+
+
+        <div
+            style="
+                background:#ecfdf3;
+                color:#059669;
+                padding:8px 14px;
+                border-radius:999px;
+                font-weight:800;
+            "
+        >
+            🔥 Racha: ${juegoLenguaActual.racha}
+        </div>
+
+
+        <div
+            style="
+                background:#f8fafc;
+                color:#475467;
+                padding:8px 14px;
+                border-radius:999px;
+                font-weight:800;
+            "
+        >
+            🎯
+            ${juegoLenguaActual.aciertos}/
+            ${juegoLenguaActual.total}
+        </div>
+
+    `;
+}
+
+
+// ==========================================
+// COMPROBAR RESPUESTA
+// ==========================================
+
+function comprobarRespuestaLengua(
+    respuestaUsuario,
+    respuestaCorrecta
+) {
+
+    if (!juegoLenguaActual) return;
+
+
+    if (
+        juegoLenguaActual.bloqueado
+    ) return;
+
+
+    juegoLenguaActual.bloqueado =
+        true;
+
+
+    const botones =
+        document.querySelectorAll(
+            "#respuestasLengua .respuesta"
+        );
+
+
+    botones.forEach(
+        boton => {
+
+            boton.disabled =
+                true;
+
+
+            if (
+                boton.textContent ===
+                respuestaCorrecta
+            ) {
+
+                boton.style.background =
+                    "#10b981";
+
+                boton.style.color =
+                    "white";
+            }
+        }
+    );
+
+
+    const resultado =
+        document.getElementById(
+            "resultadoLengua"
+        );
+
+
+    if (!resultado) return;
+
+
+    if (
+        respuestaUsuario ===
+        respuestaCorrecta
+    ) {
+
+        juegoLenguaActual.aciertos++;
+
+
+        juegoLenguaActual.racha++;
+
+
+        if (
+            juegoLenguaActual.racha >
+            juegoLenguaActual.mejorRacha
+        ) {
+
+            juegoLenguaActual.mejorRacha =
+                juegoLenguaActual.racha;
+        }
+
+
+        const puntos =
+            100 +
+            (
+                (
+                    juegoLenguaActual.racha - 1
+                ) * 25
+            );
+
+
+        juegoLenguaActual.puntos +=
+            puntos;
+
+
+        resultado.textContent =
+            `✅ ¡Correcto! +${puntos} puntos`;
+
+
+        resultado.style.color =
+            "#10b981";
+    }
+
+
+    else {
+
+        juegoLenguaActual.errores++;
+
+
+        juegoLenguaActual.racha =
+            0;
+
+
+        resultado.textContent =
+            `❌ Incorrecto. La respuesta era ${respuestaCorrecta}`;
+
+
+        resultado.style.color =
+            "#ef4444";
+    }
+
+
+    actualizarMarcadorLengua();
+
+
+    juegoLenguaActual.pregunta++;
+
+
+    setTimeout(
+        () => {
+
+            mostrarPreguntaOrtografia();
+
+        },
+        900
+    );
+}
+
+
+// ==========================================
+// RESULTADO FINAL DE LENGUA
+// ==========================================
+
+function mostrarResultadoLengua() {
+
+    const porcentaje =
+        Math.round(
+            (
+                juegoLenguaActual.aciertos /
+                juegoLenguaActual.total
+            ) * 100
+        );
+
+
+    let mensaje;
+
+
+    if (
+        porcentaje === 100
+    ) {
+
+        mensaje =
+            "🏆 ¡Perfecto!";
+    }
+
+    else if (
+        porcentaje >= 80
+    ) {
+
+        mensaje =
+            "🔥 ¡Excelente trabajo!";
+    }
+
+    else if (
+        porcentaje >= 60
+    ) {
+
+        mensaje =
+            "👏 ¡Muy bien!";
+    }
+
+    else if (
+        porcentaje >= 40
+    ) {
+
+        mensaje =
+            "💪 ¡Sigue practicando!";
+    }
+
+    else {
+
+        mensaje =
+            "📚 ¡Vamos a mejorar!";
+    }
+
+
+    const contenedor =
+        document.getElementById(
+            "juegoLengua"
+        );
+
+
+    if (!contenedor) return;
+
+
+    contenedor.innerHTML = `
+
+        <div
+            class="resultado-final"
+            style="
+                text-align:center;
+                padding:25px;
+            "
+        >
+
+            <div
+                style="
+                    font-size:4rem;
+                "
+            >
+                ${porcentaje >= 80 ? "🏆" : "🎯"}
+            </div>
+
+
+            <h2>
+                ${mensaje}
+            </h2>
+
+
+            <p>
+                Has conseguido
+                <strong>
+                    ${juegoLenguaActual.aciertos}
+                </strong>
+                de
+                <strong>
+                    ${juegoLenguaActual.total}
+                </strong>
+                respuestas correctas.
+            </p>
+
+
+            <div
+                class="resultado-porcentaje"
+            >
+                ${porcentaje}%
+            </div>
+
+
+            <p
+                style="
+                    margin-top:15px;
+                    font-weight:800;
+                "
+            >
+                ⭐
+                ${juegoLenguaActual.puntos}
+                puntos
+            </p>
+
+
+            <button
+                type="button"
+                class="boton-principal"
+                onclick="
+                    empezarOrtografia(
+                        '${juegoLenguaActual.nivel}'
+                    )
+                "
+            >
+                🔄 Volver a jugar
+            </button>
+
+        </div>
+
+    `;
+}
