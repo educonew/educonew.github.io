@@ -33,11 +33,343 @@ const niveles = {
 
 
 // ==========================================
+// SISTEMA DE PROGRESO
+// ==========================================
+
+const CLAVE_PROGRESO = "educonew_progreso";
+
+
+function obtenerProgreso() {
+
+    const guardado =
+        localStorage.getItem(CLAVE_PROGRESO);
+
+    if (guardado) {
+
+        try {
+
+            return JSON.parse(guardado);
+
+        } catch (error) {
+
+            console.error(
+                "No se pudo leer el progreso guardado.",
+                error
+            );
+        }
+    }
+
+
+    return {
+        puntos: 0,
+        ejercicios: 0,
+        aciertos: 0,
+        errores: 0,
+        mejorRacha: 0,
+        materias: {},
+        niveles: {},
+        logros: []
+    };
+}
+
+
+function guardarProgreso(progreso) {
+
+    localStorage.setItem(
+        CLAVE_PROGRESO,
+        JSON.stringify(progreso)
+    );
+}
+
+
+function registrarResultadoFinal() {
+
+    if (!juegoActual) return;
+
+
+    const progreso =
+        obtenerProgreso();
+
+
+    progreso.puntos +=
+        juegoActual.puntos;
+
+
+    progreso.ejercicios +=
+        juegoActual.total;
+
+
+    progreso.aciertos +=
+        juegoActual.aciertos;
+
+
+    progreso.errores +=
+        juegoActual.errores;
+
+
+    if (
+        juegoActual.mejorRacha >
+        progreso.mejorRacha
+    ) {
+
+        progreso.mejorRacha =
+            juegoActual.mejorRacha;
+    }
+
+
+    // ======================================
+    // REGISTRAR MATERIA
+    // ======================================
+
+    if (!progreso.materias[juegoActual.tema]) {
+
+        progreso.materias[juegoActual.tema] = {
+            ejercicios: 0,
+            aciertos: 0,
+            puntos: 0
+        };
+    }
+
+
+    progreso.materias[
+        juegoActual.tema
+    ].ejercicios +=
+        juegoActual.total;
+
+
+    progreso.materias[
+        juegoActual.tema
+    ].aciertos +=
+        juegoActual.aciertos;
+
+
+    progreso.materias[
+        juegoActual.tema
+    ].puntos +=
+        juegoActual.puntos;
+
+
+    // ======================================
+    // REGISTRAR NIVEL
+    // ======================================
+
+    const claveNivel =
+        `${juegoActual.tema}_${juegoActual.nivel}`;
+
+
+    if (!progreso.niveles[claveNivel]) {
+
+        progreso.niveles[claveNivel] = {
+            jugado: true,
+            completado: false,
+            porcentaje: 0
+        };
+    }
+
+
+    const porcentaje =
+        Math.round(
+            (
+                juegoActual.aciertos /
+                juegoActual.total
+            ) * 100
+        );
+
+
+    progreso.niveles[
+        claveNivel
+    ].jugado = true;
+
+
+    progreso.niveles[
+        claveNivel
+    ].porcentaje = porcentaje;
+
+
+    /*
+     * Consideramos un nivel completado
+     * cuando se consigue al menos un 80%.
+     */
+
+    if (porcentaje >= 80) {
+
+        progreso.niveles[
+            claveNivel
+        ].completado = true;
+    }
+
+
+    guardarProgreso(progreso);
+
+
+    comprobarLogros(progreso);
+
+
+    return progreso;
+}
+
+
+// ==========================================
+// SISTEMA DE LOGROS
+// ==========================================
+
+function comprobarLogros(progreso) {
+
+    const nuevosLogros = [];
+
+
+    function añadirLogro(
+        id,
+        nombre,
+        descripcion
+    ) {
+
+        if (
+            !progreso.logros.includes(id)
+        ) {
+
+            progreso.logros.push(id);
+
+            nuevosLogros.push({
+                id: id,
+                nombre: nombre,
+                descripcion: descripcion
+            });
+        }
+    }
+
+
+    // Primer ejercicio completado
+
+    if (
+        progreso.ejercicios >= 10
+    ) {
+
+        añadirLogro(
+            "primer_ejercicio",
+            "Primer paso",
+            "Has completado tu primera tanda de ejercicios."
+        );
+    }
+
+
+    // 500 puntos
+
+    if (
+        progreso.puntos >= 500
+    ) {
+
+        añadirLogro(
+            "500_puntos",
+            "En marcha",
+            "Has conseguido 500 puntos."
+        );
+    }
+
+
+    // 1000 puntos
+
+    if (
+        progreso.puntos >= 1000
+    ) {
+
+        añadirLogro(
+            "1000_puntos",
+            "Gran estudiante",
+            "Has conseguido 1000 puntos."
+        );
+    }
+
+
+    // 10 aciertos seguidos
+
+    if (
+        progreso.mejorRacha >= 10
+    ) {
+
+        añadirLogro(
+            "racha_10",
+            "Racha imparable",
+            "Has conseguido 10 aciertos seguidos."
+        );
+    }
+
+
+    // 50 ejercicios
+
+    if (
+        progreso.ejercicios >= 50
+    ) {
+
+        añadirLogro(
+            "50_ejercicios",
+            "Constancia",
+            "Has completado 50 ejercicios."
+        );
+    }
+
+
+    // 100 ejercicios
+
+    if (
+        progreso.ejercicios >= 100
+    ) {
+
+        añadirLogro(
+            "100_ejercicios",
+            "Máquina de aprender",
+            "Has completado 100 ejercicios."
+        );
+    }
+
+
+    // Guardar nuevos logros
+
+    if (nuevosLogros.length > 0) {
+
+        guardarProgreso(
+            progreso
+        );
+
+        mostrarLogrosNuevos(
+            nuevosLogros
+        );
+    }
+}
+
+
+function mostrarLogrosNuevos(logros) {
+
+    /*
+     * Por ahora mostramos los logros
+     * de forma discreta.
+     *
+     * Más adelante tendremos una
+     * sección visual dedicada a ellos.
+     */
+
+    if (!logros || !logros.length) {
+        return;
+    }
+
+
+    console.log(
+        "🏆 Nuevos logros:",
+        logros
+    );
+}
+
+
+// ==========================================
 // NÚMEROS ALEATORIOS
 // ==========================================
 
 function numeroAleatorio(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+
+    return Math.floor(
+        Math.random() *
+        (max - min + 1)
+    ) + min;
 }
 
 
@@ -45,27 +377,48 @@ function numeroAleatorio(min, max) {
 // INICIAR JUEGO
 // ==========================================
 
-function iniciarJuego(tema, nivel) {
+function iniciarJuego(
+    tema,
+    nivel
+) {
 
     if (!niveles[nivel]) {
-        console.error("Nivel no válido:", nivel);
+
+        console.error(
+            "Nivel no válido:",
+            nivel
+        );
+
         return;
     }
 
+
     juegoActual = {
+
         tema: tema,
+
         nivel: nivel,
+
         pregunta: 0,
+
         aciertos: 0,
+
         errores: 0,
+
         racha: 0,
+
         mejorRacha: 0,
+
         puntos: 0,
+
         total: 10,
+
         bloqueado: false
     };
 
+
     prepararZonaJuego();
+
 
     mostrarPregunta();
 }
@@ -78,12 +431,20 @@ function iniciarJuego(tema, nivel) {
 function prepararZonaJuego() {
 
     const contenedor =
-        document.getElementById("juegoMatematicas");
+        document.getElementById(
+            "juegoMatematicas"
+        );
+
 
     if (!contenedor) {
-        console.error("No existe #juegoMatematicas");
+
+        console.error(
+            "No existe #juegoMatematicas"
+        );
+
         return;
     }
+
 
     contenedor.innerHTML = `
 
@@ -139,7 +500,8 @@ function prepararZonaJuego() {
                 id="respuestasJuego"
                 style="
                     display:grid;
-                    grid-template-columns:repeat(2,1fr);
+                    grid-template-columns:
+                        repeat(2,1fr);
                     gap:12px;
                     max-width:600px;
                     margin:auto;
@@ -170,8 +532,12 @@ function actualizarMarcador() {
 
     if (!juegoActual) return;
 
+
     const marcador =
-        document.getElementById("marcadorJuego");
+        document.getElementById(
+            "marcadorJuego"
+        );
+
 
     if (!marcador) return;
 
@@ -224,14 +590,19 @@ function actualizarMarcador() {
 // GENERAR PREGUNTA
 // ==========================================
 
-function generarPregunta(tema, nivel) {
+function generarPregunta(
+    tema,
+    nivel
+) {
 
     let a;
     let b;
     let respuesta;
     let simbolo;
 
+
     switch (tema) {
+
 
         // ==================================
         // SUMAS
@@ -240,27 +611,66 @@ function generarPregunta(tema, nivel) {
         case "sumas":
 
             if (nivel === "facil") {
-                a = numeroAleatorio(1, 20);
-                b = numeroAleatorio(1, 20);
+
+                a = numeroAleatorio(
+                    1,
+                    20
+                );
+
+                b = numeroAleatorio(
+                    1,
+                    20
+                );
             }
+
 
             else if (nivel === "medio") {
-                a = numeroAleatorio(10, 100);
-                b = numeroAleatorio(10, 100);
+
+                a = numeroAleatorio(
+                    10,
+                    100
+                );
+
+                b = numeroAleatorio(
+                    10,
+                    100
+                );
             }
+
 
             else if (nivel === "dificil") {
-                a = numeroAleatorio(100, 999);
-                b = numeroAleatorio(100, 999);
+
+                a = numeroAleatorio(
+                    100,
+                    999
+                );
+
+                b = numeroAleatorio(
+                    100,
+                    999
+                );
             }
+
 
             else {
-                a = numeroAleatorio(1000, 9999);
-                b = numeroAleatorio(1000, 9999);
+
+                a = numeroAleatorio(
+                    1000,
+                    9999
+                );
+
+                b = numeroAleatorio(
+                    1000,
+                    9999
+                );
             }
 
-            respuesta = a + b;
-            simbolo = "+";
+
+            respuesta =
+                a + b;
+
+            simbolo =
+                "+";
 
             break;
 
@@ -272,25 +682,52 @@ function generarPregunta(tema, nivel) {
         case "restas":
 
             if (nivel === "facil") {
-                a = numeroAleatorio(5, 30);
+
+                a = numeroAleatorio(
+                    5,
+                    30
+                );
             }
+
 
             else if (nivel === "medio") {
-                a = numeroAleatorio(30, 150);
+
+                a = numeroAleatorio(
+                    30,
+                    150
+                );
             }
+
 
             else if (nivel === "dificil") {
-                a = numeroAleatorio(100, 999);
+
+                a = numeroAleatorio(
+                    100,
+                    999
+                );
             }
+
 
             else {
-                a = numeroAleatorio(1000, 9999);
+
+                a = numeroAleatorio(
+                    1000,
+                    9999
+                );
             }
 
-            b = numeroAleatorio(1, a);
 
-            respuesta = a - b;
-            simbolo = "−";
+            b = numeroAleatorio(
+                1,
+                a
+            );
+
+
+            respuesta =
+                a - b;
+
+            simbolo =
+                "−";
 
             break;
 
@@ -302,27 +739,66 @@ function generarPregunta(tema, nivel) {
         case "multiplicaciones":
 
             if (nivel === "facil") {
-                a = numeroAleatorio(1, 10);
-                b = numeroAleatorio(1, 10);
+
+                a = numeroAleatorio(
+                    1,
+                    10
+                );
+
+                b = numeroAleatorio(
+                    1,
+                    10
+                );
             }
+
 
             else if (nivel === "medio") {
-                a = numeroAleatorio(2, 20);
-                b = numeroAleatorio(2, 12);
+
+                a = numeroAleatorio(
+                    2,
+                    20
+                );
+
+                b = numeroAleatorio(
+                    2,
+                    12
+                );
             }
+
 
             else if (nivel === "dificil") {
-                a = numeroAleatorio(10, 50);
-                b = numeroAleatorio(10, 30);
+
+                a = numeroAleatorio(
+                    10,
+                    50
+                );
+
+                b = numeroAleatorio(
+                    10,
+                    30
+                );
             }
+
 
             else {
-                a = numeroAleatorio(20, 200);
-                b = numeroAleatorio(20, 100);
+
+                a = numeroAleatorio(
+                    20,
+                    200
+                );
+
+                b = numeroAleatorio(
+                    20,
+                    100
+                );
             }
 
-            respuesta = a * b;
-            simbolo = "×";
+
+            respuesta =
+                a * b;
+
+            simbolo =
+                "×";
 
             break;
 
@@ -334,27 +810,70 @@ function generarPregunta(tema, nivel) {
         case "divisiones":
 
             if (nivel === "facil") {
-                b = numeroAleatorio(2, 10);
-                respuesta = numeroAleatorio(1, 10);
+
+                b = numeroAleatorio(
+                    2,
+                    10
+                );
+
+                respuesta =
+                    numeroAleatorio(
+                        1,
+                        10
+                    );
             }
+
 
             else if (nivel === "medio") {
-                b = numeroAleatorio(2, 12);
-                respuesta = numeroAleatorio(2, 20);
+
+                b = numeroAleatorio(
+                    2,
+                    12
+                );
+
+                respuesta =
+                    numeroAleatorio(
+                        2,
+                        20
+                    );
             }
+
 
             else if (nivel === "dificil") {
-                b = numeroAleatorio(5, 30);
-                respuesta = numeroAleatorio(5, 50);
+
+                b = numeroAleatorio(
+                    5,
+                    30
+                );
+
+                respuesta =
+                    numeroAleatorio(
+                        5,
+                        50
+                    );
             }
+
 
             else {
-                b = numeroAleatorio(10, 100);
-                respuesta = numeroAleatorio(10, 100);
+
+                b = numeroAleatorio(
+                    10,
+                    100
+                );
+
+                respuesta =
+                    numeroAleatorio(
+                        10,
+                        100
+                    );
             }
 
-            a = b * respuesta;
-            simbolo = "÷";
+
+            a =
+                b * respuesta;
+
+            simbolo =
+                "÷";
 
             break;
 
@@ -368,28 +887,59 @@ function generarPregunta(tema, nivel) {
             let denominador;
             let numerador;
 
+
             if (nivel === "facil") {
-                denominador = numeroAleatorio(2, 6);
+
+                denominador =
+                    numeroAleatorio(
+                        2,
+                        6
+                    );
             }
+
 
             else if (nivel === "medio") {
-                denominador = numeroAleatorio(3, 10);
+
+                denominador =
+                    numeroAleatorio(
+                        3,
+                        10
+                    );
             }
+
 
             else if (nivel === "dificil") {
-                denominador = numeroAleatorio(5, 20);
+
+                denominador =
+                    numeroAleatorio(
+                        5,
+                        20
+                    );
             }
+
 
             else {
-                denominador = numeroAleatorio(10, 50);
+
+                denominador =
+                    numeroAleatorio(
+                        10,
+                        50
+                    );
             }
 
+
             numerador =
-                numeroAleatorio(1, denominador - 1);
+                numeroAleatorio(
+                    1,
+                    denominador - 1
+                );
+
 
             return {
+
                 texto:
                     `¿Qué fracción representa ${numerador} de ${denominador}?`,
+
                 respuesta:
                     `${numerador}/${denominador}`
             };
@@ -405,44 +955,83 @@ function generarPregunta(tema, nivel) {
             let porcentaje;
             let cantidad;
 
+
             if (nivel === "facil") {
+
                 porcentaje =
-                    numeroAleatorio(1, 5) * 10;
+                    numeroAleatorio(
+                        1,
+                        5
+                    ) * 10;
 
                 cantidad =
-                    numeroAleatorio(1, 10) * 10;
+                    numeroAleatorio(
+                        1,
+                        10
+                    ) * 10;
             }
+
 
             else if (nivel === "medio") {
+
                 porcentaje =
-                    numeroAleatorio(1, 9) * 10;
+                    numeroAleatorio(
+                        1,
+                        9
+                    ) * 10;
 
                 cantidad =
-                    numeroAleatorio(1, 20) * 10;
+                    numeroAleatorio(
+                        1,
+                        20
+                    ) * 10;
             }
+
 
             else if (nivel === "dificil") {
+
                 porcentaje =
-                    numeroAleatorio(5, 95);
+                    numeroAleatorio(
+                        5,
+                        95
+                    );
 
                 cantidad =
-                    numeroAleatorio(2, 20) * 10;
+                    numeroAleatorio(
+                        2,
+                        20
+                    ) * 10;
             }
+
 
             else {
+
                 porcentaje =
-                    numeroAleatorio(5, 95);
+                    numeroAleatorio(
+                        5,
+                        95
+                    );
 
                 cantidad =
-                    numeroAleatorio(10, 100) * 10;
+                    numeroAleatorio(
+                        10,
+                        100
+                    ) * 10;
             }
 
+
             respuesta =
-                (cantidad * porcentaje) / 100;
+                (
+                    cantidad *
+                    porcentaje
+                ) / 100;
+
 
             return {
+
                 texto:
                     `¿Cuánto es el ${porcentaje}% de ${cantidad}?`,
+
                 respuesta:
                     respuesta
             };
@@ -458,32 +1047,83 @@ function generarPregunta(tema, nivel) {
             let base;
             let altura;
 
+
             if (nivel === "facil") {
-                base = numeroAleatorio(2, 10);
-                altura = numeroAleatorio(2, 10);
+
+                base =
+                    numeroAleatorio(
+                        2,
+                        10
+                    );
+
+                altura =
+                    numeroAleatorio(
+                        2,
+                        10
+                    );
             }
+
 
             else if (nivel === "medio") {
-                base = numeroAleatorio(5, 20);
-                altura = numeroAleatorio(5, 20);
+
+                base =
+                    numeroAleatorio(
+                        5,
+                        20
+                    );
+
+                altura =
+                    numeroAleatorio(
+                        5,
+                        20
+                    );
             }
+
 
             else if (nivel === "dificil") {
-                base = numeroAleatorio(10, 50);
-                altura = numeroAleatorio(10, 50);
+
+                base =
+                    numeroAleatorio(
+                        10,
+                        50
+                    );
+
+                altura =
+                    numeroAleatorio(
+                        10,
+                        50
+                    );
             }
+
 
             else {
-                base = numeroAleatorio(20, 100);
-                altura = numeroAleatorio(20, 100);
+
+                base =
+                    numeroAleatorio(
+                        20,
+                        100
+                    );
+
+                altura =
+                    numeroAleatorio(
+                        20,
+                        100
+                    );
             }
 
+
             respuesta =
-                (base * altura) / 2;
+                (
+                    base *
+                    altura
+                ) / 2;
+
 
             return {
+
                 texto:
                     `¿Cuál es el área de un triángulo de base ${base} y altura ${altura}?`,
+
                 respuesta:
                     respuesta
             };
@@ -497,46 +1137,77 @@ function generarPregunta(tema, nivel) {
         case "problemas": {
 
             let precio =
-                numeroAleatorio(2, 20);
+                numeroAleatorio(
+                    2,
+                    20
+                );
+
 
             let cantidad =
-                numeroAleatorio(2, 10);
+                numeroAleatorio(
+                    2,
+                    10
+                );
 
 
             if (nivel === "medio") {
+
                 precio =
-                    numeroAleatorio(10, 50);
+                    numeroAleatorio(
+                        10,
+                        50
+                    );
 
                 cantidad =
-                    numeroAleatorio(2, 15);
+                    numeroAleatorio(
+                        2,
+                        15
+                    );
             }
 
 
             if (nivel === "dificil") {
+
                 precio =
-                    numeroAleatorio(20, 100);
+                    numeroAleatorio(
+                        20,
+                        100
+                    );
 
                 cantidad =
-                    numeroAleatorio(5, 20);
+                    numeroAleatorio(
+                        5,
+                        20
+                    );
             }
 
 
             if (nivel === "experto") {
+
                 precio =
-                    numeroAleatorio(50, 200);
+                    numeroAleatorio(
+                        50,
+                        200
+                    );
 
                 cantidad =
-                    numeroAleatorio(10, 30);
+                    numeroAleatorio(
+                        10,
+                        30
+                    );
             }
 
 
             respuesta =
-                precio * cantidad;
+                precio *
+                cantidad;
 
 
             return {
+
                 texto:
                     `Cada producto cuesta ${precio} €. Si compras ${cantidad}, ¿cuánto pagarás?`,
+
                 respuesta:
                     respuesta
             };
@@ -549,6 +1220,7 @@ function generarPregunta(tema, nivel) {
 
 
     return {
+
         texto:
             `${a} ${simbolo} ${b} = ?`,
 
@@ -562,9 +1234,13 @@ function generarPregunta(tema, nivel) {
 // GENERAR RESPUESTAS
 // ==========================================
 
-function generarRespuestas(correcta) {
+function generarRespuestas(
+    correcta
+) {
 
-    const respuestas = [correcta];
+    const respuestas =
+        [correcta];
+
 
     let intentos = 0;
 
@@ -583,7 +1259,9 @@ function generarRespuestas(correcta) {
                 Math.max(
                     3,
                     Math.floor(
-                        Math.abs(correcta) * 0.15
+                        Math.abs(
+                            correcta
+                        ) * 0.15
                     )
                 )
             );
@@ -592,40 +1270,63 @@ function generarRespuestas(correcta) {
         let falsa;
 
 
-        if (Math.random() < 0.5) {
+        if (
+            Math.random() < 0.5
+        ) {
+
             falsa =
-                correcta + diferencia;
+                correcta +
+                diferencia;
+
         }
 
         else {
+
             falsa =
-                correcta - diferencia;
+                correcta -
+                diferencia;
         }
 
 
         if (
-            !respuestas.includes(falsa) &&
+            !respuestas.includes(
+                falsa
+            ) &&
             falsa >= 0
         ) {
-            respuestas.push(falsa);
+
+            respuestas.push(
+                falsa
+            );
         }
     }
 
 
-    while (respuestas.length < 4) {
+    while (
+        respuestas.length < 4
+    ) {
 
         let falsa =
-            correcta + respuestas.length;
+            correcta +
+            respuestas.length;
 
 
-        if (!respuestas.includes(falsa)) {
-            respuestas.push(falsa);
+        if (
+            !respuestas.includes(
+                falsa
+            )
+        ) {
+
+            respuestas.push(
+                falsa
+            );
         }
     }
 
 
     return respuestas.sort(
-        () => Math.random() - 0.5
+        () =>
+            Math.random() - 0.5
     );
 }
 
@@ -712,7 +1413,8 @@ function mostrarPregunta() {
     }
 
 
-    juegoActual.bloqueado = false;
+    juegoActual.bloqueado =
+        false;
 
 
     preguntaElemento.textContent =
@@ -730,9 +1432,12 @@ function mostrarPregunta() {
     }
 
 
-    resultadoElemento.textContent = "";
+    resultadoElemento.textContent =
+        "";
 
-    respuestasElemento.innerHTML = "";
+
+    respuestasElemento.innerHTML =
+        "";
 
 
     actualizarMarcador();
@@ -756,7 +1461,9 @@ function mostrarPregunta() {
     else {
 
         respuestas =
-            [pregunta.respuesta];
+            [
+                pregunta.respuesta
+            ];
 
 
         while (
@@ -768,16 +1475,21 @@ function mostrarPregunta() {
 
 
             if (
-                !respuestas.includes(falsa)
+                !respuestas.includes(
+                    falsa
+                )
             ) {
 
-                respuestas.push(falsa);
+                respuestas.push(
+                    falsa
+                );
             }
         }
 
 
         respuestas.sort(
-            () => Math.random() - 0.5
+            () =>
+                Math.random() - 0.5
         );
     }
 
@@ -841,10 +1553,13 @@ function comprobarRespuesta(
     if (!juegoActual) return;
 
 
-    if (juegoActual.bloqueado) return;
+    if (
+        juegoActual.bloqueado
+    ) return;
 
 
-    juegoActual.bloqueado = true;
+    juegoActual.bloqueado =
+        true;
 
 
     const botones =
@@ -856,7 +1571,8 @@ function comprobarRespuesta(
     botones.forEach(
         boton => {
 
-            boton.disabled = true;
+            boton.disabled =
+                true;
 
 
             if (
@@ -893,11 +1609,16 @@ function comprobarRespuesta(
     // ==================================
 
     if (
-        String(respuestaUsuario) ===
-        String(respuestaCorrecta)
+        String(
+            respuestaUsuario
+        ) ===
+        String(
+            respuestaCorrecta
+        )
     ) {
 
         juegoActual.aciertos++;
+
 
         juegoActual.racha++;
 
@@ -912,16 +1633,12 @@ function comprobarRespuesta(
         }
 
 
-        /*
-         * La puntuación aumenta
-         * con la racha.
-         */
-
         const puntosGanados =
             100 +
             (
-                (juegoActual.racha - 1)
-                * 25
+                (
+                    juegoActual.racha - 1
+                ) * 25
             );
 
 
@@ -935,7 +1652,6 @@ function comprobarRespuesta(
 
         resultado.style.color =
             "#10b981";
-
     }
 
 
@@ -947,7 +1663,9 @@ function comprobarRespuesta(
 
         juegoActual.errores++;
 
-        juegoActual.racha = 0;
+
+        juegoActual.racha =
+            0;
 
 
         resultado.textContent =
@@ -996,7 +1714,9 @@ function mostrarResultadoFinal() {
     let emoji;
 
 
-    if (porcentaje === 100) {
+    if (
+        porcentaje === 100
+    ) {
 
         mensaje =
             "¡Perfecto!";
@@ -1005,7 +1725,10 @@ function mostrarResultadoFinal() {
             "🏆";
     }
 
-    else if (porcentaje >= 80) {
+
+    else if (
+        porcentaje >= 80
+    ) {
 
         mensaje =
             "¡Excelente trabajo!";
@@ -1014,7 +1737,10 @@ function mostrarResultadoFinal() {
             "🔥";
     }
 
-    else if (porcentaje >= 60) {
+
+    else if (
+        porcentaje >= 60
+    ) {
 
         mensaje =
             "¡Muy bien!";
@@ -1023,7 +1749,10 @@ function mostrarResultadoFinal() {
             "👏";
     }
 
-    else if (porcentaje >= 40) {
+
+    else if (
+        porcentaje >= 40
+    ) {
 
         mensaje =
             "¡Sigue practicando!";
@@ -1031,6 +1760,7 @@ function mostrarResultadoFinal() {
         emoji =
             "💪";
     }
+
 
     else {
 
@@ -1040,6 +1770,14 @@ function mostrarResultadoFinal() {
         emoji =
             "📚";
     }
+
+
+    /*
+     * Guardamos el resultado
+     * antes de mostrar la pantalla final.
+     */
+
+    registrarResultadoFinal();
 
 
     const contenedor =
@@ -1098,7 +1836,7 @@ function mostrarResultadoFinal() {
                 style="
                     display:grid;
                     grid-template-columns:
-                        repeat(2, minmax(0, 1fr));
+                        repeat(2,minmax(0,1fr));
                     gap:12px;
                     max-width:500px;
                     margin:25px auto;
@@ -1287,7 +2025,10 @@ function mostrarResultadoFinal() {
                     type="button"
                     class="boton-secundario"
                     onclick="
-                        if (typeof volverATemas === 'function') {
+                        if (
+                            typeof volverATemas ===
+                            'function'
+                        ) {
                             volverATemas();
                         }
                     "
