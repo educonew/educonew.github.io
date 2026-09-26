@@ -10,7 +10,6 @@ let juegoActual = null;
 // ==========================================
 
 const niveles = {
-
     facil: {
         nombre: "Fácil",
         color: "🟢"
@@ -30,8 +29,16 @@ const niveles = {
         nombre: "Experto",
         color: "🟣"
     }
-
 };
+
+
+// ==========================================
+// NÚMEROS ALEATORIOS
+// ==========================================
+
+function numeroAleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 
 // ==========================================
@@ -39,6 +46,11 @@ const niveles = {
 // ==========================================
 
 function iniciarJuego(tema, nivel) {
+
+    if (!niveles[nivel]) {
+        console.error("Nivel no válido:", nivel);
+        return;
+    }
 
     juegoActual = {
         tema: tema,
@@ -49,21 +61,75 @@ function iniciarJuego(tema, nivel) {
         bloqueado: false
     };
 
-    mostrarPregunta();
+    prepararZonaJuego();
 
+    mostrarPregunta();
 }
 
 
 // ==========================================
-// GENERADOR DE NÚMEROS
+// PREPARAR ZONA DE JUEGO
 // ==========================================
 
-function numeroAleatorio(min, max) {
+function prepararZonaJuego() {
 
-    return Math.floor(
-        Math.random() * (max - min + 1)
-    ) + min;
+    const contenedor = document.getElementById("juegoMatematicas");
 
+    if (!contenedor) {
+        console.error("No existe #juegoMatematicas");
+        return;
+    }
+
+    contenedor.innerHTML = `
+        <div class="tarjeta" style="text-align:center;">
+
+            <p
+                id="progresoJuego"
+                style="
+                    color:#667085;
+                    font-weight:700;
+                    margin-bottom:10px;
+                "
+            ></p>
+
+            <div
+                id="nivelJuego"
+                style="
+                    font-weight:800;
+                    margin-bottom:10px;
+                "
+            ></div>
+
+            <h2
+                id="preguntaJuego"
+                style="
+                    font-size:2rem;
+                    margin:20px 0;
+                "
+            ></h2>
+
+            <div
+                id="respuestasJuego"
+                style="
+                    display:grid;
+                    grid-template-columns:repeat(2,1fr);
+                    gap:12px;
+                    max-width:600px;
+                    margin:auto;
+                "
+            ></div>
+
+            <p
+                id="resultadoJuego"
+                style="
+                    font-weight:800;
+                    min-height:28px;
+                    margin-top:18px;
+                "
+            ></p>
+
+        </div>
+    `;
 }
 
 
@@ -80,9 +146,9 @@ function generarPregunta(tema, nivel) {
 
     switch (tema) {
 
-        // ----------------------------------
+        // ==================================
         // SUMAS
-        // ----------------------------------
+        // ==================================
 
         case "sumas":
 
@@ -112,31 +178,29 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ----------------------------------
+        // ==================================
         // RESTAS
-        // ----------------------------------
+        // ==================================
 
         case "restas":
 
             if (nivel === "facil") {
                 a = numeroAleatorio(5, 30);
-                b = numeroAleatorio(1, a);
             }
 
             else if (nivel === "medio") {
                 a = numeroAleatorio(30, 150);
-                b = numeroAleatorio(1, a);
             }
 
             else if (nivel === "dificil") {
                 a = numeroAleatorio(100, 999);
-                b = numeroAleatorio(1, a);
             }
 
             else {
                 a = numeroAleatorio(1000, 9999);
-                b = numeroAleatorio(1, a);
             }
+
+            b = numeroAleatorio(1, a);
 
             respuesta = a - b;
             simbolo = "−";
@@ -144,9 +208,9 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ----------------------------------
+        // ==================================
         // MULTIPLICACIONES
-        // ----------------------------------
+        // ==================================
 
         case "multiplicaciones":
 
@@ -176,9 +240,9 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ----------------------------------
+        // ==================================
         // DIVISIONES
-        // ----------------------------------
+        // ==================================
 
         case "divisiones":
 
@@ -208,11 +272,11 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ----------------------------------
+        // ==================================
         // FRACCIONES
-        // ----------------------------------
+        // ==================================
 
-        case "fracciones":
+        case "fracciones": {
 
             let denominador;
             let numerador;
@@ -239,10 +303,119 @@ function generarPregunta(tema, nivel) {
                 texto: `¿Qué fracción representa ${numerador} de ${denominador}?`,
                 respuesta: `${numerador}/${denominador}`
             };
+        }
+
+
+        // ==================================
+        // PORCENTAJES
+        // ==================================
+
+        case "porcentajes": {
+
+            let porcentaje;
+            let cantidad;
+
+            if (nivel === "facil") {
+                porcentaje = numeroAleatorio(1, 5) * 10;
+                cantidad = numeroAleatorio(1, 10) * 10;
+            }
+
+            else if (nivel === "medio") {
+                porcentaje = numeroAleatorio(1, 9) * 10;
+                cantidad = numeroAleatorio(1, 20) * 10;
+            }
+
+            else if (nivel === "dificil") {
+                porcentaje = numeroAleatorio(5, 95);
+                cantidad = numeroAleatorio(2, 20) * 10;
+            }
+
+            else {
+                porcentaje = numeroAleatorio(5, 95);
+                cantidad = numeroAleatorio(10, 100) * 10;
+            }
+
+            respuesta = (cantidad * porcentaje) / 100;
+
+            return {
+                texto: `¿Cuánto es el ${porcentaje}% de ${cantidad}?`,
+                respuesta: respuesta
+            };
+        }
+
+
+        // ==================================
+        // GEOMETRÍA
+        // ==================================
+
+        case "geometria": {
+
+            let base;
+            let altura;
+
+            if (nivel === "facil") {
+                base = numeroAleatorio(2, 10);
+                altura = numeroAleatorio(2, 10);
+            }
+
+            else if (nivel === "medio") {
+                base = numeroAleatorio(5, 20);
+                altura = numeroAleatorio(5, 20);
+            }
+
+            else if (nivel === "dificil") {
+                base = numeroAleatorio(10, 50);
+                altura = numeroAleatorio(10, 50);
+            }
+
+            else {
+                base = numeroAleatorio(20, 100);
+                altura = numeroAleatorio(20, 100);
+            }
+
+            respuesta = (base * altura) / 2;
+
+            return {
+                texto: `¿Cuál es el área de un triángulo de base ${base} y altura ${altura}?`,
+                respuesta: respuesta
+            };
+        }
+
+
+        // ==================================
+        // PROBLEMAS
+        // ==================================
+
+        case "problemas": {
+
+            let precio = numeroAleatorio(2, 20);
+            let cantidad = numeroAleatorio(2, 10);
+
+            if (nivel === "medio") {
+                precio = numeroAleatorio(10, 50);
+                cantidad = numeroAleatorio(2, 15);
+            }
+
+            if (nivel === "dificil") {
+                precio = numeroAleatorio(20, 100);
+                cantidad = numeroAleatorio(5, 20);
+            }
+
+            if (nivel === "experto") {
+                precio = numeroAleatorio(50, 200);
+                cantidad = numeroAleatorio(10, 30);
+            }
+
+            respuesta = precio * cantidad;
+
+            return {
+                texto: `Cada producto cuesta ${precio} €. Si compras ${cantidad}, ¿cuánto pagarás?`,
+                respuesta: respuesta
+            };
+        }
 
 
         default:
-
             return null;
     }
 
@@ -251,7 +424,6 @@ function generarPregunta(tema, nivel) {
         texto: `${a} ${simbolo} ${b} = ?`,
         respuesta: respuesta
     };
-
 }
 
 
@@ -263,7 +435,11 @@ function generarRespuestas(correcta) {
 
     const respuestas = [correcta];
 
-    while (respuestas.length < 4) {
+    let intentos = 0;
+
+    while (respuestas.length < 4 && intentos < 100) {
+
+        intentos++;
 
         let diferencia = numeroAleatorio(
             1,
@@ -274,7 +450,9 @@ function generarRespuestas(correcta) {
 
         if (Math.random() < 0.5) {
             falsa = correcta + diferencia;
-        } else {
+        }
+
+        else {
             falsa = correcta - diferencia;
         }
 
@@ -286,10 +464,22 @@ function generarRespuestas(correcta) {
         }
     }
 
+
+    // Por seguridad, rellenamos si hiciera falta.
+
+    while (respuestas.length < 4) {
+
+        let falsa = correcta + respuestas.length;
+
+        if (!respuestas.includes(falsa)) {
+            respuestas.push(falsa);
+        }
+    }
+
+
     return respuestas.sort(
         () => Math.random() - 0.5
     );
-
 }
 
 
@@ -301,53 +491,59 @@ function mostrarPregunta() {
 
     if (!juegoActual) return;
 
-    const contenedor =
-        document.getElementById("juegoMatematicas");
-
-    if (!contenedor) {
-
-        crearContenedorJuego();
-
-    }
 
     if (
         juegoActual.pregunta >=
         juegoActual.total
     ) {
-
         mostrarResultadoFinal();
+        return;
+    }
+
+
+    const pregunta = generarPregunta(
+        juegoActual.tema,
+        juegoActual.nivel
+    );
+
+
+    if (!pregunta) {
+        console.error("No se pudo generar la pregunta.");
+        return;
+    }
+
+
+    const preguntaElemento =
+        document.getElementById("preguntaJuego");
+
+    const respuestasElemento =
+        document.getElementById("respuestasJuego");
+
+    const progresoElemento =
+        document.getElementById("progresoJuego");
+
+    const resultadoElemento =
+        document.getElementById("resultadoJuego");
+
+    const nivelElemento =
+        document.getElementById("nivelJuego");
+
+
+    if (
+        !preguntaElemento ||
+        !respuestasElemento ||
+        !progresoElemento ||
+        !resultadoElemento
+    ) {
+        console.error(
+            "No se encontraron los elementos del juego."
+        );
 
         return;
     }
 
 
     juegoActual.bloqueado = false;
-
-
-    const pregunta =
-        generarPregunta(
-            juegoActual.tema,
-            juegoActual.nivel
-        );
-
-
-    if (!pregunta) return;
-
-
-    const preguntaElemento =
-        document.getElementById(
-            "preguntaJuego"
-        );
-
-    const respuestasElemento =
-        document.getElementById(
-            "respuestasJuego"
-        );
-
-    const progresoElemento =
-        document.getElementById(
-            "progresoJuego"
-        );
 
 
     preguntaElemento.textContent =
@@ -358,45 +554,48 @@ function mostrarPregunta() {
         `Pregunta ${juegoActual.pregunta + 1} de ${juegoActual.total}`;
 
 
+    if (nivelElemento) {
+
+        nivelElemento.textContent =
+            `${niveles[juegoActual.nivel].color} ${niveles[juegoActual.nivel].nombre}`;
+    }
+
+
+    resultadoElemento.textContent = "";
+
     respuestasElemento.innerHTML = "";
 
 
     let respuestas;
 
 
-    if (
-        typeof pregunta.respuesta ===
-        "number"
-    ) {
+    if (typeof pregunta.respuesta === "number") {
 
         respuestas =
             generarRespuestas(
                 pregunta.respuesta
             );
-
     }
 
     else {
 
-        respuestas = [
-            pregunta.respuesta
-        ];
+        respuestas = [pregunta.respuesta];
+
 
         while (respuestas.length < 4) {
 
-            const falsa =
+            let falsa =
                 `${numeroAleatorio(1, 9)}/${numeroAleatorio(2, 10)}`;
 
             if (!respuestas.includes(falsa)) {
                 respuestas.push(falsa);
             }
-
         }
+
 
         respuestas.sort(
             () => Math.random() - 0.5
         );
-
     }
 
 
@@ -404,32 +603,37 @@ function mostrarPregunta() {
         respuesta => {
 
             const boton =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
-            boton.className =
-                "respuesta";
 
-            boton.textContent =
-                respuesta;
+            boton.type = "button";
+
+            boton.className = "respuesta";
+
+            boton.textContent = respuesta;
+
+
+            boton.style.cursor = "pointer";
+
 
             boton.addEventListener(
                 "click",
-                () =>
+                () => {
+
                     comprobarRespuesta(
                         respuesta,
                         pregunta.respuesta
-                    )
+                    );
+
+                }
             );
+
 
             respuestasElemento.appendChild(
                 boton
             );
-
         }
     );
-
 }
 
 
@@ -444,7 +648,9 @@ function comprobarRespuesta(
 
     if (!juegoActual) return;
 
+
     if (juegoActual.bloqueado) return;
+
 
     juegoActual.bloqueado = true;
 
@@ -470,7 +676,6 @@ function comprobarRespuesta(
 
                 boton.style.color =
                     "white";
-
             }
 
         }
@@ -483,6 +688,9 @@ function comprobarRespuesta(
         );
 
 
+    if (!resultado) return;
+
+
     if (
         String(respuestaUsuario) ===
         String(respuestaCorrecta)
@@ -490,12 +698,13 @@ function comprobarRespuesta(
 
         juegoActual.aciertos++;
 
+
         resultado.textContent =
             "✅ ¡Correcto!";
 
+
         resultado.style.color =
             "#10b981";
-
     }
 
     else {
@@ -503,9 +712,9 @@ function comprobarRespuesta(
         resultado.textContent =
             `❌ Incorrecto. La respuesta era ${respuestaCorrecta}`;
 
+
         resultado.style.color =
             "#ef4444";
-
     }
 
 
@@ -515,14 +724,11 @@ function comprobarRespuesta(
     setTimeout(
         () => {
 
-            resultado.textContent = "";
-
             mostrarPregunta();
 
         },
         900
     );
-
 }
 
 
@@ -540,6 +746,7 @@ function mostrarResultadoFinal() {
 
 
     let mensaje;
+
 
     if (porcentaje === 100) {
         mensaje = "🏆 ¡Perfecto!";
@@ -568,6 +775,9 @@ function mostrarResultadoFinal() {
         );
 
 
+    if (!contenedor) return;
+
+
     contenedor.innerHTML = `
 
         <div class="resultado-final">
@@ -576,7 +786,9 @@ function mostrarResultadoFinal() {
                 ${porcentaje >= 80 ? "🏆" : "🎯"}
             </div>
 
-            <h2>${mensaje}</h2>
+            <h2>
+                ${mensaje}
+            </h2>
 
             <p>
                 Has conseguido
@@ -597,107 +809,24 @@ function mostrarResultadoFinal() {
             <button
                 type="button"
                 class="boton-principal"
-                onclick="iniciarJuego(
-                    '${juegoActual.tema}',
-                    '${juegoActual.nivel}'
-                )">
-
+                onclick="
+                    iniciarJuego(
+                        '${juegoActual.tema}',
+                        '${juegoActual.nivel}'
+                    )
+                "
+            >
                 🔄 Volver a jugar
-
             </button>
 
         </div>
 
     `;
-
 }
 
 
 // ==========================================
-// CREAR CONTENEDOR DEL JUEGO
-// ==========================================
-
-function crearContenedorJuego() {
-
-    const zona =
-        document.querySelector(
-            ".ejercicios-seccion"
-        );
-
-    if (!zona) return;
-
-
-    const contenedor =
-        document.createElement("div");
-
-
-    contenedor.id =
-        "juegoMatematicas";
-
-
-    contenedor.className =
-        "tarjeta";
-
-
-    contenedor.style.marginTop =
-        "30px";
-
-
-    contenedor.innerHTML = `
-
-        <div style="text-align:center;">
-
-            <p
-                id="progresoJuego"
-                style="
-                    color:#667085;
-                    font-weight:700;
-                ">
-            </p>
-
-            <h2
-                id="preguntaJuego"
-                style="
-                    font-size:2rem;
-                    margin:20px 0;
-                ">
-            </h2>
-
-            <div
-                id="respuestasJuego"
-                style="
-                    display:grid;
-                    grid-template-columns:
-                    repeat(2,1fr);
-                    gap:12px;
-                    max-width:600px;
-                    margin:auto;
-                ">
-            </div>
-
-            <p
-                id="resultadoJuego"
-                style="
-                    font-weight:800;
-                    min-height:28px;
-                    margin-top:18px;
-                ">
-            </p>
-
-        </div>
-
-    `;
-
-
-    zona.appendChild(
-        contenedor
-    );
-
-}
-
-
-// ==========================================
-// BOTONES COMPATIBLES CON LA WEB ANTIGUA
+// COMPATIBILIDAD CON LA WEB ANTIGUA
 // ==========================================
 
 function empezarSumas(nivel) {
@@ -706,7 +835,6 @@ function empezarSumas(nivel) {
         "sumas",
         nivel
     );
-
 }
 
 
@@ -716,7 +844,6 @@ function empezarRestas(nivel) {
         "restas",
         nivel
     );
-
 }
 
 
@@ -726,7 +853,6 @@ function empezarMultiplicaciones(nivel) {
         "multiplicaciones",
         nivel
     );
-
 }
 
 
@@ -736,7 +862,6 @@ function empezarDivisiones(nivel) {
         "divisiones",
         nivel
     );
-
 }
 
 
@@ -746,7 +871,6 @@ function empezarFracciones(nivel) {
         "fracciones",
         nivel
     );
-
 }
 
 
@@ -754,19 +878,11 @@ function empezarFracciones(nivel) {
 // MENSAJES TEMPORALES
 // ==========================================
 
-function mostrarMensaje(tipo) {
+function mostrarMensaje(tema) {
 
-    if (tipo === "ortografia") {
-
-        alert(
-            "📚 El nuevo ejercicio de ortografía estará disponible muy pronto."
-        );
-
-    }
-
+    alert(
+        "🚀 " +
+        tema +
+        " estará disponible próximamente en Educonew."
+    );
 }
-
-
-// ==========================================
-// FINAL
-// ==========================================
