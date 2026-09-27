@@ -2,44 +2,82 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Lengua | Educonew</title>
 
     <meta
         name="description"
-        content="Practica Lengua con ejercicios interactivos de ortografía y gramática en Educonew."
+        content="Practica Lengua gratis en Educonew con ejercicios interactivos de ortografía y gramática."
     >
 
     <meta name="robots" content="index, follow">
 
-    <link rel="icon" type="image/png" href="perfil.png">
+    <link
+        rel="canonical"
+        href="https://educonew.github.io/lengua.html"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="perfil.png"
+    >
+
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
+
 <header class="hero-principal">
+
 
     <nav class="barra-navegacion">
 
-        <div class="logo">
-            <img src="perfil.png" alt="Educonew">
+        <a href="index.html" class="logo">
+
+            <img
+                src="perfil.png"
+                alt="Educonew"
+            >
+
             <span>Educonew</span>
-        </div>
+
+        </a>
+
 
         <div class="menu">
-            <a href="index.html">Inicio</a>
-            <a href="index.html#materias">Materias</a>
-            <a href="#actividades">Practicar</a>
-            <a href="index.html#recursos">Recursos</a>
+
+            <a href="index.html">
+                Inicio
+            </a>
+
+            <a href="#actividades">
+                Lengua
+            </a>
+
+            <a href="#niveles">
+                Niveles
+            </a>
+
+            <a href="#recursos">
+                Recursos
+            </a>
+
         </div>
 
     </nav>
 
 
+
     <div class="hero-contenido">
+
 
         <div class="hero-texto">
 
@@ -47,17 +85,19 @@
                 📚 LENGUA
             </span>
 
+
             <h1>
                 Aprende.<br>
                 <span>Practica.</span><br>
                 Mejora.
             </h1>
 
+
             <p>
-                Mejora tu ortografía y gramática
-                con ejercicios interactivos adaptados
-                a diferentes niveles.
+                Mejora tu ortografía y gramática con ejercicios
+                interactivos adaptados a diferentes niveles.
             </p>
+
 
             <div class="hero-botones">
 
@@ -68,11 +108,12 @@
                     🚀 Empezar a practicar
                 </a>
 
+
                 <a
                     href="index.html"
                     class="boton-secundario"
                 >
-                    ← Volver al inicio
+                    ← Volver a Educonew
                 </a>
 
             </div>
@@ -80,23 +121,48 @@
         </div>
 
 
+
         <div class="hero-visual">
 
+
             <div class="tarjeta-flotante tarjeta-libro">
+
                 ✏️
-                <strong>Aprende</strong>
-                <span>A tu ritmo</span>
+
+                <strong>
+                    2 actividades
+                </strong>
+
+                <span>
+                    Para practicar
+                </span>
+
             </div>
+
 
             <div class="circulo-educativo">
-                <img src="perfil.png" alt="Educonew">
+
+                <div style="font-size:8rem;">
+                    📚
+                </div>
+
             </div>
 
+
             <div class="tarjeta-flotante tarjeta-estadistica">
-                ⭐
-                <strong>Practica</strong>
-                <span>Mejora cada día</span>
+
+                🎯
+
+                <strong>
+                    4 niveles
+                </strong>
+
+                <span>
+                    De dificultad
+                </span>
+
             </div>
+
 
         </div>
 
@@ -105,30 +171,36 @@
 </header>
 
 
+
 <main>
+
 
 <section class="presentacion">
 
     <span class="etiqueta">
-        TODO EN UN SOLO LUGAR
+        ELIGE TU RETO
     </span>
 
+
     <h2>
-        Tu espacio para aprender Lengua
+        ¿Qué quieres practicar?
     </h2>
 
+
     <p>
-        Elige una actividad y selecciona tu nivel.
-        Todo está preparado para empezar.
+        Elige una actividad y empieza con el nivel
+        que prefieras.
     </p>
 
 </section>
+
 
 
 <section
     id="actividades"
     class="seccion"
 >
+
 
     <div class="titulo-seccion">
 
@@ -139,337 +211,139 @@
             </span>
 
             <h2>
-                ¿Qué quieres practicar?
+                Lengua paso a paso
             </h2>
 
         </div>
 
+
         <p>
-            Elige una actividad y empieza.
+            Practica y mejora con ejercicios interactivos.
         </p>
 
     </div>
 
 
-    <!-- ============================= -->
+
     <!-- ORTOGRAFÍA -->
-    <!-- ============================= -->
 
-    <div class="bloque-lengua">
+    <article class="materia-card lengua">
 
-        <div class="titulo-seccion">
+        <div class="materia-icono">
+            ✏️
+        </div>
 
-            <div>
 
-                <span class="etiqueta">
-                    ✏️ ORTOGRAFÍA
-                </span>
+        <div>
 
-                <h2>
-                    Mejora tu ortografía
-                </h2>
+            <h3>
+                Ortografía
+            </h3>
+
+            <p>
+                Elige el nivel y demuestra cuánto sabes.
+            </p>
+
+
+            <div class="niveles">
+
+                <button
+                    type="button"
+                    onclick="iniciarJuegoLengua('ortografia','facil')"
+                >
+                    🟢 Fácil
+                </button>
+
+                <button
+                    type="button"
+                    onclick="iniciarJuegoLengua('ortografia','medio')"
+                >
+                    🟡 Medio
+                </button>
+
+                <button
+                    type="button"
+                    onclick="iniciarJuegoLengua('ortografia','dificil')"
+                >
+                    🔴 Difícil
+                </button>
+
+                <button
+                    type="button"
+                    onclick="iniciarJuegoLengua('ortografia','experto')"
+                >
+                    🟣 Experto
+                </button>
 
             </div>
 
         </div>
 
-
-        <div class="materias-grid">
-
-            <button
-                type="button"
-                class="materia-card lengua-nivel"
-                data-tema="ortografia"
-                data-nivel="facil"
-            >
-
-                <div class="materia-icono">
-                    🟢
-                </div>
-
-                <div>
-                    <h3>Fácil</h3>
-                    <p>
-                        Palabras y reglas básicas.
-                    </p>
-                </div>
-
-                <span class="flecha">→</span>
-
-            </button>
+    </article>
 
 
-            <button
-                type="button"
-                class="materia-card lengua-nivel"
-                data-tema="ortografia"
-                data-nivel="medio"
-            >
 
-                <div class="materia-icono">
-                    🟡
-                </div>
-
-                <div>
-                    <h3>Medio</h3>
-                    <p>
-                        Reglas de dificultad media.
-                    </p>
-                </div>
-
-                <span class="flecha">→</span>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="materia-card lengua-nivel"
-                data-tema="ortografia"
-                data-nivel="dificil"
-            >
-
-                <div class="materia-icono">
-                    🔴
-                </div>
-
-                <div>
-                    <h3>Difícil</h3>
-                    <p>
-                        Pon a prueba tus conocimientos.
-                    </p>
-                </div>
-
-                <span class="flecha">→</span>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="materia-card lengua-nivel"
-                data-tema="ortografia"
-                data-nivel="experto"
-            >
-
-                <div class="materia-icono">
-                    🟣
-                </div>
-
-                <div>
-                    <h3>Experto</h3>
-                    <p>
-                        Para dominar la ortografía.
-                    </p>
-                </div>
-
-                <span class="flecha">→</span>
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- ============================= -->
     <!-- GRAMÁTICA -->
-    <!-- ============================= -->
 
-    <div class="bloque-lengua">
+    <article class="materia-card lengua">
 
-        <div class="titulo-seccion">
+        <div class="materia-icono">
+            🧩
+        </div>
 
-            <div>
 
-                <span class="etiqueta">
-                    🧩 GRAMÁTICA
-                </span>
+        <div>
 
-                <h2>
-                    Pon a prueba tu gramática
-                </h2>
+            <h3>
+                Gramática
+            </h3>
+
+            <p>
+                Identifica palabras y conceptos gramaticales.
+            </p>
+
+
+            <div class="niveles">
+
+                <button
+                    type="button"
+                    onclick="iniciarJuegoLengua('gramatica','facil')"
+                >
+                    🟢 Fácil
+                </button>
+
+                <button
+                    type="button"
+                    onclick="iniciarJuegoLengua('gramatica','medio')"
+                >
+                    🟡 Medio
+                </button>
+
+                <button
+                    type="button"
+                    onclick="iniciarJuegoLengua('gramatica','dificil')"
+                >
+                    🔴 Difícil
+                </button>
+
+                <button
+                    type="button"
+                    onclick="iniciarJuegoLengua('gramatica','experto')"
+                >
+                    🟣 Experto
+                </button>
 
             </div>
 
         </div>
 
-
-        <div class="materias-grid">
-
-            <button
-                type="button"
-                class="materia-card lengua-nivel"
-                data-tema="gramatica"
-                data-nivel="facil"
-            >
-
-                <div class="materia-icono">
-                    🟢
-                </div>
-
-                <div>
-                    <h3>Fácil</h3>
-                    <p>
-                        Conceptos gramaticales básicos.
-                    </p>
-                </div>
-
-                <span class="flecha">→</span>
-
-            </button>
+    </article>
 
 
-            <button
-                type="button"
-                class="materia-card lengua-nivel"
-                data-tema="gramatica"
-                data-nivel="medio"
-            >
 
-                <div class="materia-icono">
-                    🟡
-                </div>
+    <!-- ZONA DEL JUEGO -->
 
-                <div>
-                    <h3>Medio</h3>
-                    <p>
-                        Practica gramática de nivel medio.
-                    </p>
-                </div>
-
-                <span class="flecha">→</span>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="materia-card lengua-nivel"
-                data-tema="gramatica"
-                data-nivel="dificil"
-            >
-
-                <div class="materia-icono">
-                    🔴
-                </div>
-
-                <div>
-                    <h3>Difícil</h3>
-                    <p>
-                        Preguntas para poner a prueba
-                        tus conocimientos.
-                    </p>
-                </div>
-
-                <span class="flecha">→</span>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="materia-card lengua-nivel"
-                data-tema="gramatica"
-                data-nivel="experto"
-            >
-
-                <div class="materia-icono">
-                    🟣
-                </div>
-
-                <div>
-                    <h3>Experto</h3>
-                    <p>
-                        El reto para dominar la gramática.
-                    </p>
-                </div>
-
-                <span class="flecha">→</span>
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- ============================= -->
-    <!-- PRÓXIMAMENTE -->
-    <!-- ============================= -->
-
-    <div class="bloque-lengua">
-
-        <div class="titulo-seccion">
-
-            <div>
-
-                <span class="etiqueta">
-                    🚀 PRÓXIMAMENTE
-                </span>
-
-                <h2>
-                    Más formas de practicar
-                </h2>
-
-            </div>
-
-        </div>
-
-
-        <div class="materias-grid">
-
-            <div class="materia-card">
-
-                <div class="materia-icono">
-                    🧠
-                </div>
-
-                <div>
-                    <h3>Vocabulario</h3>
-                    <p>
-                        Sinónimos, antónimos
-                        y significado de palabras.
-                    </p>
-                </div>
-
-                <span class="proximamente">
-                    PRÓXIMAMENTE
-                </span>
-
-            </div>
-
-
-            <div class="materia-card">
-
-                <div class="materia-icono">
-                    📖
-                </div>
-
-                <div>
-                    <h3>Comprensión lectora</h3>
-                    <p>
-                        Lee textos y demuestra
-                        cuánto has comprendido.
-                    </p>
-                </div>
-
-                <span class="proximamente">
-                    PRÓXIMAMENTE
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ============================= -->
-    <!-- JUEGO -->
-    <!-- ============================= -->
-
-    <section
+    <div
         id="juegoLengua"
         style="
             max-width:900px;
@@ -494,37 +368,282 @@
                 📚
             </div>
 
+
             <h2>
-                Elige un nivel para comenzar
+                Elige una actividad para comenzar
             </h2>
+
 
             <p>
                 Selecciona Ortografía o Gramática
-                y empieza a practicar.
+                y después el nivel que quieras.
             </p>
 
         </div>
 
-    </section>
+    </div>
 
 
 </section>
+
+
+
+<section
+    id="niveles"
+    class="seccion seccion-destacados"
+>
+
+
+    <div class="titulo-seccion">
+
+        <div>
+
+            <span class="etiqueta">
+                🎯 DIFICULTAD
+            </span>
+
+            <h2>
+                Elige tu nivel
+            </h2>
+
+        </div>
+
+
+        <p>
+            Empieza poco a poco y aumenta el reto.
+        </p>
+
+    </div>
+
+
+
+    <div class="destacados-grid">
+
+
+        <article class="destacado-card">
+
+            <span class="destacado-icono">
+                🟢
+            </span>
+
+            <div>
+
+                <span class="nivel">
+                    NIVEL 1
+                </span>
+
+                <h3>
+                    Fácil
+                </h3>
+
+                <p>
+                    Para comenzar y practicar
+                    conceptos básicos.
+                </p>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="destacado-card">
+
+            <span class="destacado-icono">
+                🟡
+            </span>
+
+            <div>
+
+                <span class="nivel">
+                    NIVEL 2
+                </span>
+
+                <h3>
+                    Medio
+                </h3>
+
+                <p>
+                    Un reto mayor para
+                    seguir mejorando.
+                </p>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="destacado-card">
+
+            <span class="destacado-icono">
+                🔴
+            </span>
+
+            <div>
+
+                <span class="nivel">
+                    NIVEL 3
+                </span>
+
+                <h3>
+                    Difícil
+                </h3>
+
+                <p>
+                    Pon a prueba todo
+                    lo que has aprendido.
+                </p>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="destacado-card">
+
+            <span class="destacado-icono">
+                🟣
+            </span>
+
+            <div>
+
+                <span class="nivel">
+                    NIVEL 4
+                </span>
+
+                <h3>
+                    Experto
+                </h3>
+
+                <p>
+                    El reto para dominar
+                    Lengua.
+                </p>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+
+<section
+    id="recursos"
+    class="seccion"
+>
+
+
+    <div class="titulo-seccion">
+
+        <div>
+
+            <span class="etiqueta">
+                📖 RECURSOS
+            </span>
+
+            <h2>
+                Sigue aprendiendo
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="recursos-grid">
+
+
+        <a
+            href="reglas-ortografia.html"
+            class="recurso-card"
+        >
+
+            <span>
+                ✏️
+            </span>
+
+            <div>
+
+                <h3>
+                    Reglas de ortografía
+                </h3>
+
+                <p>
+                    Aprende las reglas más importantes
+                    con ejemplos.
+                </p>
+
+            </div>
+
+            <strong>
+                →
+            </strong>
+
+        </a>
+
+
+
+        <a
+            href="index.html#recursos"
+            class="recurso-card"
+        >
+
+            <span>
+                📚
+            </span>
+
+            <div>
+
+                <h3>
+                    Más recursos
+                </h3>
+
+                <p>
+                    Descubre otros contenidos
+                    educativos de Educonew.
+                </p>
+
+            </div>
+
+            <strong>
+                →
+            </strong>
+
+        </a>
+
+
+    </div>
+
+</section>
+
 
 
 <section class="llamada-final">
 
     <div>
 
-        <span>🚀</span>
+        <span>
+            🚀
+        </span>
+
 
         <h2>
             ¿Preparado para mejorar?
         </h2>
 
+
         <p>
             Practica un poco cada día
             y sigue avanzando.
         </p>
+
 
         <a
             href="#actividades"
@@ -537,16 +656,21 @@
 
 </section>
 
+
 </main>
+
 
 
 <footer>
 
     <div class="footer-contenido">
 
+
         <div>
 
-            <h3>🎓 Educonew</h3>
+            <h3>
+                🎓 Educonew
+            </h3>
 
             <p>
                 Aprende, practica y mejora.
@@ -555,32 +679,45 @@
         </div>
 
 
+
         <div>
 
-            <h4>Enlaces</h4>
+            <h4>
+                Navegación
+            </h4>
 
-            <a href="index.html">Inicio</a>
-            <a href="index.html#materias">Materias</a>
-            <a href="#actividades">Practicar</a>
-            <a href="index.html#recursos">Recursos</a>
+            <a href="index.html">
+                Inicio
+            </a>
+
+            <a href="#actividades">
+                Lengua
+            </a>
+
+            <a href="#niveles">
+                Niveles
+            </a>
+
+            <a href="#recursos">
+                Recursos
+            </a>
 
         </div>
 
 
+
         <div>
 
-            <h4>Recursos</h4>
-
-            <a href="tablas-multiplicar.html">
-                Tablas de multiplicar
-            </a>
-
-            <a href="mejorar-matematicas.html">
-                Matemáticas
-            </a>
+            <h4>
+                Recursos
+            </h4>
 
             <a href="reglas-ortografia.html">
                 Ortografía
+            </a>
+
+            <a href="index.html#recursos">
+                Más recursos
             </a>
 
             <a href="politica-privacidad.html">
@@ -589,7 +726,9 @@
 
         </div>
 
+
     </div>
+
 
 
     <div class="footer-final">
@@ -603,12 +742,9 @@
 </footer>
 
 
-<!-- IMPORTANTE:
-     Este archivo NO utiliza script.js.
-     Utiliza su propio motor independiente.
--->
 
-<script src="lengua.js"></script>
+<script src="script.js"></script>
 
 </body>
+
 </html>
