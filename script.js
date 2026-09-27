@@ -2958,3 +2958,388 @@ function mostrarResultadoLengua() {
 
     `;
 }
+```javascript
+// ==========================================
+// EDUCONEW — LENGUA: GRAMÁTICA
+// ==========================================
+
+const preguntasGramatica = {
+
+    facil: [
+        {
+            pregunta: "¿Cuál de estas palabras es un sustantivo?",
+            opciones: ["correr", "casa", "rápido", "bonito"],
+            respuesta: "casa"
+        },
+        {
+            pregunta: "¿Cuál de estas palabras es un verbo?",
+            opciones: ["mesa", "cantar", "azul", "niño"],
+            respuesta: "cantar"
+        },
+        {
+            pregunta: "¿Cuál de estas palabras es un adjetivo?",
+            opciones: ["perro", "saltar", "grande", "casa"],
+            respuesta: "grande"
+        },
+        {
+            pregunta: "¿Cuál de estas palabras es un sustantivo?",
+            opciones: ["feliz", "correr", "montaña", "rápidamente"],
+            respuesta: "montaña"
+        },
+        {
+            pregunta: "¿Cuál de estas palabras es un verbo?",
+            opciones: ["jugar", "pelota", "verde", "colegio"],
+            respuesta: "jugar"
+        }
+    ],
+
+    medio: [
+        {
+            pregunta: "En «El perro corre», ¿cuál es el sujeto?",
+            opciones: ["El perro", "corre", "El", "perro corre"],
+            respuesta: "El perro"
+        },
+        {
+            pregunta: "En «María lee un libro», ¿cuál es el verbo?",
+            opciones: ["María", "lee", "libro", "un"],
+            respuesta: "lee"
+        },
+        {
+            pregunta: "¿Cuál es un pronombre personal?",
+            opciones: ["mesa", "ellos", "rápido", "correr"],
+            respuesta: "ellos"
+        },
+        {
+            pregunta: "¿Cuál es el plural de «lápiz»?",
+            opciones: ["lápizes", "lápizs", "lápices", "lapices"],
+            respuesta: "lápices"
+        },
+        {
+            pregunta: "¿Cuál es el femenino de «actor»?",
+            opciones: ["actora", "actriz", "actora", "actriz"],
+            respuesta: "actriz"
+        }
+    ],
+
+    dificil: [
+        {
+            pregunta: "En «Los alumnos estudian matemáticas», ¿cuál es el predicado?",
+            opciones: [
+                "Los alumnos",
+                "estudian matemáticas",
+                "matemáticas",
+                "estudian"
+            ],
+            respuesta: "estudian matemáticas"
+        },
+        {
+            pregunta: "¿Cuál de estas palabras es un adverbio?",
+            opciones: ["rápidamente", "coche", "azul", "saltar"],
+            respuesta: "rápidamente"
+        },
+        {
+            pregunta: "En «Mi hermana compró un libro», ¿cuál es el complemento directo?",
+            opciones: [
+                "Mi hermana",
+                "compró",
+                "un libro",
+                "hermana"
+            ],
+            respuesta: "un libro"
+        },
+        {
+            pregunta: "¿Cuál de estas palabras es una conjunción?",
+            opciones: ["pero", "casa", "rápido", "ellos"],
+            respuesta: "pero"
+        },
+        {
+            pregunta: "En «Pedro y Ana juegan», ¿cuál es el sujeto?",
+            opciones: [
+                "juegan",
+                "Pedro",
+                "Pedro y Ana",
+                "Ana"
+            ],
+            respuesta: "Pedro y Ana"
+        }
+    ],
+
+    experto: [
+        {
+            pregunta: "En «Aunque llueva, iremos al parque», ¿qué tipo de palabra es «aunque»?",
+            opciones: [
+                "Conjunción",
+                "Adjetivo",
+                "Adverbio",
+                "Pronombre"
+            ],
+            respuesta: "Conjunción"
+        },
+        {
+            pregunta: "En «El profesor explicó la lección a los alumnos», ¿cuál es el complemento indirecto?",
+            opciones: [
+                "El profesor",
+                "la lección",
+                "a los alumnos",
+                "explicó"
+            ],
+            respuesta: "a los alumnos"
+        },
+        {
+            pregunta: "¿Cuál de estas palabras es un pronombre relativo?",
+            opciones: ["que", "muy", "pero", "desde"],
+            respuesta: "que"
+        },
+        {
+            pregunta: "En «Cuando llegues, llámame», ¿qué tipo de oración introduce «cuando llegues»?",
+            opciones: [
+                "Subordinada temporal",
+                "Subordinada causal",
+                "Coordinada copulativa",
+                "Oración principal"
+            ],
+            respuesta: "Subordinada temporal"
+        },
+        {
+            pregunta: "En «El libro fue escrito por Cervantes», ¿qué función cumple «por Cervantes»?",
+            opciones: [
+                "Complemento directo",
+                "Complemento agente",
+                "Complemento indirecto",
+                "Atributo"
+            ],
+            respuesta: "Complemento agente"
+        }
+    ]
+};
+
+
+// ==========================================
+// INICIAR GRAMÁTICA
+// ==========================================
+
+function empezarGramatica(nivel) {
+
+    if (!preguntasGramatica[nivel]) {
+
+        console.error(
+            "Nivel de gramática no válido:",
+            nivel
+        );
+
+        return;
+    }
+
+    juegoLenguaActual = {
+
+        tema: "gramatica",
+
+        nivel: nivel,
+
+        pregunta: 0,
+
+        aciertos: 0,
+
+        errores: 0,
+
+        racha: 0,
+
+        mejorRacha: 0,
+
+        puntos: 0,
+
+        total: 10,
+
+        bloqueado: false,
+
+        preguntas:
+            crearPartidaGramatica(nivel)
+    };
+
+    prepararZonaLengua();
+
+    mostrarPreguntaGramatica();
+}
+
+
+// ==========================================
+// CREAR PARTIDA ALEATORIA
+// ==========================================
+
+function crearPartidaGramatica(nivel) {
+
+    const disponibles =
+        [...preguntasGramatica[nivel]];
+
+    const partida = [];
+
+    while (partida.length < 10) {
+
+        const indice =
+            Math.floor(
+                Math.random() *
+                disponibles.length
+            );
+
+        const pregunta =
+            disponibles[indice];
+
+        partida.push({
+
+            pregunta: pregunta.pregunta,
+
+            opciones: [...pregunta.opciones],
+
+            respuesta: pregunta.respuesta
+
+        });
+
+        disponibles.splice(
+            indice,
+            1
+        );
+
+        if (disponibles.length === 0) {
+
+            disponibles.push(
+                ...preguntasGramatica[nivel]
+            );
+        }
+    }
+
+    return partida;
+}
+
+
+// ==========================================
+// MOSTRAR PREGUNTA
+// ==========================================
+
+function mostrarPreguntaGramatica() {
+
+    if (!juegoLenguaActual) return;
+
+    if (
+        juegoLenguaActual.pregunta >=
+        juegoLenguaActual.total
+    ) {
+
+        mostrarResultadoLengua();
+
+        return;
+    }
+
+    const pregunta =
+        juegoLenguaActual.preguntas[
+            juegoLenguaActual.pregunta
+        ];
+
+    const preguntaElemento =
+        document.getElementById(
+            "preguntaLengua"
+        );
+
+    const respuestasElemento =
+        document.getElementById(
+            "respuestasLengua"
+        );
+
+    const progresoElemento =
+        document.getElementById(
+            "progresoLengua"
+        );
+
+    const resultadoElemento =
+        document.getElementById(
+            "resultadoLengua"
+        );
+
+    const nivelElemento =
+        document.getElementById(
+            "nivelLengua"
+        );
+
+    if (
+        !preguntaElemento ||
+        !respuestasElemento ||
+        !progresoElemento ||
+        !resultadoElemento
+    ) {
+
+        console.error(
+            "No se encontraron los elementos de Gramática."
+        );
+
+        return;
+    }
+
+    juegoLenguaActual.bloqueado =
+        false;
+
+    preguntaElemento.textContent =
+        pregunta.pregunta;
+
+    progresoElemento.textContent =
+        `Pregunta ${juegoLenguaActual.pregunta + 1} de ${juegoLenguaActual.total}`;
+
+    if (nivelElemento) {
+
+        nivelElemento.textContent =
+            `${niveles[juegoLenguaActual.nivel].color} ${niveles[juegoLenguaActual.nivel].nombre}`;
+    }
+
+    resultadoElemento.textContent =
+        "";
+
+    respuestasElemento.innerHTML =
+        "";
+
+    actualizarMarcadorLengua();
+
+    const opciones =
+        [...pregunta.opciones];
+
+    opciones.sort(
+        () =>
+            Math.random() - 0.5
+    );
+
+    opciones.forEach(
+        opcion => {
+
+            const boton =
+                document.createElement(
+                    "button"
+                );
+
+            boton.type =
+                "button";
+
+            boton.className =
+                "respuesta";
+
+            boton.textContent =
+                opcion;
+
+            boton.style.cursor =
+                "pointer";
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    comprobarRespuestaLengua(
+                        opcion,
+                        pregunta.respuesta
+                    );
+
+                }
+            );
+
+            respuestasElemento.appendChild(
+                boton
+            );
+        }
+    );
+}
+```
