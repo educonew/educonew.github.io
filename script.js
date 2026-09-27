@@ -1,4 +1,4 @@
-```javascript
+
 // ============================================================
 // EDUCONew — MOTOR COMPLETO DE EJERCICIOS
 // MATEMÁTICAS + LENGUA
