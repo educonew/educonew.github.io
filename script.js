@@ -2958,7 +2958,6 @@ function mostrarResultadoLengua() {
 
     `;
 }
-```javascript
 // ==========================================
 // EDUCONEW — LENGUA: GRAMÁTICA
 // ==========================================
