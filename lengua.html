@@ -4,7 +4,6 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Lengua | Educonew</title>
@@ -21,13 +20,337 @@
         href="https://educonew.github.io/lengua.html"
     >
 
-    <link
-        rel="icon"
-        type="image/png"
-        href="perfil.png"
-    >
+    <link rel="icon" type="image/png" href="perfil.png">
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* ==========================================
+           LENGUA
+           MISMO DISEÑO QUE MATEMÁTICAS
+           ========================================== */
+
+        .lengua-main {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 70px 20px 90px;
+        }
+
+        .lengua-panel {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        .lengua-panel-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .lengua-panel-title h2 {
+            margin: 12px 0 8px;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+        }
+
+        .lengua-panel-title p {
+            color: #667085;
+            margin: 0;
+        }
+
+        .lengua-temas {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .lengua-tema {
+            position: relative;
+            border: 1px solid #e7eaf0;
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 25px 20px;
+            text-align: left;
+            cursor: pointer;
+            font: inherit;
+            color: #101828;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .lengua-tema:hover {
+            transform: translateY(-5px);
+            border-color: #c7d2fe;
+            box-shadow: 0 15px 32px rgba(15, 23, 42, 0.10);
+        }
+
+        .lengua-tema-icono {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: #f1f5ff;
+            font-size: 1.8rem;
+            margin-bottom: 17px;
+        }
+
+        .lengua-tema h3 {
+            margin: 0 0 7px;
+            font-size: 1.1rem;
+        }
+
+        .lengua-tema p {
+            margin: 0;
+            color: #667085;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .lengua-flecha {
+            position: absolute;
+            right: 18px;
+            bottom: 17px;
+            color: #667085;
+            font-size: 1.2rem;
+        }
+
+        .lengua-pantalla {
+            display: none;
+            animation: lenguaAparecer 0.3s ease;
+        }
+
+        .lengua-pantalla.activa {
+            display: block;
+        }
+
+        @keyframes lenguaAparecer {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .lengua-volver {
+            border: none;
+            background: transparent;
+            color: #4f46e5;
+            font: inherit;
+            font-weight: 800;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+
+        .lengua-volver:hover {
+            opacity: 0.7;
+        }
+
+        .lengua-seleccionada {
+            text-align: center;
+            margin: 10px 0 32px;
+        }
+
+        .lengua-seleccionada .icono-grande {
+            display: block;
+            font-size: 3.4rem;
+            margin-bottom: 8px;
+        }
+
+        .lengua-seleccionada h2 {
+            margin: 0 0 8px;
+            font-size: clamp(1.9rem, 4vw, 2.6rem);
+        }
+
+        .lengua-seleccionada p {
+            margin: 0;
+            color: #667085;
+        }
+
+        .lengua-niveles {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .lengua-nivel {
+            border: 1px solid #e4e7ec;
+            border-radius: 20px;
+            background: #ffffff;
+            padding: 22px 15px;
+            cursor: pointer;
+            text-align: center;
+            font: inherit;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .lengua-nivel:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 13px 28px rgba(15, 23, 42, 0.09);
+            border-color: #c7d2fe;
+        }
+
+        .lengua-nivel-emoji {
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .lengua-nivel-nombre {
+            display: block;
+            font-weight: 900;
+        }
+
+        .lengua-nivel-descripcion {
+            display: block;
+            color: #667085;
+            font-size: 0.82rem;
+            margin-top: 5px;
+        }
+
+        .lengua-juego {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .lengua-juego.activo {
+            display: block;
+            animation: lenguaAparecer 0.3s ease;
+        }
+
+        #juegoLengua > .tarjeta {
+            border-radius: 25px;
+            border: 1px solid #e7eaf0;
+            background: #ffffff;
+            padding: clamp(22px, 5vw, 42px);
+            box-shadow: 0 15px 38px rgba(15, 23, 42, 0.07);
+        }
+
+        #respuestasLengua {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        #respuestasLengua .respuesta-lengua {
+            min-height: 58px;
+            border: 1px solid #e4e7ec;
+            border-radius: 15px;
+            background: #ffffff;
+            font: inherit;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition:
+                transform 0.18s ease,
+                box-shadow 0.18s ease;
+            padding: 12px;
+        }
+
+        #respuestasLengua .respuesta-lengua:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        #respuestasLengua .respuesta-lengua:disabled {
+            cursor: default;
+        }
+
+        .lengua-recursos {
+            margin-top: 50px;
+        }
+
+        .lengua-recursos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .lengua-recurso {
+            background: #ffffff;
+            border: 1px solid #e7eaf0;
+            border-radius: 22px;
+            padding: 24px;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .lengua-recurso:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 13px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        .lengua-recurso span {
+            font-size: 1.8rem;
+        }
+
+        .lengua-recurso h3 {
+            margin: 12px 0 7px;
+        }
+
+        .lengua-recurso p {
+            color: #667085;
+            line-height: 1.55;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+
+            .lengua-niveles {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .lengua-recursos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .lengua-main {
+                padding-top: 45px;
+            }
+
+            .lengua-panel {
+                padding: 25px 18px;
+                border-radius: 22px;
+            }
+
+            .lengua-temas {
+                grid-template-columns: 1fr;
+            }
+
+            .lengua-niveles {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            #respuestasLengua {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
 
 </head>
 
@@ -36,7 +359,6 @@
 
 
 <header class="hero-principal">
-
 
     <nav class="barra-navegacion">
 
@@ -51,19 +373,14 @@
 
         </a>
 
-
         <div class="menu">
 
             <a href="index.html">
                 Inicio
             </a>
 
-            <a href="#actividades">
+            <a href="#temas">
                 Lengua
-            </a>
-
-            <a href="#niveles">
-                Niveles
             </a>
 
             <a href="#recursos">
@@ -75,9 +392,7 @@
     </nav>
 
 
-
     <div class="hero-contenido">
-
 
         <div class="hero-texto">
 
@@ -85,35 +400,31 @@
                 📚 LENGUA
             </span>
 
-
             <h1>
                 Aprende.<br>
                 <span>Practica.</span><br>
                 Mejora.
             </h1>
 
-
             <p>
                 Mejora tu ortografía y gramática con ejercicios
                 interactivos adaptados a diferentes niveles.
             </p>
 
-
             <div class="hero-botones">
 
                 <a
-                    href="#actividades"
+                    href="#temas"
                     class="boton-principal"
                 >
                     🚀 Empezar a practicar
                 </a>
 
-
                 <a
-                    href="index.html"
+                    href="#recursos"
                     class="boton-secundario"
                 >
-                    ← Volver a Educonew
+                    Ver recursos →
                 </a>
 
             </div>
@@ -121,20 +432,18 @@
         </div>
 
 
-
         <div class="hero-visual">
-
 
             <div class="tarjeta-flotante tarjeta-libro">
 
                 ✏️
 
                 <strong>
-                    2 actividades
+                    Practica
                 </strong>
 
                 <span>
-                    Para practicar
+                    A tu ritmo
                 </span>
 
             </div>
@@ -151,18 +460,17 @@
 
             <div class="tarjeta-flotante tarjeta-estadistica">
 
-                🎯
+                ⭐
 
                 <strong>
-                    4 niveles
+                    Lengua
                 </strong>
 
                 <span>
-                    De dificultad
+                    Mejora cada día
                 </span>
 
             </div>
-
 
         </div>
 
@@ -171,334 +479,336 @@
 </header>
 
 
-
 <main>
 
 
 <section class="presentacion">
 
     <span class="etiqueta">
-        ELIGE TU RETO
+        🧠 APRENDE PRACTICANDO
     </span>
 
-
     <h2>
-        ¿Qué quieres practicar?
+        Tu espacio para mejorar en Lengua
     </h2>
 
-
     <p>
-        Elige una actividad y empieza con el nivel
-        que prefieras.
+        Elige una actividad, selecciona tu nivel
+        y empieza a practicar.
     </p>
 
 </section>
 
 
+<div class="lengua-main">
 
 <section
-    id="actividades"
-    class="seccion"
+    id="temas"
+    class="lengua-panel"
 >
 
 
-    <div class="titulo-seccion">
+    <!-- ==========================
+         SELECCIÓN DE ACTIVIDAD
+         ========================== -->
 
-        <div>
+    <div
+        id="selectorLengua"
+        class="lengua-pantalla activa"
+    >
+
+        <div class="lengua-panel-title">
 
             <span class="etiqueta">
                 📚 ACTIVIDADES
             </span>
 
             <h2>
-                Lengua paso a paso
+                ¿Qué quieres practicar?
             </h2>
+
+            <p>
+                Elige una actividad para comenzar.
+            </p>
 
         </div>
 
 
+        <div class="lengua-temas">
+
+
+            <button
+                type="button"
+                class="lengua-tema"
+                onclick="seleccionarActividadLengua('ortografia')"
+            >
+
+                <div class="lengua-tema-icono">
+                    ✏️
+                </div>
+
+                <h3>
+                    Ortografía
+                </h3>
+
+                <p>
+                    Practica palabras y aprende a escribirlas correctamente.
+                </p>
+
+                <span class="lengua-flecha">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="lengua-tema"
+                onclick="seleccionarActividadLengua('gramatica')"
+            >
+
+                <div class="lengua-tema-icono">
+                    🧩
+                </div>
+
+                <h3>
+                    Gramática
+                </h3>
+
+                <p>
+                    Identifica sustantivos, verbos, adjetivos y otras categorías.
+                </p>
+
+                <span class="lengua-flecha">
+                    →
+                </span>
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================
+         SELECCIÓN DE NIVEL
+         ========================== -->
+
+    <div
+        id="selectorNivelLengua"
+        class="lengua-pantalla"
+    >
+
+        <button
+            type="button"
+            class="lengua-volver"
+            onclick="volverActividadesLengua()"
+        >
+            ← Volver a actividades
+        </button>
+
+
+        <div class="lengua-seleccionada">
+
+            <span
+                id="lenguaIcono"
+                class="icono-grande"
+            >
+                ✏️
+            </span>
+
+            <h2 id="lenguaTitulo">
+                Ortografía
+            </h2>
+
+            <p id="lenguaDescripcion">
+                Elige el nivel con el que quieres practicar.
+            </p>
+
+        </div>
+
+
+        <div class="lengua-niveles">
+
+
+            <button
+                type="button"
+                class="lengua-nivel"
+                onclick="empezarLengua('facil')"
+            >
+
+                <span class="lengua-nivel-emoji">
+                    🟢
+                </span>
+
+                <span class="lengua-nivel-nombre">
+                    Fácil
+                </span>
+
+                <span class="lengua-nivel-descripcion">
+                    Para empezar
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="lengua-nivel"
+                onclick="empezarLengua('medio')"
+            >
+
+                <span class="lengua-nivel-emoji">
+                    🟡
+                </span>
+
+                <span class="lengua-nivel-nombre">
+                    Medio
+                </span>
+
+                <span class="lengua-nivel-descripcion">
+                    Para mejorar
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="lengua-nivel"
+                onclick="empezarLengua('dificil')"
+            >
+
+                <span class="lengua-nivel-emoji">
+                    🔴
+                </span>
+
+                <span class="lengua-nivel-nombre">
+                    Difícil
+                </span>
+
+                <span class="lengua-nivel-descripcion">
+                    Para ponerte a prueba
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="lengua-nivel"
+                onclick="empezarLengua('experto')"
+            >
+
+                <span class="lengua-nivel-emoji">
+                    🟣
+                </span>
+
+                <span class="lengua-nivel-nombre">
+                    Experto
+                </span>
+
+                <span class="lengua-nivel-descripcion">
+                    Para dominarlo
+                </span>
+
+            </button>
+
+
+        </div>
+
+
+        <div
+            id="zonaJuegoLengua"
+            class="lengua-juego"
+        >
+
+            <div id="juegoLengua"></div>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- ==========================
+     RECURSOS
+     ========================== -->
+
+<section
+    id="recursos"
+    class="lengua-recursos"
+>
+
+    <div class="lengua-panel-title">
+
+        <span class="etiqueta">
+            📖 RECURSOS
+        </span>
+
+        <h2>
+            Sigue aprendiendo
+        </h2>
+
         <p>
-            Practica y mejora con ejercicios interactivos.
+            Recursos para mejorar tu Lengua.
         </p>
 
     </div>
 
 
-
-    <!-- ORTOGRAFÍA -->
-
-    <article class="materia-card lengua">
-
-        <div class="materia-icono">
-            ✏️
-        </div>
+    <div class="lengua-recursos-grid">
 
 
-        <div>
+        <article class="lengua-recurso">
+
+            <span>✏️</span>
 
             <h3>
                 Ortografía
             </h3>
 
             <p>
-                Elige el nivel y demuestra cuánto sabes.
+                Aprende las reglas ortográficas
+                más importantes.
             </p>
 
-
-            <div class="niveles">
-
-               <button type="button" onclick="empezarOrtografia('facil')">
-    🟢 Fácil
-</button>
-
-<button type="button" onclick="empezarOrtografia('medio')">
-    🟡 Medio
-</button>
-
-<button type="button" onclick="empezarOrtografia('dificil')">
-    🔴 Difícil
-</button>
-
-<button type="button" onclick="empezarOrtografia('experto')">
-    🟣 Experto
-</button>
-
-            </div>
-
-        </div>
-
-    </article>
+        </article>
 
 
+        <article class="lengua-recurso">
 
-    <!-- GRAMÁTICA -->
-
-    <article class="materia-card lengua">
-
-        <div class="materia-icono">
-            🧩
-        </div>
-
-
-        <div>
+            <span>🧠</span>
 
             <h3>
-                Gramática
+                Aprende de tus errores
             </h3>
 
             <p>
-                Identifica palabras y conceptos gramaticales.
+                Cada ejercicio te ayuda a descubrir
+                qué necesitas seguir practicando.
             </p>
 
-
-            <div class="niveles">
-
-              <button type="button" onclick="empezarGramatica('facil')">
-    🟢 Fácil
-</button>
-
-<button type="button" onclick="empezarGramatica('medio')">
-    🟡 Medio
-</button>
-
-<button type="button" onclick="empezarGramatica('dificil')">
-    🔴 Difícil
-</button>
-
-<button type="button" onclick="empezarGramatica('experto')">
-    🟣 Experto
-</button>
-            </div>
-
-        </div>
-
-    </article>
+        </article>
 
 
+        <article class="lengua-recurso">
 
-    <!-- ZONA DEL JUEGO -->
+            <span>🚀</span>
 
-    <div
-        id="juegoLengua"
-        style="
-            max-width:900px;
-            margin:50px auto 0;
-        "
-    >
-
-        <div
-            class="tarjeta"
-            style="
-                text-align:center;
-                padding:45px 25px;
-            "
-        >
-
-            <div
-                style="
-                    font-size:4rem;
-                    margin-bottom:15px;
-                "
-            >
-                📚
-            </div>
-
-
-            <h2>
-                Elige una actividad para comenzar
-            </h2>
-
+            <h3>
+                Supera tus límites
+            </h3>
 
             <p>
-                Selecciona Ortografía o Gramática
-                y después el nivel que quieras.
+                Cuando controles un nivel,
+                prueba el siguiente.
             </p>
 
-        </div>
-
-    </div>
-
-
-</section>
-
-
-
-<section
-    id="niveles"
-    class="seccion seccion-destacados"
->
-
-
-    <div class="titulo-seccion">
-
-        <div>
-
-            <span class="etiqueta">
-                🎯 DIFICULTAD
-            </span>
-
-            <h2>
-                Elige tu nivel
-            </h2>
-
-        </div>
-
-
-        <p>
-            Empieza poco a poco y aumenta el reto.
-        </p>
-
-    </div>
-
-
-
-    <div class="destacados-grid">
-
-
-        <article class="destacado-card">
-
-            <span class="destacado-icono">
-                🟢
-            </span>
-
-            <div>
-
-                <span class="nivel">
-                    NIVEL 1
-                </span>
-
-                <h3>
-                    Fácil
-                </h3>
-
-                <p>
-                    Para comenzar y practicar
-                    conceptos básicos.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <article class="destacado-card">
-
-            <span class="destacado-icono">
-                🟡
-            </span>
-
-            <div>
-
-                <span class="nivel">
-                    NIVEL 2
-                </span>
-
-                <h3>
-                    Medio
-                </h3>
-
-                <p>
-                    Un reto mayor para
-                    seguir mejorando.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <article class="destacado-card">
-
-            <span class="destacado-icono">
-                🔴
-            </span>
-
-            <div>
-
-                <span class="nivel">
-                    NIVEL 3
-                </span>
-
-                <h3>
-                    Difícil
-                </h3>
-
-                <p>
-                    Pon a prueba todo
-                    lo que has aprendido.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <article class="destacado-card">
-
-            <span class="destacado-icono">
-                🟣
-            </span>
-
-            <div>
-
-                <span class="nivel">
-                    NIVEL 4
-                </span>
-
-                <h3>
-                    Experto
-                </h3>
-
-                <p>
-                    El reto para dominar
-                    Lengua.
-                </p>
-
-            </div>
-
         </article>
 
 
@@ -506,140 +816,14 @@
 
 </section>
 
-
-
-<section
-    id="recursos"
-    class="seccion"
->
-
-
-    <div class="titulo-seccion">
-
-        <div>
-
-            <span class="etiqueta">
-                📖 RECURSOS
-            </span>
-
-            <h2>
-                Sigue aprendiendo
-            </h2>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="recursos-grid">
-
-
-        <a
-            href="reglas-ortografia.html"
-            class="recurso-card"
-        >
-
-            <span>
-                ✏️
-            </span>
-
-            <div>
-
-                <h3>
-                    Reglas de ortografía
-                </h3>
-
-                <p>
-                    Aprende las reglas más importantes
-                    con ejemplos.
-                </p>
-
-            </div>
-
-            <strong>
-                →
-            </strong>
-
-        </a>
-
-
-
-        <a
-            href="index.html#recursos"
-            class="recurso-card"
-        >
-
-            <span>
-                📚
-            </span>
-
-            <div>
-
-                <h3>
-                    Más recursos
-                </h3>
-
-                <p>
-                    Descubre otros contenidos
-                    educativos de Educonew.
-                </p>
-
-            </div>
-
-            <strong>
-                →
-            </strong>
-
-        </a>
-
-
-    </div>
-
-</section>
-
-
-
-<section class="llamada-final">
-
-    <div>
-
-        <span>
-            🚀
-        </span>
-
-
-        <h2>
-            ¿Preparado para mejorar?
-        </h2>
-
-
-        <p>
-            Practica un poco cada día
-            y sigue avanzando.
-        </p>
-
-
-        <a
-            href="#actividades"
-            class="boton-principal"
-        >
-            Empezar ahora
-        </a>
-
-    </div>
-
-</section>
-
+</div>
 
 </main>
-
 
 
 <footer>
 
     <div class="footer-contenido">
-
 
         <div>
 
@@ -654,7 +838,6 @@
         </div>
 
 
-
         <div>
 
             <h4>
@@ -665,12 +848,8 @@
                 Inicio
             </a>
 
-            <a href="#actividades">
+            <a href="#temas">
                 Lengua
-            </a>
-
-            <a href="#niveles">
-                Niveles
             </a>
 
             <a href="#recursos">
@@ -678,7 +857,6 @@
             </a>
 
         </div>
-
 
 
         <div>
@@ -701,9 +879,7 @@
 
         </div>
 
-
     </div>
-
 
 
     <div class="footer-final">
@@ -717,8 +893,798 @@
 </footer>
 
 
+<script>
 
-<script src="script.js"></script>
+    /* ==========================================
+       DATOS
+       ========================================== */
+
+    const actividadesLengua = {
+
+        ortografia: {
+            icono: "✏️",
+            titulo: "Ortografía",
+            descripcion:
+                "Practica palabras y aprende a escribirlas correctamente."
+        },
+
+        gramatica: {
+            icono: "🧩",
+            titulo: "Gramática",
+            descripcion:
+                "Identifica palabras y categorías gramaticales."
+        }
+
+    };
+
+
+    let actividadLenguaActual = null;
+
+    let juegoLenguaActual = null;
+
+
+    /* ==========================================
+       PREGUNTAS
+       ========================================== */
+
+    const preguntasOrtografia = [
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "Haber",
+                "Aver",
+                "Haver",
+                "Abér"
+            ],
+            correcta: "Haber"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "Vaca",
+                "Baca",
+                "Vaka",
+                "Baca"
+            ],
+            correcta: "Vaca"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "Huevo",
+                "Uevo",
+                "Hebo",
+                "Huuevo"
+            ],
+            correcta: "Huevo"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "Guitarra",
+                "Gitarra",
+                "Guitara",
+                "Guitarrah"
+            ],
+            correcta: "Guitarra"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "Biblioteca",
+                "Bivlioteca",
+                "Biblioteka",
+                "Bibloteca"
+            ],
+            correcta: "Biblioteca"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "Zapato",
+                "Sapato",
+                "Zappato",
+                "Zapatho"
+            ],
+            correcta: "Zapato"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "Coche",
+                "Koche",
+                "Coxe",
+                "Cochee"
+            ],
+            correcta: "Coche"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "Mariposa",
+                "Maripoza",
+                "Maripossa",
+                "Mariposa"
+            ],
+            correcta: "Mariposa"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "Árbol",
+                "Arbol",
+                "Árvol",
+                "Arvol"
+            ],
+            correcta: "Árbol"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            respuestas: [
+                "También",
+                "Tambien",
+                "Tanbién",
+                "Tambien"
+            ],
+            correcta: "También"
+        }
+
+    ];
+
+
+    const preguntasGramatica = [
+
+        {
+            pregunta: "¿Cuál de estas palabras es un sustantivo?",
+            respuestas: [
+                "Casa",
+                "Correr",
+                "Rápido",
+                "Saltando"
+            ],
+            correcta: "Casa"
+        },
+
+        {
+            pregunta: "¿Cuál de estas palabras es un verbo?",
+            respuestas: [
+                "Correr",
+                "Mesa",
+                "Bonito",
+                "Azul"
+            ],
+            correcta: "Correr"
+        },
+
+        {
+            pregunta: "¿Cuál de estas palabras es un adjetivo?",
+            respuestas: [
+                "Grande",
+                "Casa",
+                "Saltar",
+                "Libro"
+            ],
+            correcta: "Grande"
+        },
+
+        {
+            pregunta: "¿Cuál de estas palabras es un sustantivo?",
+            respuestas: [
+                "Perro",
+                "Rápidamente",
+                "Correr",
+                "Bonito"
+            ],
+            correcta: "Perro"
+        },
+
+        {
+            pregunta: "¿Cuál de estas palabras es un verbo?",
+            respuestas: [
+                "Comer",
+                "Mesa",
+                "Rojo",
+                "Casa"
+            ],
+            correcta: "Comer"
+        },
+
+        {
+            pregunta: "¿Cuál de estas palabras es un adjetivo?",
+            respuestas: [
+                "Pequeño",
+                "Silla",
+                "Caminar",
+                "Libro"
+            ],
+            correcta: "Pequeño"
+        },
+
+        {
+            pregunta: "¿Cuál de estas palabras es un sustantivo?",
+            respuestas: [
+                "Escuela",
+                "Estudiar",
+                "Rápido",
+                "Alegremente"
+            ],
+            correcta: "Escuela"
+        },
+
+        {
+            pregunta: "¿Cuál de estas palabras es un verbo?",
+            respuestas: [
+                "Escribir",
+                "Cuaderno",
+                "Bonito",
+                "Grande"
+            ],
+            correcta: "Escribir"
+        },
+
+        {
+            pregunta: "¿Cuál de estas palabras es un adjetivo?",
+            respuestas: [
+                "Inteligente",
+                "Profesor",
+                "Leer",
+                "Colegio"
+            ],
+            correcta: "Inteligente"
+        },
+
+        {
+            pregunta: "¿Cuál de estas palabras es un sustantivo?",
+            respuestas: [
+                "Montaña",
+                "Subir",
+                "Alto",
+                "Rápidamente"
+            ],
+            correcta: "Montaña"
+        }
+
+    ];
+
+
+    /* ==========================================
+       SELECCIONAR ACTIVIDAD
+       ========================================== */
+
+    function seleccionarActividadLengua(actividad) {
+
+        if (!actividadesLengua[actividad]) {
+            return;
+        }
+
+        actividadLenguaActual = actividad;
+
+        const datos =
+            actividadesLengua[actividad];
+
+        document.getElementById(
+            "lenguaIcono"
+        ).textContent = datos.icono;
+
+        document.getElementById(
+            "lenguaTitulo"
+        ).textContent = datos.titulo;
+
+        document.getElementById(
+            "lenguaDescripcion"
+        ).textContent = datos.descripcion;
+
+        document.getElementById(
+            "selectorLengua"
+        ).classList.remove("activa");
+
+        document.getElementById(
+            "selectorNivelLengua"
+        ).classList.add("activa");
+
+        document.getElementById(
+            "zonaJuegoLengua"
+        ).classList.remove("activo");
+
+        document.getElementById(
+            "juegoLengua"
+        ).innerHTML = "";
+
+        document.getElementById(
+            "selectorNivelLengua"
+        ).scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
+
+
+    /* ==========================================
+       VOLVER
+       ========================================== */
+
+    function volverActividadesLengua() {
+
+        actividadLenguaActual = null;
+
+        juegoLenguaActual = null;
+
+        document.getElementById(
+            "zonaJuegoLengua"
+        ).classList.remove("activo");
+
+        document.getElementById(
+            "juegoLengua"
+        ).innerHTML = "";
+
+        document.getElementById(
+            "selectorNivelLengua"
+        ).classList.remove("activa");
+
+        document.getElementById(
+            "selectorLengua"
+        ).classList.add("activa");
+
+        document.getElementById(
+            "temas"
+        ).scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
+
+
+    /* ==========================================
+       EMPEZAR JUEGO
+       ========================================== */
+
+    function empezarLengua(nivel) {
+
+        if (!actividadLenguaActual) {
+            return;
+        }
+
+        juegoLenguaActual = {
+
+            actividad: actividadLenguaActual,
+
+            nivel: nivel,
+
+            pregunta: 0,
+
+            aciertos: 0,
+
+            total: 10,
+
+            bloqueado: false
+
+        };
+
+        document.getElementById(
+            "zonaJuegoLengua"
+        ).classList.add("activo");
+
+        mostrarPreguntaLengua();
+
+        setTimeout(() => {
+
+            document.getElementById(
+                "zonaJuegoLengua"
+            ).scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }, 50);
+
+    }
+
+
+    /* ==========================================
+       GENERAR PREGUNTA
+       ========================================== */
+
+    function obtenerPreguntasLengua() {
+
+        if (
+            actividadLenguaActual ===
+            "ortografia"
+        ) {
+
+            return preguntasOrtografia;
+
+        }
+
+        return preguntasGramatica;
+
+    }
+
+
+    function mezclarArray(array) {
+
+        return [...array].sort(
+            () => Math.random() - 0.5
+        );
+
+    }
+
+
+    /* ==========================================
+       MOSTRAR PREGUNTA
+       ========================================== */
+
+    function mostrarPreguntaLengua() {
+
+        if (!juegoLenguaActual) {
+            return;
+        }
+
+        if (
+            juegoLenguaActual.pregunta >=
+            juegoLenguaActual.total
+        ) {
+
+            mostrarResultadoLengua();
+
+            return;
+
+        }
+
+
+        const preguntas =
+            obtenerPreguntasLengua();
+
+        const pregunta =
+            preguntas[
+                juegoLenguaActual.pregunta
+            ];
+
+
+        juegoLenguaActual.bloqueado = false;
+
+
+        const contenedor =
+            document.getElementById(
+                "juegoLengua"
+            );
+
+
+        contenedor.innerHTML = `
+
+            <div class="tarjeta" style="text-align:center;">
+
+                <p
+                    style="
+                        color:#667085;
+                        font-weight:700;
+                        margin-bottom:10px;
+                    "
+                >
+                    Pregunta
+                    ${juegoLenguaActual.pregunta + 1}
+                    de
+                    ${juegoLenguaActual.total}
+                </p>
+
+                <div
+                    style="
+                        font-weight:800;
+                        margin-bottom:10px;
+                    "
+                >
+                    ${
+                        juegoLenguaActual.nivel === "facil"
+                            ? "🟢 Fácil"
+                            : juegoLenguaActual.nivel === "medio"
+                                ? "🟡 Medio"
+                                : juegoLenguaActual.nivel === "dificil"
+                                    ? "🔴 Difícil"
+                                    : "🟣 Experto"
+                    }
+                </div>
+
+                <h2
+                    style="
+                        font-size:1.7rem;
+                        margin:25px 0;
+                    "
+                >
+                    ${pregunta.pregunta}
+                </h2>
+
+                <div id="respuestasLengua"></div>
+
+                <p
+                    id="resultadoLengua"
+                    style="
+                        font-weight:800;
+                        min-height:28px;
+                        margin-top:18px;
+                    "
+                ></p>
+
+            </div>
+
+        `;
+
+
+        const respuestas =
+            document.getElementById(
+                "respuestasLengua"
+            );
+
+
+        mezclarArray(
+            pregunta.respuestas
+        ).forEach(
+            respuesta => {
+
+                const boton =
+                    document.createElement(
+                        "button"
+                    );
+
+                boton.type = "button";
+
+                boton.className =
+                    "respuesta-lengua";
+
+                boton.textContent =
+                    respuesta;
+
+                boton.addEventListener(
+                    "click",
+                    () => {
+
+                        comprobarRespuestaLengua(
+                            respuesta,
+                            pregunta.correcta
+                        );
+
+                    }
+                );
+
+                respuestas.appendChild(
+                    boton
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ==========================================
+       COMPROBAR
+       ========================================== */
+
+    function comprobarRespuestaLengua(
+        respuestaUsuario,
+        respuestaCorrecta
+    ) {
+
+        if (!juegoLenguaActual) {
+            return;
+        }
+
+        if (juegoLenguaActual.bloqueado) {
+            return;
+        }
+
+        juegoLenguaActual.bloqueado = true;
+
+
+        const botones =
+            document.querySelectorAll(
+                "#respuestasLengua .respuesta-lengua"
+            );
+
+
+        botones.forEach(
+            boton => {
+
+                boton.disabled = true;
+
+                if (
+                    boton.textContent ===
+                    respuestaCorrecta
+                ) {
+
+                    boton.style.background =
+                        "#10b981";
+
+                    boton.style.color =
+                        "white";
+
+                }
+
+            }
+        );
+
+
+        const resultado =
+            document.getElementById(
+                "resultadoLengua"
+            );
+
+
+        if (
+            respuestaUsuario ===
+            respuestaCorrecta
+        ) {
+
+            juegoLenguaActual.aciertos++;
+
+            resultado.textContent =
+                "✅ ¡Correcto!";
+
+            resultado.style.color =
+                "#10b981";
+
+        }
+
+        else {
+
+            resultado.textContent =
+                "❌ Incorrecto. La respuesta correcta era " +
+                respuestaCorrecta;
+
+            resultado.style.color =
+                "#ef4444";
+
+        }
+
+
+        juegoLenguaActual.pregunta++;
+
+
+        setTimeout(
+            () => {
+
+                mostrarPreguntaLengua();
+
+            },
+            900
+        );
+
+    }
+
+
+    /* ==========================================
+       RESULTADO FINAL
+       ========================================== */
+
+    function mostrarResultadoLengua() {
+
+        const porcentaje =
+            Math.round(
+                (
+                    juegoLenguaActual.aciertos /
+                    juegoLenguaActual.total
+                ) * 100
+            );
+
+
+        let mensaje;
+
+
+        if (porcentaje === 100) {
+
+            mensaje = "🏆 ¡Perfecto!";
+
+        }
+
+        else if (porcentaje >= 80) {
+
+            mensaje = "🔥 ¡Excelente trabajo!";
+
+        }
+
+        else if (porcentaje >= 60) {
+
+            mensaje = "👏 ¡Muy bien!";
+
+        }
+
+        else if (porcentaje >= 40) {
+
+            mensaje = "💪 ¡Sigue practicando!";
+
+        }
+
+        else {
+
+            mensaje = "📚 ¡Vamos a mejorar!";
+
+        }
+
+
+        const contenedor =
+            document.getElementById(
+                "juegoLengua"
+            );
+
+
+        contenedor.innerHTML = `
+
+            <div
+                class="resultado-final"
+                style="text-align:center;"
+            >
+
+                <div style="font-size:4rem;">
+                    ${
+                        porcentaje >= 80
+                            ? "🏆"
+                            : "🎯"
+                    }
+                </div>
+
+                <h2>
+                    ${mensaje}
+                </h2>
+
+                <p>
+                    Has conseguido
+                    <strong>
+                        ${juegoLenguaActual.aciertos}
+                    </strong>
+                    de
+                    <strong>
+                        ${juegoLenguaActual.total}
+                    </strong>
+                    respuestas correctas.
+                </p>
+
+                <div
+                    class="resultado-porcentaje"
+                    style="
+                        font-size:2.5rem;
+                        font-weight:900;
+                        margin:20px;
+                    "
+                >
+                    ${porcentaje}%
+                </div>
+
+                <button
+                    type="button"
+                    class="boton-principal"
+                    onclick="empezarLengua('${juegoLenguaActual.nivel}')"
+                >
+                    🔄 Volver a jugar
+                </button>
+
+                <br><br>
+
+                <button
+                    type="button"
+                    class="boton-secundario"
+                    onclick="volverActividadesLengua()"
+                >
+                    ← Cambiar actividad
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+</script>
+
 
 </body>
 
