@@ -1,33 +1,38 @@
-// ==========================================
-// EDUCONEW — MOTOR COMPLETO DE EJERCICIOS
+```javascript
+// ============================================================
+// EDUCONew — MOTOR COMPLETO DE EJERCICIOS
 // MATEMÁTICAS + LENGUA
 // VERSIÓN DEFINITIVA
-// ==========================================
+// ============================================================
+
+"use strict";
+
+
+// ============================================================
+// ESTADO GENERAL
+// ============================================================
 
 let juegoActual = null;
 let juegoLengua = null;
 
 
-// ==========================================
-// CONFIGURACIÓN DE NIVELES
-// ==========================================
+// ============================================================
+// NIVELES
+// ============================================================
 
 const niveles = {
     facil: {
         nombre: "Fácil",
         color: "🟢"
     },
-
     medio: {
         nombre: "Medio",
         color: "🟡"
     },
-
     dificil: {
         nombre: "Difícil",
         color: "🔴"
     },
-
     experto: {
         nombre: "Experto",
         color: "🟣"
@@ -35,9 +40,9 @@ const niveles = {
 };
 
 
-// ==========================================
+// ============================================================
 // UTILIDADES
-// ==========================================
+// ============================================================
 
 function numeroAleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -57,8 +62,7 @@ function mezclarArray(array) {
 }
 
 
-// Selecciona una cantidad de elementos sin repetir
-function seleccionarAleatorios(array, cantidad) {
+function seleccionarPreguntasUnicas(array, cantidad) {
     return mezclarArray(array).slice(
         0,
         Math.min(cantidad, array.length)
@@ -66,12 +70,58 @@ function seleccionarAleatorios(array, cantidad) {
 }
 
 
-// ==========================================
-// ==========================================
-// MATEMÁTICAS
-// ==========================================
-// ==========================================
+function crearOpciones(correcta, generadores, cantidad = 4) {
 
+    const resultado = [correcta];
+
+    let intentos = 0;
+
+    while (
+        resultado.length < cantidad &&
+        intentos < 200
+    ) {
+
+        intentos++;
+
+        const generador =
+            generadores[
+                numeroAleatorio(
+                    0,
+                    generadores.length - 1
+                )
+            ];
+
+        const falsa =
+            typeof generador === "function"
+                ? generador(correcta)
+                : generador;
+
+        if (
+            falsa !== undefined &&
+            falsa !== null &&
+            String(falsa) !== String(correcta) &&
+            !resultado.some(
+                x => String(x) === String(falsa)
+            )
+        ) {
+            resultado.push(falsa);
+        }
+    }
+
+    return mezclarArray(resultado);
+}
+
+
+// ============================================================
+// ============================================================
+// MATEMÁTICAS
+// ============================================================
+// ============================================================
+
+
+// ============================================================
+// INICIAR MATEMÁTICAS
+// ============================================================
 
 function iniciarJuego(tema, nivel) {
 
@@ -94,9 +144,9 @@ function iniciarJuego(tema, nivel) {
 }
 
 
-// ==========================================
-// PREPARAR MATEMÁTICAS
-// ==========================================
+// ============================================================
+// ZONA DE MATEMÁTICAS
+// ============================================================
 
 function prepararZonaJuego() {
 
@@ -104,7 +154,9 @@ function prepararZonaJuego() {
         document.getElementById("juegoMatematicas");
 
     if (!contenedor) {
-        console.error("No existe #juegoMatematicas");
+        console.error(
+            "No existe el elemento #juegoMatematicas"
+        );
         return;
     }
 
@@ -161,9 +213,9 @@ function prepararZonaJuego() {
 }
 
 
-// ==========================================
-// GENERAR PREGUNTA MATEMÁTICAS
-// ==========================================
+// ============================================================
+// GENERAR PREGUNTA DE MATEMÁTICAS
+// ============================================================
 
 function generarPregunta(tema, nivel) {
 
@@ -174,9 +226,9 @@ function generarPregunta(tema, nivel) {
 
     switch (tema) {
 
-        // ==================================
+        // ----------------------------------------------------
         // SUMAS
-        // ==================================
+        // ----------------------------------------------------
 
         case "sumas":
 
@@ -206,9 +258,9 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ==================================
+        // ----------------------------------------------------
         // RESTAS
-        // ==================================
+        // ----------------------------------------------------
 
         case "restas":
 
@@ -236,9 +288,9 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ==================================
+        // ----------------------------------------------------
         // MULTIPLICACIONES
-        // ==================================
+        // ----------------------------------------------------
 
         case "multiplicaciones":
 
@@ -268,9 +320,9 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ==================================
+        // ----------------------------------------------------
         // DIVISIONES
-        // ==================================
+        // ----------------------------------------------------
 
         case "divisiones":
 
@@ -300,14 +352,13 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ==================================
+        // ----------------------------------------------------
         // FRACCIONES
-        // ==================================
+        // ----------------------------------------------------
 
         case "fracciones": {
 
             let denominador;
-            let numerador;
 
             if (nivel === "facil") {
                 denominador = numeroAleatorio(2, 6);
@@ -325,22 +376,24 @@ function generarPregunta(tema, nivel) {
                 denominador = numeroAleatorio(10, 50);
             }
 
-            numerador =
-                numeroAleatorio(1, denominador - 1);
+            const numerador =
+                numeroAleatorio(
+                    1,
+                    denominador - 1
+                );
 
             return {
                 texto:
                     `¿Qué fracción representa ${numerador} de ${denominador}?`,
-
                 respuesta:
                     `${numerador}/${denominador}`
             };
         }
 
 
-        // ==================================
+        // ----------------------------------------------------
         // PORCENTAJES
-        // ==================================
+        // ----------------------------------------------------
 
         case "porcentajes": {
 
@@ -384,21 +437,24 @@ function generarPregunta(tema, nivel) {
             }
 
             respuesta =
-                (cantidad * porcentaje) / 100;
+                Number(
+                    (
+                        cantidad * porcentaje / 100
+                    ).toFixed(2)
+                );
 
             return {
                 texto:
                     `¿Cuánto es el ${porcentaje}% de ${cantidad}?`,
-
                 respuesta:
                     respuesta
             };
         }
 
 
-        // ==================================
+        // ----------------------------------------------------
         // GEOMETRÍA
-        // ==================================
+        // ----------------------------------------------------
 
         case "geometria": {
 
@@ -426,21 +482,24 @@ function generarPregunta(tema, nivel) {
             }
 
             respuesta =
-                (base * altura) / 2;
+                Number(
+                    (
+                        base * altura / 2
+                    ).toFixed(2)
+                );
 
             return {
                 texto:
                     `¿Cuál es el área de un triángulo de base ${base} y altura ${altura}?`,
-
                 respuesta:
                     respuesta
             };
         }
 
 
-        // ==================================
+        // ----------------------------------------------------
         // PROBLEMAS
-        // ==================================
+        // ----------------------------------------------------
 
         case "problemas": {
 
@@ -473,7 +532,6 @@ function generarPregunta(tema, nivel) {
             return {
                 texto:
                     `Cada producto cuesta ${precio} €. Si compras ${cantidad}, ¿cuánto pagarás?`,
-
                 respuesta:
                     respuesta
             };
@@ -487,16 +545,15 @@ function generarPregunta(tema, nivel) {
     return {
         texto:
             `${a} ${simbolo} ${b} = ?`,
-
         respuesta:
             respuesta
     };
 }
 
 
-// ==========================================
-// RESPUESTAS MATEMÁTICAS
-// ==========================================
+// ============================================================
+// RESPUESTAS DE MATEMÁTICAS
+// ============================================================
 
 function generarRespuestas(correcta) {
 
@@ -504,9 +561,17 @@ function generarRespuestas(correcta) {
 
     let intentos = 0;
 
+    const distanciaBase =
+        Math.max(
+            3,
+            Math.floor(
+                Math.abs(Number(correcta)) * 0.15
+            )
+        );
+
     while (
         respuestas.length < 4 &&
-        intentos < 100
+        intentos < 200
     ) {
 
         intentos++;
@@ -514,36 +579,37 @@ function generarRespuestas(correcta) {
         const diferencia =
             numeroAleatorio(
                 1,
-                Math.max(
-                    3,
-                    Math.floor(
-                        Math.abs(correcta) * 0.15
-                    )
-                )
+                distanciaBase
             );
 
         let falsa;
 
         if (Math.random() < 0.5) {
-            falsa = correcta + diferencia;
+            falsa =
+                Number(correcta) + diferencia;
         }
 
         else {
-            falsa = correcta - diferencia;
+            falsa =
+                Number(correcta) - diferencia;
         }
 
         if (
-            !respuestas.includes(falsa) &&
-            falsa >= 0
+            falsa >= 0 &&
+            !respuestas.includes(falsa)
         ) {
             respuestas.push(falsa);
         }
     }
 
+    let incremento = 1;
+
     while (respuestas.length < 4) {
 
         const falsa =
-            correcta + respuestas.length;
+            Number(correcta) + incremento;
+
+        incremento++;
 
         if (!respuestas.includes(falsa)) {
             respuestas.push(falsa);
@@ -554,9 +620,9 @@ function generarRespuestas(correcta) {
 }
 
 
-// ==========================================
-// MOSTRAR MATEMÁTICAS
-// ==========================================
+// ============================================================
+// MOSTRAR PREGUNTA DE MATEMÁTICAS
+// ============================================================
 
 function mostrarPregunta() {
 
@@ -566,9 +632,7 @@ function mostrarPregunta() {
         juegoActual.pregunta >=
         juegoActual.total
     ) {
-
         mostrarResultadoFinal();
-
         return;
     }
 
@@ -582,7 +646,6 @@ function mostrarPregunta() {
         console.error(
             "No se pudo generar la pregunta."
         );
-
         return;
     }
 
@@ -617,11 +680,9 @@ function mostrarPregunta() {
         !progresoElemento ||
         !resultadoElemento
     ) {
-
         console.error(
-            "No se encontraron los elementos del juego."
+            "Faltan elementos del juego de Matemáticas."
         );
-
         return;
     }
 
@@ -640,6 +701,7 @@ function mostrarPregunta() {
     }
 
     resultadoElemento.textContent = "";
+    resultadoElemento.style.color = "";
 
     respuestasElemento.innerHTML = "";
 
@@ -649,7 +711,6 @@ function mostrarPregunta() {
         typeof pregunta.respuesta ===
         "number"
     ) {
-
         respuestas =
             generarRespuestas(
                 pregunta.respuesta
@@ -661,12 +722,21 @@ function mostrarPregunta() {
         respuestas =
             [pregunta.respuesta];
 
-        while (respuestas.length < 4) {
+        let intentos = 0;
+
+        while (
+            respuestas.length < 4 &&
+            intentos < 200
+        ) {
+
+            intentos++;
 
             const falsa =
-                `${numeroAleatorio(1, 9)}/${numeroAleatorio(2, 10)}`;
+                `${numeroAleatorio(1, 9)}/${numeroAleatorio(2, 12)}`;
 
-            if (!respuestas.includes(falsa)) {
+            if (
+                !respuestas.includes(falsa)
+            ) {
                 respuestas.push(falsa);
             }
         }
@@ -684,15 +754,9 @@ function mostrarPregunta() {
                 );
 
             boton.type = "button";
-
-            boton.className =
-                "respuesta";
-
-            boton.textContent =
-                respuesta;
-
-            boton.style.cursor =
-                "pointer";
+            boton.className = "respuesta";
+            boton.textContent = respuesta;
+            boton.style.cursor = "pointer";
 
             boton.addEventListener(
                 "click",
@@ -714,9 +778,9 @@ function mostrarPregunta() {
 }
 
 
-// ==========================================
+// ============================================================
 // COMPROBAR MATEMÁTICAS
-// ==========================================
+// ============================================================
 
 function comprobarRespuesta(
     respuestaUsuario,
@@ -748,7 +812,7 @@ function comprobarRespuesta(
                     "#10b981";
 
                 boton.style.color =
-                    "white";
+                    "#ffffff";
             }
         }
     );
@@ -794,11 +858,13 @@ function comprobarRespuesta(
 }
 
 
-// ==========================================
-// RESULTADO MATEMÁTICAS
-// ==========================================
+// ============================================================
+// RESULTADO FINAL MATEMÁTICAS
+// ============================================================
 
 function mostrarResultadoFinal() {
+
+    if (!juegoActual) return;
 
     const porcentaje =
         Math.round(
@@ -837,9 +903,16 @@ function mostrarResultadoFinal() {
 
     if (!contenedor) return;
 
+    const tema =
+        juegoActual.tema;
+
+    const nivel =
+        juegoActual.nivel;
+
     contenedor.innerHTML = `
 
-        <div class="resultado-final">
+        <div class="resultado-final"
+             style="text-align:center;padding:40px 20px;">
 
             <div style="font-size:4rem;">
                 ${porcentaje >= 80 ? "🏆" : "🎯"}
@@ -864,24 +937,31 @@ function mostrarResultadoFinal() {
             <button
                 type="button"
                 class="boton-principal"
-                onclick="
-                    iniciarJuego(
-                        '${juegoActual.tema}',
-                        '${juegoActual.nivel}'
-                    )
-                "
+                id="volverMatematicas"
             >
                 🔄 Volver a jugar
             </button>
 
         </div>
     `;
+
+    const boton =
+        document.getElementById(
+            "volverMatematicas"
+        );
+
+    if (boton) {
+        boton.addEventListener(
+            "click",
+            () => iniciarJuego(tema, nivel)
+        );
+    }
 }
 
 
-// ==========================================
+// ============================================================
 // COMPATIBILIDAD MATEMÁTICAS
-// ==========================================
+// ============================================================
 
 function empezarSumas(nivel) {
     iniciarJuego("sumas", nivel);
@@ -903,24 +983,32 @@ function empezarFracciones(nivel) {
     iniciarJuego("fracciones", nivel);
 }
 
+function empezarPorcentajes(nivel) {
+    iniciarJuego("porcentajes", nivel);
+}
 
-// ==========================================
-// ==========================================
+function empezarGeometria(nivel) {
+    iniciarJuego("geometria", nivel);
+}
+
+function empezarProblemas(nivel) {
+    iniciarJuego("problemas", nivel);
+}
+
+
+// ============================================================
+// ============================================================
 // LENGUA
-// ==========================================
-// ==========================================
+// ============================================================
+// ============================================================
 
 
-// ==========================================
+// ============================================================
 // BANCO DE ORTOGRAFÍA
-// AHORA HAY MUCHAS MÁS PREGUNTAS
-// ==========================================
+// AHORA HAY MUCHAS MÁS PREGUNTAS POR NIVEL
+// ============================================================
 
 const preguntasOrtografia = {
-
-    // ======================================
-    // FÁCIL
-    // ======================================
 
     facil: [
 
@@ -986,99 +1074,78 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["escuela", "escuella", "ezcuela", "escueIa"],
+            opciones: ["escuela", "escuella", "eskuela", "escuela"],
             correcta: "escuela"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["familia", "família", "familiaa", "phamilia"],
-            correcta: "familia"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["amigo", "amijo", "amiggo", "hamigo"],
+            opciones: ["amigo", "amijo", "amiggo", "amigo"],
             correcta: "amigo"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["zapato", "sapato", "zabato", "zapatho"],
-            correcta: "zapato"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["coche", "koche", "cochee", "cocche"],
-            correcta: "coche"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["domingo", "dominggo", "domingo", "domingó"],
-            correcta: "domingo"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["helado", "elado", "helhado", "hellado"],
-            correcta: "helado"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["hospital", "ospital", "hosspital", "hospitál"],
-            correcta: "hospital"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["jirafa", "girafa", "girrafa", "jirapha"],
-            correcta: "jirafa"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["pelota", "pellota", "pelotta", "peloda"],
-            correcta: "pelota"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["familia", "famillia", "familiaa", "phamilia"],
+            opciones: ["familia", "familía", "famillia", "familia"],
             correcta: "familia"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["mañana", "manana", "mañanna", "mañána"],
-            correcta: "mañana"
+            opciones: ["domingo", "dominggo", "domingó", "domingo"],
+            correcta: "domingo"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["sábado", "sabado", "sávado", "sabbado"],
-            correcta: "sábado"
+            opciones: ["coche", "cochee", "koche", "coxe"],
+            correcta: "coche"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["teléfono", "telefono", "teléphono", "telefonó"],
-            correcta: "teléfono"
+            opciones: ["helado", "elado", "hellado", "helhado"],
+            correcta: "helado"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["pájaro", "pajaro", "pájaro", "páxaro"],
-            correcta: "pájaro"
+            opciones: ["huevo", "uevo", "huebo", "huévo"],
+            correcta: "huevo"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["gato", "jato", "gatto", "gatho"],
+            correcta: "gato"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["zapato", "sapato", "zapato", "zabato"],
+            correcta: "zapato"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["pelota", "pellota", "pelotta", "pelodha"],
+            correcta: "pelota"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["escuchar", "escuchar", "eskuchar", "escuxar"],
+            correcta: "escuchar"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["jueves", "juebes", "juevés", "jueves"],
+            correcta: "jueves"
         }
+
     ],
 
-
-    // ======================================
-    // MEDIO
-    // ======================================
 
     medio: [
 
@@ -1086,12 +1153,6 @@ const preguntasOrtografia = {
             pregunta: "¿Cuál está escrita correctamente?",
             opciones: ["haber", "aver", "haver", "aber"],
             correcta: "haber"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["huevo", "uevo", "huévo", "huebo"],
-            correcta: "huevo"
         },
 
         {
@@ -1144,50 +1205,50 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["vegetación", "begetación", "vegetazión", "vegetacion"],
-            correcta: "vegetación"
+            opciones: ["viaje", "biaje", "viage", "viaje"],
+            correcta: "viaje"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["observar", "ovservar", "obserbar", "obserbar"],
-            correcta: "observar"
+            opciones: ["prohibido", "proivido", "prohibído", "prohibido"],
+            correcta: "prohibido"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["hervir", "ervir", "herbir", "hervír"],
-            correcta: "hervir"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["decisión", "desisión", "decición", "decision"],
-            correcta: "decisión"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["también", "tanbien", "tambien", "tanbién"],
+            opciones: ["también", "tanbién", "también", "tanvien"],
             correcta: "también"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["geografía", "jeografía", "geografia", "geográfia"],
-            correcta: "geografía"
+            opciones: ["héroe", "heroe", "éroe", "héroe"],
+            correcta: "héroe"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["historia", "istoria", "hystoria", "história"],
-            correcta: "historia"
+            opciones: ["océano", "oceano", "oséano", "océanno"],
+            correcta: "océano"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["prohibido", "proivido", "prohibído", "prohibitto"],
-            correcta: "prohibido"
+            opciones: ["difícil", "dificil", "difízil", "difícil"],
+            correcta: "difícil"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["fácilmente", "facilmente", "fázilmente", "fácilmente"],
+            correcta: "fácilmente"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["vehículo", "veículo", "vehiculo", "beículo"],
+            correcta: "vehículo"
         },
 
         {
@@ -1198,27 +1259,20 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["vehículo", "veículo", "vehiculo", "veehículo"],
-            correcta: "vehículo"
+            opciones: ["tambor", "tanbor", "tamborr", "tambor"],
+            correcta: "tambor"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["excepción", "exepción", "excepsión", "excepcion"],
-            correcta: "excepción"
-        },
+            opciones: ["excursión", "escursión", "excursíon", "excursión"],
+            correcta: "excursión"
+        }
 
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["construcción", "construción", "construccion", "construcsión"],
-            correcta: "construcción"
-        },
+    ],
 
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["extraordinario", "estraordinario", "extraordinarío", "extraordinareo"],
-            correcta: "extraordinario"
-        },
+
+    dificil: [
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
@@ -1228,27 +1282,7 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["vergüenza", "verguënza", "verguenza", "berguenza"],
-            correcta: "vergüenza"
-        }
-    ],
-
-
-    // ======================================
-    // DIFÍCIL
-    // ======================================
-
-    dificil: [
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["subterráneo", "subterraneo", "subterráneo", "subterráneó"],
-            correcta: "subterráneo"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["extraordinario", "estraordinario", "extraordinareo", "extraordinarío"],
+            opciones: ["extraordinario", "estraordinario", "extraordinarío", "extraordinareo"],
             correcta: "extraordinario"
         },
 
@@ -1278,7 +1312,7 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["inmediatamente", "inmediataménte", "inmediatemente", "inmediatamenté"],
+            opciones: ["inmediatamente", "inmediataménte", "inmediatemente", "inmediatamente"],
             correcta: "inmediatamente"
         },
 
@@ -1290,7 +1324,7 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["desarrollo", "desarollo", "desarroyo", "desarroyó"],
+            opciones: ["desarrollo", "desarollo", "desarroyo", "desarrollo"],
             correcta: "desarrollo"
         },
 
@@ -1302,20 +1336,26 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["circunstancia", "circumstancia", "circunstáncia", "circunstansia"],
+            opciones: ["circunstancia", "circustancia", "circunstanzia", "circunstáncia"],
             correcta: "circunstancia"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["imprescindible", "inprescindible", "impresindible", "imprecindible"],
-            correcta: "imprescindible"
+            opciones: ["descripción", "descrición", "descripsión", "descripcion"],
+            correcta: "descripción"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["responsabilidad", "responsavilidad", "responzabilidad", "responsábilidad"],
+            opciones: ["responsabilidad", "responsavilidad", "responzabilidad", "responsabilidád"],
             correcta: "responsabilidad"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["imprescindible", "inprescindible", "impreszindible", "imprescindíble"],
+            correcta: "imprescindible"
         },
 
         {
@@ -1326,75 +1366,36 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["aproximadamente", "aprosimadamente", "aproximadaménte", "aprocsimadamente"],
+            opciones: ["aproximadamente", "aprosimadamente", "aproximademente", "aproximádamente"],
             correcta: "aproximadamente"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["desafortunadamente", "desafortunadamenté", "desafortunadaménte", "desafortunademente"],
-            correcta: "desafortunadamente"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["inconveniente", "inconveniente", "inconbeniente", "inconveniénte"],
-            correcta: "inconveniente"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["consecuencia", "consecuéncia", "consekuencia", "consecuensia"],
+            opciones: ["consecuencia", "consecuenzia", "consecuéncia", "consecuencia"],
             correcta: "consecuencia"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["circunferencia", "circunferéncia", "circunferenzia", "circunferensia"],
-            correcta: "circunferencia"
+            opciones: ["adquisición", "adquisición", "adquisizión", "adquición"],
+            correcta: "adquisición"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["independiente", "indepediente", "independiénte", "indepentiente"],
-            correcta: "independiente"
+            opciones: ["presupuesto", "presupesto", "presupuezto", "presupuestó"],
+            correcta: "presupuesto"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["descripción", "descripsión", "descrición", "descripcion"],
-            correcta: "descripción"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["organización", "organisación", "organizazión", "organizacion"],
-            correcta: "organización"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["investigación", "inbestigación", "investigazión", "investigacion"],
-            correcta: "investigación"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["completamente", "completaménte", "completamente", "completementé"],
-            correcta: "completamente"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["evidentemente", "evidenteménte", "evidentemente", "evidentementé"],
-            correcta: "evidentemente"
+            opciones: ["reivindicar", "reibindicar", "reivindicár", "reinvindicar"],
+            correcta: "reivindicar"
         }
+
     ],
 
-
-    // ======================================
-    // EXPERTO
-    // ======================================
 
     experto: [
 
@@ -1460,106 +1461,73 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["heterogéneo", "heterogeneo", "heterogéneo", "heterojéneo"],
+            opciones: ["heterogéneo", "heterogeneo", "heterojéneo", "heterogéneo"],
             correcta: "heterogéneo"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["yuxtaposición", "llustaposición", "yuxtaposicion", "yuxtapozición"],
-            correcta: "yuxtaposición"
+            opciones: ["paradójico", "paradojico", "paradójíco", "paradoxico"],
+            correcta: "paradójico"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["epistemología", "epistemolojía", "epistemologia", "epistemolugía"],
-            correcta: "epistemología"
+            opciones: ["efervescente", "efervezcente", "efervesente", "efervescénte"],
+            correcta: "efervescente"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["circunscripción", "circunscripsión", "circunscrición", "circunscripcion"],
-            correcta: "circunscripción"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["idiosincrático", "idiosincractico", "idiosincrático", "idiosincrásico"],
-            correcta: "idiosincrático"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["inconmensurable", "inconmensuravle", "incomensurable", "inconmensuráble"],
+            opciones: ["inconmensurable", "inconmensuravle", "inconmensurable", "incomensurable"],
             correcta: "inconmensurable"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["perspicacia", "perspicásia", "perspicacia", "perspicasia"],
-            correcta: "perspicacia"
+            opciones: ["yuxtaposición", "iustaposición", "yuxtaposicion", "yuxtapozición"],
+            correcta: "yuxtaposición"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["procrastinación", "procastinación", "procrastinacion", "procrastrinación"],
-            correcta: "procrastinación"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["vicisitud", "visicitud", "vicisidud", "vicisitud"],
-            correcta: "vicisitud"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["beneplácito", "beneplacito", "beneplásito", "beneplácitto"],
-            correcta: "beneplácito"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["inextricable", "inextricavle", "inextricable", "inextricáble"],
-            correcta: "inextricable"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["susceptibilidad", "susceptivilidad", "suseptibilidad", "susceptibílidad"],
-            correcta: "susceptibilidad"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["omnisciente", "omnisziente", "omnisciente", "omniscéncia"],
-            correcta: "omnisciente"
-        },
-
-        {
-            pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["idiosincrasia", "idiosincracia", "idiosincrasía", "idiosincrássia"],
+            opciones: ["idiosincrasia", "idiosincrasia", "idiosincrácia", "idiosincracia"],
             correcta: "idiosincrasia"
         },
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["paradójicamente", "paradojicamente", "paradojícamente", "paradogicamente"],
-            correcta: "paradójicamente"
+            opciones: ["omnisciente", "omniscente", "omnisziente", "omnisciente"],
+            correcta: "omnisciente"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["suspicacia", "suspicazia", "suspicácia", "suspikacia"],
+            correcta: "suspicacia"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["perspicaz", "perspicás", "perspicaz", "perspicaz"],
+            correcta: "perspicaz"
+        },
+
+        {
+            pregunta: "¿Cuál está escrita correctamente?",
+            opciones: ["inextricable", "inextricáble", "inextricavle", "inextricable"],
+            correcta: "inextricable"
         }
+
     ]
 };
 
 
-// ==========================================
+// ============================================================
 // BANCO DE GRAMÁTICA
-// ==========================================
+// ============================================================
 
 const preguntasGramatica = {
-
-    // ======================================
-    // FÁCIL
-    // ======================================
 
     facil: [
 
@@ -1625,69 +1593,66 @@ const preguntasGramatica = {
 
         {
             pregunta: "¿Qué tipo de palabra es «feliz»?",
-            opciones: ["Adjetivo", "Verbo", "Sustantivo", "Preposición"],
+            opciones: ["Adjetivo", "Verbo", "Adverbio", "Pronombre"],
             correcta: "Adjetivo"
         },
 
         {
-            pregunta: "¿Qué tipo de palabra es «casa»?",
-            opciones: ["Sustantivo", "Adverbio", "Verbo", "Conjunción"],
-            correcta: "Sustantivo"
-        },
-
-        {
-            pregunta: "¿Qué tipo de palabra es «muy»?",
+            pregunta: "¿Qué tipo de palabra es «ayer»?",
             opciones: ["Adverbio", "Sustantivo", "Verbo", "Artículo"],
             correcta: "Adverbio"
         },
 
         {
             pregunta: "¿Qué tipo de palabra es «ellos»?",
-            opciones: ["Pronombre", "Verbo", "Adjetivo", "Artículo"],
+            opciones: ["Pronombre", "Verbo", "Adjetivo", "Adverbio"],
             correcta: "Pronombre"
         },
 
         {
-            pregunta: "¿Qué tipo de palabra es «y»?",
-            opciones: ["Conjunción", "Verbo", "Sustantivo", "Adjetivo"],
-            correcta: "Conjunción"
+            pregunta: "¿Qué tipo de palabra es «mesa»?",
+            opciones: ["Sustantivo", "Verbo", "Adverbio", "Pronombre"],
+            correcta: "Sustantivo"
         },
 
         {
-            pregunta: "¿Qué tipo de palabra es «el» en «el coche»?",
-            opciones: ["Artículo", "Verbo", "Adverbio", "Pronombre"],
-            correcta: "Artículo"
+            pregunta: "¿Qué tipo de palabra es «saltar»?",
+            opciones: ["Verbo", "Sustantivo", "Adjetivo", "Determinante"],
+            correcta: "Verbo"
         },
 
         {
-            pregunta: "¿Cuál es el verbo en «Ana canta»?",
-            opciones: ["Ana", "canta", "la", "ninguna"],
-            correcta: "canta"
+            pregunta: "¿Cuál es el verbo en «El niño juega»?",
+            opciones: ["El", "niño", "juega", "ninguna"],
+            correcta: "juega"
         },
 
         {
-            pregunta: "¿Cuál es el sustantivo en «El gato duerme»?",
-            opciones: ["El", "gato", "duerme", "ninguna"],
-            correcta: "gato"
+            pregunta: "¿Cuál es el sustantivo en «La casa grande»?",
+            opciones: ["La", "casa", "grande", "ninguna"],
+            correcta: "casa"
         },
 
         {
-            pregunta: "¿Qué tipo de palabra es «lentamente»?",
-            opciones: ["Adverbio", "Adjetivo", "Verbo", "Sustantivo"],
+            pregunta: "¿Qué tipo de palabra es «muy»?",
+            opciones: ["Adverbio", "Verbo", "Sustantivo", "Artículo"],
             correcta: "Adverbio"
         },
 
         {
-            pregunta: "¿Qué tipo de palabra es «grande»?",
-            opciones: ["Adjetivo", "Verbo", "Adverbio", "Pronombre"],
+            pregunta: "¿Qué tipo de palabra es «el»?",
+            opciones: ["Artículo", "Verbo", "Adverbio", "Sustantivo"],
+            correcta: "Artículo"
+        },
+
+        {
+            pregunta: "¿Qué tipo de palabra es «rojo»?",
+            opciones: ["Adjetivo", "Verbo", "Pronombre", "Adverbio"],
             correcta: "Adjetivo"
         }
+
     ],
 
-
-    // ======================================
-    // MEDIO
-    // ======================================
 
     medio: [
 
@@ -1752,70 +1717,67 @@ const preguntasGramatica = {
         },
 
         {
-            pregunta: "¿Cuál es el sujeto en «La profesora explica la lección»?",
-            opciones: ["La profesora", "explica", "la lección", "profesora explica"],
-            correcta: "La profesora"
+            pregunta: "¿Cuál es el sujeto en «Los pájaros vuelan alto»?",
+            opciones: ["Los pájaros", "vuelan alto", "alto", "vuelan"],
+            correcta: "Los pájaros"
         },
 
         {
-            pregunta: "¿Cuál es el predicado en «Los niños juegan en el parque»?",
-            opciones: ["Los niños", "juegan en el parque", "niños", "el parque"],
-            correcta: "juegan en el parque"
+            pregunta: "¿Cuál es el predicado en «Laura estudia matemáticas»?",
+            opciones: ["Laura", "estudia matemáticas", "matemáticas", "estudia"],
+            correcta: "estudia matemáticas"
         },
 
         {
-            pregunta: "¿Qué tipo de palabra es «cinco» en «cinco alumnos»?",
-            opciones: ["Determinante numeral", "Adjetivo", "Verbo", "Adverbio"],
+            pregunta: "¿Qué tipo de palabra es «dos» en «dos casas»?",
+            opciones: ["Determinante numeral", "Adverbio", "Verbo", "Conjunción"],
             correcta: "Determinante numeral"
         },
 
         {
-            pregunta: "¿Qué tipo de palabra es «aquellos» en «aquellos libros»?",
+            pregunta: "¿Qué tipo de palabra es «aquellos»?",
             opciones: ["Determinante demostrativo", "Verbo", "Adverbio", "Conjunción"],
             correcta: "Determinante demostrativo"
         },
 
         {
-            pregunta: "¿Qué tipo de palabra es «mi» en «mi casa»?",
-            opciones: ["Determinante posesivo", "Pronombre", "Verbo", "Adverbio"],
-            correcta: "Determinante posesivo"
+            pregunta: "¿Qué tipo de palabra es «mío»?",
+            opciones: ["Pronombre posesivo", "Verbo", "Adverbio", "Conjunción"],
+            correcta: "Pronombre posesivo"
         },
 
         {
-            pregunta: "¿Cuál es el verbo en «Mis amigos estudian matemáticas»?",
-            opciones: ["Mis", "amigos", "estudian", "matemáticas"],
-            correcta: "estudian"
+            pregunta: "¿Cuál es el sujeto en «El profesor explica la lección»?",
+            opciones: ["El profesor", "explica la lección", "la lección", "explica"],
+            correcta: "El profesor"
         },
 
         {
-            pregunta: "¿Cuál es el sujeto en «El coche rojo corre mucho»?",
-            opciones: ["El coche rojo", "corre mucho", "rojo", "mucho"],
-            correcta: "El coche rojo"
-        },
-
-        {
-            pregunta: "¿Cuál es el predicado en «Mi padre trabaja mucho»?",
-            opciones: ["Mi padre", "trabaja mucho", "padre", "mucho"],
-            correcta: "trabaja mucho"
+            pregunta: "¿Cuál es el predicado en «Mis amigos viven cerca»?",
+            opciones: ["Mis amigos", "viven cerca", "amigos", "cerca"],
+            correcta: "viven cerca"
         },
 
         {
             pregunta: "¿Qué tipo de palabra es «porque»?",
-            opciones: ["Conjunción", "Adjetivo", "Sustantivo", "Pronombre"],
+            opciones: ["Conjunción", "Adjetivo", "Pronombre", "Artículo"],
             correcta: "Conjunción"
         },
 
         {
-            pregunta: "¿Qué tipo de palabra es «mañana» en «Mañana iremos al colegio»?",
-            opciones: ["Adverbio", "Adjetivo", "Sustantivo", "Verbo"],
+            pregunta: "¿Qué tipo de palabra es «mañana» en «Iré mañana»?",
+            opciones: ["Adverbio", "Sustantivo", "Verbo", "Adjetivo"],
             correcta: "Adverbio"
+        },
+
+        {
+            pregunta: "¿Qué tipo de palabra es «este» en «este libro»?",
+            opciones: ["Determinante demostrativo", "Verbo", "Adverbio", "Conjunción"],
+            correcta: "Determinante demostrativo"
         }
+
     ],
 
-
-    // ======================================
-    // DIFÍCIL
-    // ======================================
 
     dificil: [
 
@@ -1880,45 +1842,51 @@ const preguntasGramatica = {
         },
 
         {
-            pregunta: "¿Qué función cumple «con mis amigos» en «Salí con mis amigos»?",
-            opciones: ["Complemento circunstancial", "Complemento directo", "Sujeto", "Atributo"],
+            pregunta: "¿Qué función cumple «con sus amigos» en «Salió con sus amigos»?",
+            opciones: ["Complemento circunstancial", "Complemento directo", "Atributo", "Sujeto"],
             correcta: "Complemento circunstancial"
         },
 
         {
-            pregunta: "¿Qué función cumple «un regalo» en «Pedro compró un regalo»?",
+            pregunta: "¿Qué función cumple «la carta» en «Pedro escribió la carta»?",
             opciones: ["Complemento directo", "Complemento indirecto", "Sujeto", "Atributo"],
             correcta: "Complemento directo"
         },
 
         {
-            pregunta: "¿Qué tipo de oración es «Los niños juegan en el parque»?",
-            opciones: ["Activa", "Pasiva", "Impersonal", "Copulativa"],
-            correcta: "Activa"
+            pregunta: "¿Qué tipo de oración es «Hay muchos alumnos»?",
+            opciones: ["Impersonal", "Pasiva", "Copulativa", "Interrogativa"],
+            correcta: "Impersonal"
         },
 
         {
-            pregunta: "¿Cuál es el atributo en «El cielo está nublado»?",
-            opciones: ["El cielo", "está", "nublado", "ninguna"],
-            correcta: "nublado"
+            pregunta: "¿Cuál es el atributo en «El cielo parece oscuro»?",
+            opciones: ["oscuro", "cielo", "parece", "ninguna"],
+            correcta: "oscuro"
         },
 
         {
-            pregunta: "¿Qué función cumple «muy rápido» en «El coche circula muy rápido»?",
+            pregunta: "¿Qué función cumple «muy rápido» en «El atleta corre muy rápido»?",
             opciones: ["Complemento circunstancial", "Atributo", "Complemento directo", "Sujeto"],
             correcta: "Complemento circunstancial"
         },
 
         {
-            pregunta: "¿Qué tipo de oración es «Pedro parece cansado»?",
-            opciones: ["Copulativa", "Pasiva", "Impersonal", "Transitiva"],
+            pregunta: "¿Qué función cumple «para el examen» en «Estudio para el examen»?",
+            opciones: ["Complemento circunstancial", "Sujeto", "Atributo", "Complemento directo"],
+            correcta: "Complemento circunstancial"
+        },
+
+        {
+            pregunta: "¿Qué tipo de oración es «Mi hermano parece cansado»?",
+            opciones: ["Copulativa", "Impersonal", "Pasiva", "Interrogativa"],
             correcta: "Copulativa"
         },
 
         {
-            pregunta: "¿Qué función cumple «por la mañana» en «Trabajo por la mañana»?",
-            opciones: ["Complemento circunstancial", "Complemento directo", "Atributo", "Sujeto"],
-            correcta: "Complemento circunstancial"
+            pregunta: "¿Qué función cumple «a sus padres» en «Escribió una carta a sus padres»?",
+            opciones: ["Complemento indirecto", "Complemento directo", "Sujeto", "Atributo"],
+            correcta: "Complemento indirecto"
         },
 
         {
@@ -1928,22 +1896,13 @@ const preguntasGramatica = {
         },
 
         {
-            pregunta: "¿Cuál es el complemento directo en «María escribió una carta»?",
-            opciones: ["María", "escribió", "una carta", "ninguna"],
-            correcta: "una carta"
-        },
-
-        {
-            pregunta: "¿Cuál es el sujeto en «Ayer llegaron los invitados»?",
-            opciones: ["Ayer", "llegaron", "los invitados", "Ayer llegaron"],
-            correcta: "los invitados"
+            pregunta: "¿Qué tipo de oración es «Los niños juegan en el parque»?",
+            opciones: ["Activa", "Pasiva", "Impersonal", "Copulativa"],
+            correcta: "Activa"
         }
+
     ],
 
-
-    // ======================================
-    // EXPERTO
-    // ======================================
 
     experto: [
 
@@ -2008,71 +1967,72 @@ const preguntasGramatica = {
         },
 
         {
-            pregunta: "¿Qué función cumple «a los alumnos» en «La profesora explicó el ejercicio a los alumnos»?",
-            opciones: ["Complemento indirecto", "Complemento directo", "Complemento agente", "Atributo"],
-            correcta: "Complemento indirecto"
+            pregunta: "¿Qué función cumple «por la profesora» en «El alumno fue felicitado por la profesora»?",
+            opciones: ["Complemento agente", "Complemento directo", "Complemento indirecto", "Atributo"],
+            correcta: "Complemento agente"
         },
 
         {
-            pregunta: "¿Qué función cumple «el ejercicio» en «La profesora explicó el ejercicio a los alumnos»?",
+            pregunta: "¿Qué tipo de oración es «Se alquilan habitaciones»?",
+            opciones: ["Pasiva refleja", "Impersonal", "Copulativa", "Activa"],
+            correcta: "Pasiva refleja"
+        },
+
+        {
+            pregunta: "¿Qué función cumple «un regalo» en «María compró un regalo para Juan»?",
             opciones: ["Complemento directo", "Complemento indirecto", "Sujeto", "Atributo"],
             correcta: "Complemento directo"
         },
 
         {
-            pregunta: "¿Qué tipo de oración es «Se alquilan apartamentos»?",
-            opciones: ["Pasiva refleja", "Impersonal", "Copulativa", "Pasiva perifrástica"],
-            correcta: "Pasiva refleja"
+            pregunta: "¿Qué función cumple «para Juan» en «María compró un regalo para Juan»?",
+            opciones: ["Complemento indirecto", "Complemento directo", "Sujeto", "Atributo"],
+            correcta: "Complemento indirecto"
         },
 
         {
-            pregunta: "¿Qué tipo de oración es «Hay muchos libros en la biblioteca»?",
-            opciones: ["Impersonal", "Pasiva refleja", "Copulativa", "Activa personal"],
-            correcta: "Impersonal"
+            pregunta: "¿Qué tipo de oración es «Los documentos fueron enviados ayer»?",
+            opciones: ["Pasiva perifrástica", "Activa", "Impersonal", "Copulativa"],
+            correcta: "Pasiva perifrástica"
         },
 
         {
-            pregunta: "¿Cuál es el complemento agente en «La novela fue publicada por la editorial»?",
-            opciones: ["La novela", "fue publicada", "por la editorial", "ninguna"],
-            correcta: "por la editorial"
-        },
-
-        {
-            pregunta: "¿Qué función cumple «de madera» en «La mesa es de madera»?",
-            opciones: ["Atributo", "Complemento directo", "Complemento agente", "Sujeto"],
-            correcta: "Atributo"
-        },
-
-        {
-            pregunta: "¿Qué tipo de oración es «Los alumnos han terminado el examen»?",
-            opciones: ["Activa", "Pasiva refleja", "Impersonal", "Copulativa"],
-            correcta: "Activa"
-        },
-
-        {
-            pregunta: "¿Qué función cumple «con mucha atención» en «Escuchó al profesor con mucha atención»?",
+            pregunta: "¿Qué función cumple «ayer» en «Los documentos fueron enviados ayer»?",
             opciones: ["Complemento circunstancial", "Complemento directo", "Atributo", "Sujeto"],
             correcta: "Complemento circunstancial"
         },
 
         {
-            pregunta: "¿Cuál es el sujeto en «A los alumnos les gustan las matemáticas»?",
-            opciones: ["A los alumnos", "les", "gustan", "las matemáticas"],
-            correcta: "las matemáticas"
+            pregunta: "¿Qué tipo de oración es «Es necesario estudiar»?",
+            opciones: ["Impersonal", "Pasiva", "Activa", "Interrogativa"],
+            correcta: "Impersonal"
         },
 
         {
-            pregunta: "¿Qué tipo de oración es «María se peina»?",
-            opciones: ["Reflexiva", "Pasiva refleja", "Impersonal", "Copulativa"],
-            correcta: "Reflexiva"
+            pregunta: "¿Qué función cumple «la puerta» en «El conserje cerró la puerta»?",
+            opciones: ["Complemento directo", "Complemento indirecto", "Atributo", "Sujeto"],
+            correcta: "Complemento directo"
+        },
+
+        {
+            pregunta: "¿Qué función cumple «a los estudiantes» en «El profesor explicó la lección a los estudiantes»?",
+            opciones: ["Complemento indirecto", "Complemento directo", "Complemento agente", "Atributo"],
+            correcta: "Complemento indirecto"
+        },
+
+        {
+            pregunta: "¿Qué tipo de oración es «La puerta está abierta»?",
+            opciones: ["Copulativa", "Pasiva refleja", "Impersonal", "Transitiva"],
+            correcta: "Copulativa"
         }
+
     ]
 };
 
 
-// ==========================================
+// ============================================================
 // INICIAR LENGUA
-// ==========================================
+// ============================================================
 
 function iniciarJuegoLengua(tema, nivel) {
 
@@ -2081,7 +2041,6 @@ function iniciarJuegoLengua(tema, nivel) {
             "Nivel de Lengua no válido:",
             nivel
         );
-
         return;
     }
 
@@ -2094,55 +2053,51 @@ function iniciarJuegoLengua(tema, nivel) {
         console.error(
             "No existe #juegoLengua"
         );
-
         return;
     }
-
-
-    // ======================================
-    // SELECCIONAR BANCO
-    // ======================================
 
     let banco;
 
     if (tema === "ortografia") {
-
         banco =
             preguntasOrtografia[nivel];
     }
 
     else if (tema === "gramatica") {
-
         banco =
             preguntasGramatica[nivel];
     }
 
     else {
-
         console.error(
             "Tema de Lengua no válido:",
             tema
         );
-
         return;
     }
 
+    if (
+        !Array.isArray(banco) ||
+        banco.length === 0
+    ) {
+        console.error(
+            "El banco de preguntas está vacío."
+        );
+        return;
+    }
 
-    // ======================================
-    // AQUÍ ESTÁ LA CORRECCIÓN IMPORTANTE
+    // IMPORTANTE:
+    // SELECCIONAMOS 10 PREGUNTAS ALEATORIAS
+    // DE TODO EL BANCO.
     //
-    // NO SE USAN SIEMPRE LAS MISMAS 10.
-    //
-    // Tenemos un banco de 20-25 preguntas
-    // y elegimos 10 diferentes al azar.
-    // ======================================
+    // Esto hace que una partida NO sea igual
+    // que la anterior.
 
     const preguntasPartida =
-        seleccionarAleatorios(
+        seleccionarPreguntasUnicas(
             banco,
             10
         );
-
 
     juegoLengua = {
 
@@ -2154,36 +2109,38 @@ function iniciarJuegoLengua(tema, nivel) {
 
         aciertos: 0,
 
-        total: preguntasPartida.length,
+        total:
+            preguntasPartida.length,
 
         bloqueado: false,
 
-        preguntas: preguntasPartida
+        preguntas:
+            preguntasPartida
     };
-
 
     mostrarPreguntaLengua();
 
+    setTimeout(
+        () => {
 
-    setTimeout(() => {
+            contenedor.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
-        contenedor.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    }, 50);
+        },
+        50
+    );
 }
 
 
-// ==========================================
+// ============================================================
 // MOSTRAR LENGUA
-// ==========================================
+// ============================================================
 
 function mostrarPreguntaLengua() {
 
     if (!juegoLengua) return;
-
 
     if (
         juegoLengua.pregunta >=
@@ -2195,12 +2152,10 @@ function mostrarPreguntaLengua() {
         return;
     }
 
-
     const pregunta =
         juegoLengua.preguntas[
             juegoLengua.pregunta
         ];
-
 
     if (!pregunta) {
 
@@ -2211,24 +2166,19 @@ function mostrarPreguntaLengua() {
         return;
     }
 
-
     const contenedor =
         document.getElementById(
             "juegoLengua"
         );
 
-
     if (!contenedor) return;
 
-
     juegoLengua.bloqueado = false;
-
 
     const nombreTema =
         juegoLengua.tema === "ortografia"
             ? "✏️ Ortografía"
             : "🧩 Gramática";
-
 
     contenedor.innerHTML = `
 
@@ -2253,7 +2203,6 @@ function mostrarPreguntaLengua() {
                 ${juegoLengua.total}
             </p>
 
-
             <div
                 style="
                     font-weight:800;
@@ -2266,7 +2215,6 @@ function mostrarPreguntaLengua() {
                 ${nombreTema}
             </div>
 
-
             <h2
                 style="
                     font-size:clamp(1.4rem,4vw,2rem);
@@ -2275,7 +2223,6 @@ function mostrarPreguntaLengua() {
             >
                 ${pregunta.pregunta}
             </h2>
-
 
             <div
                 id="respuestasLengua"
@@ -2287,7 +2234,6 @@ function mostrarPreguntaLengua() {
                     margin:auto;
                 "
             ></div>
-
 
             <p
                 id="resultadoLengua"
@@ -2301,26 +2247,17 @@ function mostrarPreguntaLengua() {
         </div>
     `;
 
-
-    // ======================================
-    // LAS RESPUESTAS CAMBIAN DE POSICIÓN
-    // EN CADA PREGUNTA
-    // ======================================
-
     const respuestas =
         mezclarArray(
             pregunta.opciones
         );
-
 
     const zona =
         document.getElementById(
             "respuestasLengua"
         );
 
-
     if (!zona) return;
-
 
     respuestas.forEach(
         opcion => {
@@ -2330,54 +2267,40 @@ function mostrarPreguntaLengua() {
                     "button"
                 );
 
-
-            boton.type =
-                "button";
-
+            boton.type = "button";
 
             boton.textContent =
                 opcion;
 
-
             boton.className =
                 "respuesta";
-
 
             boton.style.minHeight =
                 "58px";
 
-
             boton.style.border =
                 "1px solid #e4e7ec";
-
 
             boton.style.borderRadius =
                 "15px";
 
-
             boton.style.background =
                 "#ffffff";
-
 
             boton.style.font =
                 "inherit";
 
-
             boton.style.fontWeight =
                 "800";
-
 
             boton.style.fontSize =
                 "1rem";
 
-
             boton.style.cursor =
                 "pointer";
 
-
             boton.style.padding =
                 "12px";
-
 
             boton.addEventListener(
                 "click",
@@ -2391,7 +2314,6 @@ function mostrarPreguntaLengua() {
                 }
             );
 
-
             zona.appendChild(
                 boton
             );
@@ -2400,9 +2322,9 @@ function mostrarPreguntaLengua() {
 }
 
 
-// ==========================================
+// ============================================================
 // COMPROBAR LENGUA
-// ==========================================
+// ============================================================
 
 function comprobarRespuestaLengua(
     respuestaUsuario,
@@ -2413,21 +2335,17 @@ function comprobarRespuestaLengua(
 
     if (juegoLengua.bloqueado) return;
 
-
     juegoLengua.bloqueado = true;
-
 
     const botones =
         document.querySelectorAll(
             "#respuestasLengua .respuesta"
         );
 
-
     botones.forEach(
         boton => {
 
             boton.disabled = true;
-
 
             if (
                 boton.textContent ===
@@ -2438,9 +2356,8 @@ function comprobarRespuestaLengua(
                     "#10b981";
 
                 boton.style.color =
-                    "white";
+                    "#ffffff";
             }
-
 
             if (
                 boton.textContent ===
@@ -2453,20 +2370,17 @@ function comprobarRespuestaLengua(
                     "#ef4444";
 
                 boton.style.color =
-                    "white";
+                    "#ffffff";
             }
         }
     );
-
 
     const resultado =
         document.getElementById(
             "resultadoLengua"
         );
 
-
     if (!resultado) return;
-
 
     if (
         respuestaUsuario ===
@@ -2475,10 +2389,8 @@ function comprobarRespuestaLengua(
 
         juegoLengua.aciertos++;
 
-
         resultado.textContent =
             "✅ ¡Correcto!";
-
 
         resultado.style.color =
             "#10b981";
@@ -2489,14 +2401,11 @@ function comprobarRespuestaLengua(
         resultado.textContent =
             `❌ Incorrecto. La respuesta era: ${respuestaCorrecta}`;
 
-
         resultado.style.color =
             "#ef4444";
     }
 
-
     juegoLengua.pregunta++;
-
 
     setTimeout(
         () => {
@@ -2509,14 +2418,13 @@ function comprobarRespuestaLengua(
 }
 
 
-// ==========================================
+// ============================================================
 // RESULTADO FINAL LENGUA
-// ==========================================
+// ============================================================
 
 function mostrarResultadoFinalLengua() {
 
     if (!juegoLengua) return;
-
 
     const porcentaje =
         Math.round(
@@ -2526,56 +2434,40 @@ function mostrarResultadoFinalLengua() {
             ) * 100
         );
 
-
     let mensaje;
 
-
     if (porcentaje === 100) {
-
-        mensaje =
-            "🏆 ¡Perfecto!";
+        mensaje = "🏆 ¡Perfecto!";
     }
 
     else if (porcentaje >= 80) {
-
-        mensaje =
-            "🔥 ¡Excelente trabajo!";
+        mensaje = "🔥 ¡Excelente trabajo!";
     }
 
     else if (porcentaje >= 60) {
-
-        mensaje =
-            "👏 ¡Muy bien!";
+        mensaje = "👏 ¡Muy bien!";
     }
 
     else if (porcentaje >= 40) {
-
-        mensaje =
-            "💪 ¡Sigue practicando!";
+        mensaje = "💪 ¡Sigue practicando!";
     }
 
     else {
-
-        mensaje =
-            "📚 ¡Vamos a mejorar!";
+        mensaje = "📚 ¡Vamos a mejorar!";
     }
-
 
     const contenedor =
         document.getElementById(
             "juegoLengua"
         );
 
-
     if (!contenedor) return;
-
 
     const tema =
         juegoLengua.tema;
 
     const nivel =
         juegoLengua.nivel;
-
 
     contenedor.innerHTML = `
 
@@ -2595,11 +2487,9 @@ function mostrarResultadoFinalLengua() {
                 ${porcentaje >= 80 ? "🏆" : "🎯"}
             </div>
 
-
             <h2>
                 ${mensaje}
             </h2>
-
 
             <p>
                 Has conseguido
@@ -2613,23 +2503,16 @@ function mostrarResultadoFinalLengua() {
                 respuestas correctas.
             </p>
 
-
             <div
                 class="resultado-porcentaje"
             >
                 ${porcentaje}%
             </div>
 
-
             <button
                 type="button"
                 class="boton-principal"
-                onclick="
-                    iniciarJuegoLengua(
-                        '${tema}',
-                        '${nivel}'
-                    )
-                "
+                id="volverLengua"
             >
                 🔄 Volver a jugar
             </button>
@@ -2637,6 +2520,25 @@ function mostrarResultadoFinalLengua() {
         </div>
     `;
 
+    const boton =
+        document.getElementById(
+            "volverLengua"
+        );
+
+    if (boton) {
+
+        boton.addEventListener(
+            "click",
+            () => {
+
+                iniciarJuegoLengua(
+                    tema,
+                    nivel
+                );
+
+            }
+        );
+    }
 
     contenedor.scrollIntoView({
         behavior: "smooth",
@@ -2645,9 +2547,9 @@ function mostrarResultadoFinalLengua() {
 }
 
 
-// ==========================================
+// ============================================================
 // MENSAJE ANTIGUO
-// ==========================================
+// ============================================================
 
 function mostrarMensaje(tema) {
 
@@ -2657,3 +2559,9 @@ function mostrarMensaje(tema) {
         " estará disponible próximamente en Educonew."
     );
 }
+
+
+// ============================================================
+// FIN DEL MOTOR
+// ============================================================
+```
