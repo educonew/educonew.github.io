@@ -3,8 +3,8 @@
 // MATEMÁTICAS + LENGUA
 // ==========================================
 
-
 let juegoActual = null;
+let juegoLengua = null;
 
 
 // ==========================================
@@ -44,14 +44,31 @@ function numeroAleatorio(min, max) {
 
 
 // ==========================================
+// MEZCLAR ARRAY DE FORMA ALEATORIA
+// ==========================================
+
+function mezclarArray(array) {
+
+    const copia = [...array];
+
+    for (let i = copia.length - 1; i > 0; i--) {
+
+        const j = Math.floor(
+            Math.random() * (i + 1)
+        );
+
+        [copia[i], copia[j]] =
+            [copia[j], copia[i]];
+    }
+
+    return copia;
+}
+
+
+// ==========================================
 // ==========================================
 // MATEMÁTICAS
 // ==========================================
-// ==========================================
-
-
-// ==========================================
-// INICIAR JUEGO MATEMÁTICAS
 // ==========================================
 
 function iniciarJuego(tema, nivel) {
@@ -157,10 +174,6 @@ function generarPregunta(tema, nivel) {
 
     switch (tema) {
 
-        // ==================================
-        // SUMAS
-        // ==================================
-
         case "sumas":
 
             if (nivel === "facil") {
@@ -189,10 +202,6 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ==================================
-        // RESTAS
-        // ==================================
-
         case "restas":
 
             if (nivel === "facil") {
@@ -218,10 +227,6 @@ function generarPregunta(tema, nivel) {
 
             break;
 
-
-        // ==================================
-        // MULTIPLICACIONES
-        // ==================================
 
         case "multiplicaciones":
 
@@ -251,10 +256,6 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ==================================
-        // DIVISIONES
-        // ==================================
-
         case "divisiones":
 
             if (nivel === "facil") {
@@ -283,16 +284,10 @@ function generarPregunta(tema, nivel) {
             break;
 
 
-        // ==================================
-        // FRACCIONES
-        // ==================================
-
         case "fracciones": {
 
             let denominador;
-
             let numerador;
-
 
             if (nivel === "facil") {
                 denominador = numeroAleatorio(2, 6);
@@ -310,10 +305,8 @@ function generarPregunta(tema, nivel) {
                 denominador = numeroAleatorio(10, 50);
             }
 
-
             numerador =
                 numeroAleatorio(1, denominador - 1);
-
 
             return {
                 texto:
@@ -325,18 +318,13 @@ function generarPregunta(tema, nivel) {
         }
 
 
-        // ==================================
-        // PORCENTAJES
-        // ==================================
-
         case "porcentajes": {
 
             let porcentaje;
-
             let cantidad;
 
-
             if (nivel === "facil") {
+
                 porcentaje =
                     numeroAleatorio(1, 5) * 10;
 
@@ -345,6 +333,7 @@ function generarPregunta(tema, nivel) {
             }
 
             else if (nivel === "medio") {
+
                 porcentaje =
                     numeroAleatorio(1, 9) * 10;
 
@@ -353,6 +342,7 @@ function generarPregunta(tema, nivel) {
             }
 
             else if (nivel === "dificil") {
+
                 porcentaje =
                     numeroAleatorio(5, 95);
 
@@ -361,6 +351,7 @@ function generarPregunta(tema, nivel) {
             }
 
             else {
+
                 porcentaje =
                     numeroAleatorio(5, 95);
 
@@ -368,10 +359,8 @@ function generarPregunta(tema, nivel) {
                     numeroAleatorio(10, 100) * 10;
             }
 
-
             respuesta =
                 (cantidad * porcentaje) / 100;
-
 
             return {
                 texto:
@@ -382,16 +371,10 @@ function generarPregunta(tema, nivel) {
         }
 
 
-        // ==================================
-        // GEOMETRÍA
-        // ==================================
-
         case "geometria": {
 
             let base;
-
             let altura;
-
 
             if (nivel === "facil") {
                 base = numeroAleatorio(2, 10);
@@ -413,10 +396,8 @@ function generarPregunta(tema, nivel) {
                 altura = numeroAleatorio(20, 100);
             }
 
-
             respuesta =
                 (base * altura) / 2;
-
 
             return {
                 texto:
@@ -427,10 +408,6 @@ function generarPregunta(tema, nivel) {
         }
 
 
-        // ==================================
-        // PROBLEMAS
-        // ==================================
-
         case "problemas": {
 
             let precio =
@@ -439,8 +416,8 @@ function generarPregunta(tema, nivel) {
             let cantidad =
                 numeroAleatorio(2, 10);
 
-
             if (nivel === "medio") {
+
                 precio =
                     numeroAleatorio(10, 50);
 
@@ -448,8 +425,8 @@ function generarPregunta(tema, nivel) {
                     numeroAleatorio(2, 15);
             }
 
-
             if (nivel === "dificil") {
+
                 precio =
                     numeroAleatorio(20, 100);
 
@@ -457,8 +434,8 @@ function generarPregunta(tema, nivel) {
                     numeroAleatorio(5, 20);
             }
 
-
             if (nivel === "experto") {
+
                 precio =
                     numeroAleatorio(50, 200);
 
@@ -466,10 +443,8 @@ function generarPregunta(tema, nivel) {
                     numeroAleatorio(10, 30);
             }
 
-
             respuesta =
                 precio * cantidad;
-
 
             return {
                 texto:
@@ -505,7 +480,6 @@ function generarRespuestas(correcta) {
 
     let intentos = 0;
 
-
     while (
         respuestas.length < 4 &&
         intentos < 100
@@ -513,8 +487,7 @@ function generarRespuestas(correcta) {
 
         intentos++;
 
-
-        let diferencia =
+        const diferencia =
             numeroAleatorio(
                 1,
                 Math.max(
@@ -525,20 +498,15 @@ function generarRespuestas(correcta) {
                 )
             );
 
-
         let falsa;
 
-
         if (Math.random() < 0.5) {
-            falsa =
-                correcta + diferencia;
+            falsa = correcta + diferencia;
         }
 
         else {
-            falsa =
-                correcta - diferencia;
+            falsa = correcta - diferencia;
         }
-
 
         if (
             !respuestas.includes(falsa) &&
@@ -548,22 +516,17 @@ function generarRespuestas(correcta) {
         }
     }
 
-
     while (respuestas.length < 4) {
 
-        let falsa =
+        const falsa =
             correcta + respuestas.length;
-
 
         if (!respuestas.includes(falsa)) {
             respuestas.push(falsa);
         }
     }
 
-
-    return respuestas.sort(
-        () => Math.random() - 0.5
-    );
+    return mezclarArray(respuestas);
 }
 
 
@@ -575,7 +538,6 @@ function mostrarPregunta() {
 
     if (!juegoActual) return;
 
-
     if (
         juegoActual.pregunta >=
         juegoActual.total
@@ -586,52 +548,43 @@ function mostrarPregunta() {
         return;
     }
 
-
     const pregunta =
         generarPregunta(
             juegoActual.tema,
             juegoActual.nivel
         );
 
-
     if (!pregunta) {
         console.error(
             "No se pudo generar la pregunta."
         );
-
         return;
     }
-
 
     const preguntaElemento =
         document.getElementById(
             "preguntaJuego"
         );
 
-
     const respuestasElemento =
         document.getElementById(
             "respuestasJuego"
         );
-
 
     const progresoElemento =
         document.getElementById(
             "progresoJuego"
         );
 
-
     const resultadoElemento =
         document.getElementById(
             "resultadoJuego"
         );
 
-
     const nivelElemento =
         document.getElementById(
             "nivelJuego"
         );
-
 
     if (
         !preguntaElemento ||
@@ -639,25 +592,19 @@ function mostrarPregunta() {
         !progresoElemento ||
         !resultadoElemento
     ) {
-
         console.error(
             "No se encontraron los elementos del juego."
         );
-
         return;
     }
 
-
     juegoActual.bloqueado = false;
-
 
     preguntaElemento.textContent =
         pregunta.texto;
 
-
     progresoElemento.textContent =
         `Pregunta ${juegoActual.pregunta + 1} de ${juegoActual.total}`;
-
 
     if (nivelElemento) {
 
@@ -665,14 +612,11 @@ function mostrarPregunta() {
             `${niveles[juegoActual.nivel].color} ${niveles[juegoActual.nivel].nombre}`;
     }
 
-
     resultadoElemento.textContent = "";
 
     respuestasElemento.innerHTML = "";
 
-
     let respuestas;
-
 
     if (
         typeof pregunta.respuesta ===
@@ -690,29 +634,23 @@ function mostrarPregunta() {
         respuestas =
             [pregunta.respuesta];
 
-
         while (
             respuestas.length < 4
         ) {
 
-            let falsa =
+            const falsa =
                 `${numeroAleatorio(1, 9)}/${numeroAleatorio(2, 10)}`;
-
 
             if (
                 !respuestas.includes(falsa)
             ) {
-
                 respuestas.push(falsa);
             }
         }
 
-
-        respuestas.sort(
-            () => Math.random() - 0.5
-        );
+        respuestas =
+            mezclarArray(respuestas);
     }
-
 
     respuestas.forEach(
         respuesta => {
@@ -722,7 +660,6 @@ function mostrarPregunta() {
                     "button"
                 );
 
-
             boton.type = "button";
 
             boton.className =
@@ -731,10 +668,8 @@ function mostrarPregunta() {
             boton.textContent =
                 respuesta;
 
-
             boton.style.cursor =
                 "pointer";
-
 
             boton.addEventListener(
                 "click",
@@ -747,7 +682,6 @@ function mostrarPregunta() {
 
                 }
             );
-
 
             respuestasElemento.appendChild(
                 boton
@@ -770,21 +704,17 @@ function comprobarRespuesta(
 
     if (juegoActual.bloqueado) return;
 
-
     juegoActual.bloqueado = true;
-
 
     const botones =
         document.querySelectorAll(
             "#respuestasJuego .respuesta"
         );
 
-
     botones.forEach(
         boton => {
 
             boton.disabled = true;
-
 
             if (
                 String(
@@ -804,15 +734,12 @@ function comprobarRespuesta(
         }
     );
 
-
     const resultado =
         document.getElementById(
             "resultadoJuego"
         );
 
-
     if (!resultado) return;
-
 
     if (
         String(respuestaUsuario) ===
@@ -821,10 +748,8 @@ function comprobarRespuesta(
 
         juegoActual.aciertos++;
 
-
         resultado.textContent =
             "✅ ¡Correcto!";
-
 
         resultado.style.color =
             "#10b981";
@@ -835,14 +760,11 @@ function comprobarRespuesta(
         resultado.textContent =
             `❌ Incorrecto. La respuesta era ${respuestaCorrecta}`;
 
-
         resultado.style.color =
             "#ef4444";
     }
 
-
     juegoActual.pregunta++;
-
 
     setTimeout(
         () => {
@@ -869,9 +791,7 @@ function mostrarResultadoFinal() {
             ) * 100
         );
 
-
     let mensaje;
-
 
     if (porcentaje === 100) {
         mensaje = "🏆 ¡Perfecto!";
@@ -893,15 +813,12 @@ function mostrarResultadoFinal() {
         mensaje = "📚 ¡Vamos a mejorar!";
     }
 
-
     const contenedor =
         document.getElementById(
             "juegoMatematicas"
         );
 
-
     if (!contenedor) return;
-
 
     contenedor.innerHTML = `
 
@@ -957,21 +874,17 @@ function empezarSumas(nivel) {
     iniciarJuego("sumas", nivel);
 }
 
-
 function empezarRestas(nivel) {
     iniciarJuego("restas", nivel);
 }
-
 
 function empezarMultiplicaciones(nivel) {
     iniciarJuego("multiplicaciones", nivel);
 }
 
-
 function empezarDivisiones(nivel) {
     iniciarJuego("divisiones", nivel);
 }
-
 
 function empezarFracciones(nivel) {
     iniciarJuego("fracciones", nivel);
@@ -986,7 +899,7 @@ function empezarFracciones(nivel) {
 
 
 // ==========================================
-// DATOS DE ORTOGRAFÍA
+// ORTOGRAFÍA
 // ==========================================
 
 const preguntasOrtografia = {
@@ -1001,7 +914,7 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["queso", "keso", "qeso", "queso"],
+            opciones: ["queso", "keso", "qeso", "quesso"],
             correcta: "queso"
         },
 
@@ -1025,7 +938,7 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["árbol", "arbol", "árvol", "árvol"],
+            opciones: ["árbol", "arbol", "árvol", "arvol"],
             correcta: "árbol"
         },
 
@@ -1040,7 +953,6 @@ const preguntasOrtografia = {
             opciones: ["lápiz", "lapiz", "lápis", "lapíz"],
             correcta: "lápiz"
         }
-
     ],
 
 
@@ -1093,7 +1005,6 @@ const preguntasOrtografia = {
             opciones: ["examen", "ecsamen", "exámen", "esamen"],
             correcta: "examen"
         }
-
     ],
 
 
@@ -1101,7 +1012,7 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["subterráneo", "subterraneo", "subterráneo", "subterráneó"],
+            opciones: ["subterráneo", "subterraneo", "subterráneó", "subterraneo"],
             correcta: "subterráneo"
         },
 
@@ -1119,7 +1030,7 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["adolescente", "adoleszente", "adolescente", "adolesente"],
+            opciones: ["adolescente", "adoleszente", "adolesente", "adolescentte"],
             correcta: "adolescente"
         },
 
@@ -1137,7 +1048,7 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["inmediatamente", "inmediatamente", "inmediataménte", "inmediatemente"],
+            opciones: ["inmediatamente", "inmediataménte", "inmediatemente", "inmediatamente"],
             correcta: "inmediatamente"
         },
 
@@ -1146,7 +1057,6 @@ const preguntasOrtografia = {
             opciones: ["beneficioso", "veneficioso", "benefisioso", "beneficióso"],
             correcta: "beneficioso"
         }
-
     ],
 
 
@@ -1196,17 +1106,15 @@ const preguntasOrtografia = {
 
         {
             pregunta: "¿Cuál está escrita correctamente?",
-            opciones: ["idiosincrasia", "idiosincracia", "idiosincrásia", "idiosincracía"],
-            correcta: "idiosincrasia"
+            opciones: ["inconmensurable", "inconmensuráble", "incomensurable", "inconmensuravle"],
+            correcta: "inconmensurable"
         }
-
     ]
-
 };
 
 
 // ==========================================
-// DATOS DE GRAMÁTICA
+// GRAMÁTICA
 // ==========================================
 
 const preguntasGramatica = {
@@ -1248,7 +1156,6 @@ const preguntasGramatica = {
             opciones: ["El", "perro", "corre", "ninguna"],
             correcta: "perro"
         }
-
     ],
 
 
@@ -1289,7 +1196,6 @@ const preguntasGramatica = {
             opciones: ["niño", "pequeño", "juega", "el"],
             correcta: "juega"
         }
-
     ],
 
 
@@ -1330,7 +1236,6 @@ const preguntasGramatica = {
             opciones: ["Complemento circunstancial", "Complemento directo", "Sujeto", "Atributo"],
             correcta: "Complemento circunstancial"
         }
-
     ],
 
 
@@ -1371,26 +1276,18 @@ const preguntasGramatica = {
             opciones: ["Pasiva refleja", "Impersonal", "Copulativa", "Interrogativa"],
             correcta: "Pasiva refleja"
         }
-
     ]
-
 };
 
 
 // ==========================================
-// ESTADO DEL JUEGO DE LENGUA
-// ==========================================
-
-let juegoLengua = null;
-
-
-// ==========================================
-// INICIAR JUEGO LENGUA
+// INICIAR JUEGO DE LENGUA
 // ==========================================
 
 function iniciarJuegoLengua(tema, nivel) {
 
     if (!niveles[nivel]) {
+
         console.error(
             "Nivel de Lengua no válido:",
             nivel
@@ -1399,17 +1296,32 @@ function iniciarJuegoLengua(tema, nivel) {
         return;
     }
 
-
     const contenedor =
         document.getElementById(
             "juegoLengua"
         );
 
-
     if (!contenedor) {
 
         console.error(
             "No existe #juegoLengua"
+        );
+
+        return;
+    }
+
+
+    const banco =
+        obtenerPreguntasLengua(
+            tema,
+            nivel
+        );
+
+
+    if (!banco.length) {
+
+        console.error(
+            "No existen preguntas para este nivel."
         );
 
         return;
@@ -1428,7 +1340,14 @@ function iniciarJuegoLengua(tema, nivel) {
 
         total: 10,
 
-        bloqueado: false
+        bloqueado: false,
+
+        // ==================================
+        // BANCO ALEATORIO
+        // ==================================
+
+        preguntasDisponibles:
+            mezclarArray(banco)
 
     };
 
@@ -1451,7 +1370,7 @@ function iniciarJuegoLengua(tema, nivel) {
 
 
 // ==========================================
-// OBTENER PREGUNTAS LENGUA
+// OBTENER PREGUNTAS DE LENGUA
 // ==========================================
 
 function obtenerPreguntasLengua(
@@ -1459,36 +1378,24 @@ function obtenerPreguntasLengua(
     nivel
 ) {
 
-    let banco;
+    let banco = [];
 
 
     if (tema === "ortografia") {
 
         banco =
-            preguntasOrtografia[nivel];
+            preguntasOrtografia[nivel] || [];
+
     }
 
     else if (tema === "gramatica") {
 
         banco =
-            preguntasGramatica[nivel];
+            preguntasGramatica[nivel] || [];
     }
 
 
-    if (!banco) {
-        return [];
-    }
-
-
-    /*
-     * Copiamos y mezclamos las preguntas
-     * para que no salgan siempre en el
-     * mismo orden.
-     */
-
-    return [...banco].sort(
-        () => Math.random() - 0.5
-    );
+    return [...banco];
 }
 
 
@@ -1512,34 +1419,41 @@ function mostrarPreguntaLengua() {
     }
 
 
-    const preguntas =
-        obtenerPreguntasLengua(
-            juegoLengua.tema,
-            juegoLengua.nivel
-        );
+    // ======================================
+    // SI SE ACABAN LAS PREGUNTAS
+    // VOLVEMOS A MEZCLAR EL BANCO
+    // ======================================
 
+    if (
+        juegoLengua.preguntasDisponibles.length === 0
+    ) {
 
-    if (!preguntas.length) {
-
-        console.error(
-            "No hay preguntas de Lengua."
-        );
-
-        return;
+        juegoLengua.preguntasDisponibles =
+            mezclarArray(
+                obtenerPreguntasLengua(
+                    juegoLengua.tema,
+                    juegoLengua.nivel
+                )
+            );
     }
 
 
-    /*
-     * Usamos una pregunta del banco.
-     * Si llegamos al final del banco,
-     * volvemos a mezclarlo.
-     */
+    // ======================================
+    // SACAR UNA PREGUNTA ALEATORIA
+    // ======================================
+
+    const posicion =
+        Math.floor(
+            Math.random() *
+            juegoLengua.preguntasDisponibles.length
+        );
+
 
     const pregunta =
-        preguntas[
-            juegoLengua.pregunta %
-            preguntas.length
-        ];
+        juegoLengua.preguntasDisponibles.splice(
+            posicion,
+            1
+        )[0];
 
 
     const contenedor =
@@ -1632,9 +1546,13 @@ function mostrarPreguntaLengua() {
     `;
 
 
+    // ======================================
+    // RESPUESTAS ALEATORIAS
+    // ======================================
+
     const respuestas =
-        [...pregunta.opciones].sort(
-            () => Math.random() - 0.5
+        mezclarArray(
+            pregunta.opciones
         );
 
 
@@ -1657,7 +1575,6 @@ function mostrarPreguntaLengua() {
 
             boton.textContent =
                 opcion;
-
 
             boton.className =
                 "respuesta";
@@ -1704,7 +1621,10 @@ function mostrarPreguntaLengua() {
             );
 
 
-            zona.appendChild(boton);
+            zona.appendChild(
+                boton
+            );
+
         }
     );
 }
@@ -1720,7 +1640,6 @@ function comprobarRespuestaLengua(
 ) {
 
     if (!juegoLengua) return;
-
 
     if (juegoLengua.bloqueado) return;
 
@@ -1785,7 +1704,6 @@ function comprobarRespuestaLengua(
         resultado.textContent =
             `❌ Incorrecto. La respuesta era: ${respuestaCorrecta}`;
 
-
         resultado.style.color =
             "#ef4444";
     }
@@ -1827,33 +1745,23 @@ function mostrarResultadoFinalLengua() {
 
 
     if (porcentaje === 100) {
-
-        mensaje =
-            "🏆 ¡Perfecto!";
+        mensaje = "🏆 ¡Perfecto!";
     }
 
     else if (porcentaje >= 80) {
-
-        mensaje =
-            "🔥 ¡Excelente trabajo!";
+        mensaje = "🔥 ¡Excelente trabajo!";
     }
 
     else if (porcentaje >= 60) {
-
-        mensaje =
-            "👏 ¡Muy bien!";
+        mensaje = "👏 ¡Muy bien!";
     }
 
     else if (porcentaje >= 40) {
-
-        mensaje =
-            "💪 ¡Sigue practicando!";
+        mensaje = "💪 ¡Sigue practicando!";
     }
 
     else {
-
-        mensaje =
-            "📚 ¡Vamos a mejorar!";
+        mensaje = "📚 ¡Vamos a mejorar!";
     }
 
 
